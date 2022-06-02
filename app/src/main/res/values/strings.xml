@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AdvancedProjectAndroidClient</string>
+    <string name="login_btn_text">Log in</string>
+    <string name="login_pwd">password</string>
+    <string name="login_username">username</string>
+    <string name="login_don_t_have_an_account">Don\'t have an account?\t</string>
+    <string name="login_click_here_to_sign_up"><u>Click here to sign up</u></string>
+    <string name="login_email">email</string>
+    <string name="login_error">Error: Incorrect username or password</string>
 </resources>
