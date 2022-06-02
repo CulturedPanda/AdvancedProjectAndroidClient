@@ -7,4 +7,6 @@
     <string name="login_click_here_to_sign_up"><u>Click here to sign up</u></string>
     <string name="login_email">email</string>
     <string name="login_error">Error: Incorrect username or password</string>
+    <string name="login_pwd_empty">Password must not be empty</string>
+    <string name="empty">can not be empty</string>
 </resources>

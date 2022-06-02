@@ -30,6 +30,7 @@
 
 
             <EditText
+                android:id="@+id/login_et_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/login_username"
@@ -45,6 +46,14 @@
 
             </EditText>
 
+            <TextView
+                android:id="@+id/login_tv_username_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:visibility="gone"
+                />
+
 
             <RadioGroup
                 android:id="@+id/login_rg_email_or_login"
@@ -57,7 +66,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login_username"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/login_rb_email"
@@ -69,7 +79,7 @@
             </RadioGroup>
 
             <EditText
-                android:id="@+id/editTextTextPassword2"
+                android:id="@+id/login_et_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/login_pwd"
@@ -83,8 +93,17 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/hintColor"/>
 
+            <TextView
+                android:id="@+id/login_tv_pwd_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_pwd_empty"
+                android:textColor="@color/red"
+                android:visibility="gone"
+                />
+
             <Button
-                android:id="@+id/main_btn_login"
+                android:id="@+id/login_btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

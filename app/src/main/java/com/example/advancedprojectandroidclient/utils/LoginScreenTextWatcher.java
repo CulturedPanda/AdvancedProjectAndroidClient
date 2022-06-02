@@ -1,0 +1,35 @@
+package com.example.advancedprojectandroidclient.utils;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.TextView;
+
+import com.example.advancedprojectandroidclient.R;
+
+public class LoginScreenTextWatcher implements TextWatcher {
+
+    private TextView errorTv;
+
+    public LoginScreenTextWatcher(TextView errorTv) {
+        this.errorTv = errorTv;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (!s.toString().isEmpty()){
+            errorTv.setVisibility(TextView.GONE);
+        }
+        else{
+            errorTv.setVisibility(TextView.VISIBLE);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+}
