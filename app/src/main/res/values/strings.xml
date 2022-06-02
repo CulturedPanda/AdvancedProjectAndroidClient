@@ -7,6 +7,16 @@
     <string name="login_click_here_to_sign_up"><u>Click here to sign up</u></string>
     <string name="login_email">email</string>
     <string name="login_error">Error: Incorrect username or password</string>
+    <string name="signup_email">Email:</string>
+    <string name="signup_email_example">name@example.come</string>
+    <string name="signup_username">Username:</string>
+    <string name="signup_username_example">Example: JohnSmith</string>
+    <string name="signup_password">Password:</string>
+    <string name="signup_password_confirm">Confirm Password:</string>
+    <string name="signup_password_hint">password</string>
+    <string name="signup_nickname">Nickname:</string>
+    <string name="signup_nickname_example">Example: Bond007</string>
+    <string name="signup_important">*</string>
     <string name="login_pwd_empty">Password must not be empty</string>
     <string name="empty">must not be empty</string>
 </resources>

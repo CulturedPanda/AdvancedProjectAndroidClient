@@ -10,12 +10,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/shape"
+        android:padding="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shape"
-        android:padding="24dp">
+        app:layout_constraintVertical_bias="0.498">
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -74,8 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login_email"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
             </RadioGroup>
 
             <EditText
@@ -91,7 +91,7 @@
                 android:minHeight="48dp"
                 android:shadowColor="@color/black"
                 android:textColor="@color/black"
-                android:textColorHint="@color/hintColor"/>
+                android:textColorHint="@color/hintColor" />
 
             <TextView
                 android:id="@+id/login_tv_pwd_empty"
@@ -117,25 +117,23 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_error"
                 android:textColor="@color/red"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal"
-            android:layout_marginTop="30dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_don_t_have_an_account"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/login_tv_sign_up_link"
