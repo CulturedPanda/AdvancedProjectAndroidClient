@@ -1,7 +1,13 @@
 package com.example.advancedprojectandroidclient.api;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.daos.ContactDao;
+import com.example.advancedprojectandroidclient.entities.Contact;
+
+import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,13 +15,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ContactApi {
 
     private Retrofit retrofit;
-    WebServiceApi webServiceApi;
+    private WebServiceApi webServiceApi;
+    private MutableLiveData<List<Contact>> contacts;
+    private ContactDao contactDao;
 
-    public ContactApi(){
-        retrofit = new Retrofit.Builder()
+    public ContactApi(MutableLiveData<List<Contact>> contacts, ContactDao contactDao) {
+        this.retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        webServiceApi = retrofit.create(WebServiceApi.class);
+        this.webServiceApi = retrofit.create(WebServiceApi.class);
+        this.contacts = contacts;
+        this.contactDao = contactDao;
     }
 }
