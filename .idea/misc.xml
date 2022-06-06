@@ -6,11 +6,13 @@
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/drawable/custom_border.xml" value="0.2215" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/drawable/ic_person_circle.xml" value="0.121" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_change_text_data.xml" value="0.2" />
-        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_chat.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_chat.xml" value="0.264" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_contacts.xml" value="0.264" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_main.xml" value="0.18055555555555555" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
+        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/chat_bubble_left.xml" value="0.25" />
+        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/chat_bubble_right.xml" value="0.25" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/contact_item.xml" value="0.25" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/contact_layout.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/settings_item.xml" value="0.264" />

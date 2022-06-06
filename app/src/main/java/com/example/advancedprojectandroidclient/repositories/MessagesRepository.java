@@ -11,12 +11,18 @@ import com.example.advancedprojectandroidclient.entities.Message;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class MessagesRepository {
 
     private MessageDao messageDao;
     // private ContactApi contactApi;
     private MessageData messages;
+
+    public void setWith(String with) {
+        this.with = with;
+    }
+
     private String with;
 
     public MessagesRepository() {
@@ -28,6 +34,11 @@ public class MessagesRepository {
         messageDao = db.messageDao();
         messages = new MessageData();
         // contactApi = new ContactApi(contacts, contactDao);
+    }
+
+    public void insert(Message message) {
+        messageDao.insert(message);
+        messages.setValue(messageDao.getAllMessages(with));
     }
 
     class MessageData extends MutableLiveData<List<Message>>{
@@ -49,7 +60,11 @@ public class MessagesRepository {
         }
     }
 
-    public LiveData<List<Message>> getAllMessages(){
+    public LiveData<List<Message>> getAllMessages(String with){
+        if (!Objects.equals(with, this.with)) {
+            this.with = with;
+            messages.setValue(messageDao.getAllMessages(with));
+        }
         return messages;
     }
 }

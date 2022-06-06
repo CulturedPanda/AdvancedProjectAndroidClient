@@ -35,10 +35,7 @@
         <!-- </intent-filter> -->
         <!-- </service> -->
         <activity
-            android:name=".ChatConvoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChatActivity"
+            android:name=".activities.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ContactsActivity"

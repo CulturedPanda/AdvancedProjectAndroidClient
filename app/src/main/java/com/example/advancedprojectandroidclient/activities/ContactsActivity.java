@@ -2,6 +2,7 @@ package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,8 +11,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.adapters.ContactListAdapter;
+import com.example.advancedprojectandroidclient.click_listeners.ContactItemClickListener;
+import com.example.advancedprojectandroidclient.entities.Contact;
 import com.example.advancedprojectandroidclient.view_models.ContactsViewModel;
 import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
 
@@ -51,5 +55,21 @@ public class ContactsActivity extends AppCompatActivity {
         lstContacts.setAdapter(adapter);
 
         contactsViewModel.getContacts().observe(this, adapter::setContacts);
+
+        lstContacts.addOnItemTouchListener(new ContactItemClickListener(MyApplication.context, lstContacts ,new ContactItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Contact contact = adapter.getContact(position);
+                Intent intent = new Intent(ContactsActivity.this, ChatActivity.class);
+                intent.putExtra("contactName", contact.getName());
+                intent.putExtra("contactId", contact.getId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+                // do whatever
+            }
+        }));
     }
 }

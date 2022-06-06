@@ -7,18 +7,33 @@ import com.example.advancedprojectandroidclient.entities.Message;
 import com.example.advancedprojectandroidclient.repositories.MessagesRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MessagesViewModel extends ViewModel {
 
     private LiveData<List<Message>> messages;
     private MessagesRepository messagesRepository;
 
-    public MessagesViewModel() {
-        this.messagesRepository = new MessagesRepository();
-        messages = messagesRepository.getAllMessages();
+    public void setWith(String with) {
+        this.with = with;
     }
 
-    public LiveData<List<Message>> getMessages() {
+    private String with;
+
+    public MessagesViewModel() {
+        this.messagesRepository = new MessagesRepository();
+    }
+
+    public LiveData<List<Message>> getMessages(String with) {
+        if (!Objects.equals(with, this.with) || messages == null) {
+            this.with = with;
+            messagesRepository.setWith(with);
+            messages = messagesRepository.getAllMessages(with);
+        }
         return messages;
+    }
+
+    public void insert(Message message) {
+        messagesRepository.insert(message);
     }
 }

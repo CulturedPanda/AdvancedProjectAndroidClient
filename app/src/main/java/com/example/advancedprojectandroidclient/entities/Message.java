@@ -1,6 +1,6 @@
 package com.example.advancedprojectandroidclient.entities;
 
-import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,11 +15,21 @@ public class Message {
         this.with = with;
     }
 
-    @PrimaryKey
-    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "with")
     private String with;
 
-    public Message(@NonNull String with, int conversationId, String created, String content, boolean sent, String type) {
+    public Message(String with, int conversationId, String created, String content, boolean sent, String type) {
         this.with = with;
         this.conversationId = conversationId;
         this.created = created;

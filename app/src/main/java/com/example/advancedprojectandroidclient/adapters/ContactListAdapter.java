@@ -17,6 +17,10 @@ import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
 
+    public Contact getContact(int position) {
+        return contacts.get(position);
+    }
+
     class ContactViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView nicknameTv;
