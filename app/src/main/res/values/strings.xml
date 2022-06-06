@@ -20,4 +20,11 @@
     <string name="login_pwd_empty">Password must not be empty</string>
     <string name="empty">must not be empty</string>
     <string name="base_url">https://192.168.1.163:7031/api/</string>
+    <string name="signup_phone">Phone number:</string>
+    <string name="signup_security_question">Security question:</string>
+    <string name="signup_phone_example">Example: 05–1234–5678</string>
+    <string name="signup_secret_answer">Answer:</string>
+    <string name="signup_terms_of_service_accept">I have read and accepted the </string>
+    <string name="signup_security_answer">security answer </string>
+    <string name="signup_terms_of_service">terms of service </string>
 </resources>
