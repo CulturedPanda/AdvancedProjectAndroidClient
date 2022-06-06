@@ -16,10 +16,8 @@
     <string name="signup_password_hint">password</string>
     <string name="signup_nickname">Nickname:</string>
     <string name="signup_nickname_example">Example: Bond007</string>
-    <string name="signup_phone">Phone Number</string>
-    <string name="signup_phone_example">Example: 05-1234-5678</string>
     <string name="signup_important">*</string>
     <string name="login_pwd_empty">Password must not be empty</string>
     <string name="empty">must not be empty</string>
-    <string name="signup_security_question">Security question:</string>
+    <string name="base_url">https://192.168.1.163:7031/api/</string>
 </resources>
