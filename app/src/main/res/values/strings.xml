@@ -24,7 +24,7 @@
     <string name="signup_security_question">Security question:</string>
     <string name="signup_phone_example">Example: 05–1234–5678</string>
     <string name="signup_secret_answer">Answer:</string>
-    <string name="signup_terms_of_service_accept">I have read and accepted the </string>
+    <string name="signup_terms_of_service_accept">I have read and accepted the\t</string>
     <string name="signup_security_answer">security answer </string>
     <string name="signup_terms_of_service">terms of service </string>
     <string name="user_s_profile_picture">User\'s profile picture</string>
@@ -51,4 +51,19 @@
     <string name="new_server_hint">New server address</string>
     <string name="chat_contact_image">User\'s profile picture</string>
     <string name="chat_attachment">Chat attachment</string>
+    <string name="email_verification_6_letter">A 6 letter verification code has been sent to your
+        email. Please input the code that was sent to you in the box below and then press
+        submit. Input 111111 to bypass this.</string>
+    <string name="email_verification_input">Verification code:</string>
+    <string name="email_verification_code">code</string>
+    <string name="email_verification_resend">Resend code</string>
+    <string name="email_verification_submit">Submit</string>
+    <string name="add_contact_heading">Add contact</string>
+    <string name="add_contact_username">Username</string>
+    <string name="add_contact_email">Email</string>
+    <string name="add_contact_phone">Phone number</string>
+    <string name="add_contact_btn">Add contact</string>
+    <string name="add_contact_close">Close</string>
+
+
 </resources>

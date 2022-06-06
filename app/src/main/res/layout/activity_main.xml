@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,8 +27,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.333">
 
 
             <EditText
@@ -52,8 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
 
             <RadioGroup
@@ -66,9 +68,9 @@
                     android:id="@+id/login_rb_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/login_username"
-                    android:textColor="@color/black"
-                    android:checked="true"/>
+                    android:textColor="@color/black" />
 
                 <RadioButton
                     android:id="@+id/login_rb_email"
@@ -99,8 +101,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_pwd_empty"
                 android:textColor="@color/red"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/login_btn_login"
