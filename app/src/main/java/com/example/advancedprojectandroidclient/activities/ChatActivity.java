@@ -1,10 +1,13 @@
 package com.example.advancedprojectandroidclient.activities;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +39,20 @@ public class ChatActivity extends AppCompatActivity {
         lstMessages.setLayoutManager(new LinearLayoutManager(this));
         lstMessages.setAdapter(adapter);
 
-        messageViewModel.getMessages(contactId).observe(this, adapter::setMessages);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = (displayMetrics.heightPixels * 75) / 100;
+        ConstraintLayout constraintLayout = findViewById(R.id.chat_constraint_layout);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+        constraintSet.constrainMaxHeight(R.id.chat_recycle_view, height);
+        constraintSet.applyTo(constraintLayout);
+
+        messageViewModel.getMessages(contactId).observe(this, messages -> {
+            adapter.setMessages(messages);
+            lstMessages.scrollToPosition(adapter.getItemCount() - 1);
+        });
+        lstMessages.scrollToPosition(adapter.getItemCount() - 1);
 
         Button sendBtn = findViewById(R.id.chat_btn_send);
         sendBtn.setOnClickListener(v -> {

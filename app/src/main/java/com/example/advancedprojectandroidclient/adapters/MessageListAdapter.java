@@ -58,9 +58,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             if (current.isSent()){
                 holder.messageContentTv.setBackgroundResource(R.color.green);
                 constraintSet.connect(R.id.chat_bubble_tv, ConstraintSet.END, R.id.chat_bubble_constraint_layout, ConstraintSet.END);
+                constraintSet.clear(R.id.chat_bubble_tv, ConstraintSet.START);
             }
             else{
+                holder.messageContentTv.setBackgroundResource(R.color.grey);
                 constraintSet.connect(R.id.chat_bubble_tv, ConstraintSet.START, R.id.chat_bubble_constraint_layout, ConstraintSet.START);
+                constraintSet.clear(R.id.chat_bubble_tv, ConstraintSet.END);
             }
             constraintSet.applyTo(holder.messageLayout);
         }
