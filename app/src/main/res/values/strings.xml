@@ -27,4 +27,6 @@
     <string name="signup_terms_of_service_accept">I have read and accepted the </string>
     <string name="signup_security_answer">security answer </string>
     <string name="signup_terms_of_service">terms of service </string>
+    <string name="user_s_profile_picture">User\'s profile picture</string>
+    <string name="settings">Settings</string>
 </resources>

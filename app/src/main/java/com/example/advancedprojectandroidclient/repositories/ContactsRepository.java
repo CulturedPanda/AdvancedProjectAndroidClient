@@ -24,7 +24,7 @@ public class ContactsRepository {
                 MyApplication.context,
                 AppDB.class,
                 "app.db"
-        ).build();
+        ).fallbackToDestructiveMigration().allowMainThreadQueries().build();
         contactDao = db.contactDao();
         contacts = new ContactsData();
         contactApi = new ContactApi(contacts, contactDao);
