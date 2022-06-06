@@ -2,12 +2,13 @@ package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.adapters.SettingsListAdapter;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         ListView lstSettings = findViewById(R.id.settings_list_view);
-        lstSettings.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+        lstSettings.setAdapter(new SettingsListAdapter(MyApplication.context,
                 new String[]{"Change server", "Change description", "Change nickname"}));
 
         lstSettings.setOnItemClickListener((parent, view, position, id) -> {

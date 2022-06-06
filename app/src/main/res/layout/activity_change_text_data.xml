@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/change_text_data_top_ll">
 
         <TextView
-            android:id="@+id/change_text_data_new_info_type"
+            android:id="@+id/change_text_data_new_info_type_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="New server: "
@@ -74,16 +74,21 @@
             android:layout_marginTop="30dp">
 
             <Button
+                android:id="@+id/change_text_data_btn_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/discard_changes"
                 android:backgroundTint="@color/red"
+                android:layout_weight="2"
                 android:layout_marginEnd="15dp"/>
 
             <Button
+                android:id="@+id/change_text_data_btn_discard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/save_changes"/>
+                android:layout_weight="2"
+                android:text="@string/save_changes"
+                android:backgroundTint="@color/light_blue"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
