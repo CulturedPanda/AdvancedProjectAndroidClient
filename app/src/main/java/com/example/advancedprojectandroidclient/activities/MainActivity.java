@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
-import com.example.advancedprojectandroidclient.entities.User;
 import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginBtn = findViewById(R.id.login_btn_login);
         loginBtn.setOnClickListener(v -> {
+
+            Intent intent = new Intent(this, ContactsActivity.class);
+            startActivity(intent);
+
             String username = usernameEt.getText().toString();
             String password = passwordEt.getText().toString();
 
@@ -63,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            User user = new User(username, password);
-            registeredUserApi.loginUser(user);
-            if (user.isLoggedIn()){
-                usernameEt.setText("WOOOOOOO");
-            }
-            else{
-                TextView errorTv = findViewById(R.id.login_tv_error);
-            }
+//            User user = new User(username, password);
+//            registeredUserApi.loginUser(user);
+//            if (user.isLoggedIn()){
+//                usernameEt.setText("WOOOOOOO");
+//            }
+//            else{
+//                TextView errorTv = findViewById(R.id.login_tv_error);
+//            }
         });
 
         TextView signupTv = findViewById(R.id.login_tv_sign_up_link);
