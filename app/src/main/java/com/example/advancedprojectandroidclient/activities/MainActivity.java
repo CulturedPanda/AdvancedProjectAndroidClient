@@ -1,6 +1,4 @@
-package com.example.advancedprojectandroidclient;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +8,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
 
 public class MainActivity extends AppCompatActivity {
 

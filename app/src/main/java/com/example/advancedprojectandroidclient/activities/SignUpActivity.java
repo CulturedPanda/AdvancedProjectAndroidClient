@@ -1,8 +1,10 @@
-package com.example.advancedprojectandroidclient;
+package com.example.advancedprojectandroidclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.advancedprojectandroidclient.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
