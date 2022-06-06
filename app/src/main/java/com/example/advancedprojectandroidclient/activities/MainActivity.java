@@ -11,14 +11,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
+import com.example.advancedprojectandroidclient.entities.User;
 import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RegisteredUserApi registeredUserApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.registeredUserApi = new RegisteredUserApi();
 
         EditText usernameEt = findViewById(R.id.login_et_username);
         EditText passwordEt = findViewById(R.id.login_et_pwd);
@@ -58,15 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-//            Future<Boolean> request = ServerCommunication.login(username, password);
-//            while (!request.isDone()) {
-//                System.out.println("Waiting for response...");
-//                try {
-//                    Thread.sleep(300);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
+            User user = new User(username, password);
+            registeredUserApi.loginUser(user);
+            if (user.isLoggedIn()){
+                usernameEt.setText("WOOOOOOO");
+            }
+            else{
+                TextView errorTv = findViewById(R.id.login_tv_error);
+            }
         });
 
         TextView signupTv = findViewById(R.id.login_tv_sign_up_link);
