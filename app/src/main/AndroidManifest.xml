@@ -17,12 +17,23 @@
         android:theme="@style/Theme.AdvancedProjectAndroidClient"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-<!--        <service-->
-<!--            android:name=".MyFirebaseInstanceIDService">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>-->
-<!--            </intent-filter>-->
-<!--        </service>-->
+        <activity
+            android:name=".activities.ChangeNicknameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ChangeDescriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ChangeServerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false" /> <!-- <service -->
+        <!-- android:name=".MyFirebaseInstanceIDService"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
         <activity
             android:name=".ChatConvoActivity"
             android:exported="false" />

@@ -9,14 +9,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
+import com.example.advancedprojectandroidclient.entities.RefreshToken;
 import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
+import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private RegisteredUserApi registeredUserApi;
+    private RefreshTokenViewModel refreshTokenViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         String errorText = "username " + getResources().getString(R.string.empty);
         usernameErrorTv.setText(errorText);
 
+        refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
 
         usernameEt.addTextChangedListener(new LoginScreenTextWatcher(findViewById(R.id.login_tv_username_empty)));
         passwordEt.addTextChangedListener(new LoginScreenTextWatcher(findViewById(R.id.login_tv_pwd_empty)));
@@ -46,11 +51,16 @@ public class MainActivity extends AppCompatActivity {
         Button loginBtn = findViewById(R.id.login_btn_login);
         loginBtn.setOnClickListener(v -> {
 
-            Intent intent = new Intent(this, ContactsActivity.class);
-            startActivity(intent);
-
             String username = usernameEt.getText().toString();
             String password = passwordEt.getText().toString();
+
+            refreshTokenViewModel.deleteRefreshToken();
+            refreshTokenViewModel.setRefreshToken(new RefreshToken("abcde"));
+
+            Intent intent = new Intent(this, ContactsActivity.class);
+            intent.putExtra("nickname", username);
+            startActivity(intent);
+            finish();
 
             boolean error = false;
             if (username.isEmpty()) {

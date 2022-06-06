@@ -3,22 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/drawable/custom_border.xml" value="0.2215" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/drawable/ic_person_circle.xml" value="0.121" />
-        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_contacts.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_change_text_data.xml" value="0.2" />
+        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_contacts.xml" value="0.264" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_main.xml" value="0.18055555555555555" />
+        <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/Yuval/AndroidStudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/contact_layout.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
+        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_sign_up.xml" value="0.12578616352201258" />
+        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/chat_bubble_left.xml" value="0.6485714285714286" />
+        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/chat_bubble_right.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/contact_item.xml" value="0.1125" />
+        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/contact_layout.xml" value="0.11875" />
         <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/drawable/background_left.xml" value="0.107" />
         <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/drawable/background_right.xml" value="0.129" />
         <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_chat.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_chat_convo.xml" value="0.1125" />
         <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_contacts.xml" value="0.11875" />
         <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_email_verification.xml" value="0.1" />
-        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/activity_sign_up.xml" value="0.12578616352201258" />
-        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/chat_bubble_left.xml" value="0.6485714285714286" />
-        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/chat_bubble_right.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/contact_item.xml" value="0.1125" />
-        <entry key="..\:/Users/ereze/StudioProjects/AdvancedProjectAndroidClient/app/src/main/res/layout/contact_layout.xml" value="0.11875" />
       </map>
     </option>
   </component>

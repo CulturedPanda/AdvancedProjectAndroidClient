@@ -22,10 +22,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@drawable/ic_person_circle"
+            android:src="@drawable/ic_person_circle"
             android:layout_margin="10dp"
             android:contentDescription="@string/user_s_profile_picture" />
 
         <TextView
+            android:id="@+id/contacts_username_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -42,15 +44,23 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="15dp">
+            android:padding="15dp">
 
             <ImageView
-                android:id="@+id/contacts_user_settings"
+                android:id="@+id/contacts_settings_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:src="@drawable/ic_settings"
                 android:contentDescription="@string/settings" />
+
+            <ImageView
+                android:id="@+id/contacts_logout_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/ic_logout"
+                android:contentDescription="@string/logout" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
