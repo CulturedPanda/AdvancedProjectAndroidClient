@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ContactApi {
 
     private Retrofit retrofit;
-    private WebServiceApi webServiceApi;
+    private IContactsApi IContactsApi;
     private MutableLiveData<List<Contact>> contacts;
     private ContactDao contactDao;
 
@@ -24,7 +24,7 @@ public class ContactApi {
                 .baseUrl(MyApplication.context.getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        this.webServiceApi = retrofit.create(WebServiceApi.class);
+        this.IContactsApi = retrofit.create(IContactsApi.class);
         this.contacts = contacts;
         this.contactDao = contactDao;
     }

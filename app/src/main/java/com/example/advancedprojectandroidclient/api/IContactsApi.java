@@ -6,7 +6,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 
-public interface WebServiceApi {
+public interface IContactsApi {
 
     @GET("/contacts")
     List<Contact> getContacts();
