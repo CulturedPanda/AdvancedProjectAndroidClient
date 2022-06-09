@@ -18,6 +18,8 @@ import com.example.advancedprojectandroidclient.entities.User;
 import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
 import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private RegisteredUserApi registeredUserApi;
@@ -35,7 +37,37 @@ public class MainActivity extends AppCompatActivity {
         String errorText = "username " + getResources().getString(R.string.empty);
         usernameErrorTv.setText(errorText);
 
+        MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
+        loggedIn.observe(this, aBoolean -> {
+            if (aBoolean) {
+                Intent intent = new Intent(this, ContactsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                TextView errorTv = findViewById(R.id.login_tv_error);
+                errorTv.setVisibility(TextView.VISIBLE);
+            }
+        });
+
+        MutableLiveData<Boolean> loggedInRefreshToken = new MutableLiveData<>();
+        loggedInRefreshToken.observe(this, aBoolean -> {
+            if (aBoolean) {
+                Intent intent = new Intent(this, ContactsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
+        Date now = new Date();
+
+        MutableLiveData<Boolean> canProceed = new MutableLiveData<>();
+        // Try logging in via refresh token for 200 miliseconds at most.
+        // If the database did not retrieve the refresh token within this amount of time, assume there is none.
+        while (new Date().getTime() - now.getTime() < 200 && (canProceed.getValue() == null || !canProceed.getValue())) {
+            refreshTokenViewModel.logInWithAccessToken(canProceed, loggedInRefreshToken);
+        }
 
         usernameEt.addTextChangedListener(new LoginScreenTextWatcher(findViewById(R.id.login_tv_username_empty)));
         passwordEt.addTextChangedListener(new LoginScreenTextWatcher(findViewById(R.id.login_tv_pwd_empty)));
@@ -49,18 +81,7 @@ public class MainActivity extends AppCompatActivity {
             usernameErrorTv.setText(errText);
         });
 
-        MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
-        loggedIn.observe(this, aBoolean -> {
-            if (aBoolean) {
-                Intent intent = new Intent(this, ContactsActivity.class);
-                startActivity(intent);
-                finish();
-            }
-            else{
-                TextView errorTv = findViewById(R.id.login_tv_error);
-                errorTv.setVisibility(TextView.VISIBLE);
-            }
-        });
+
 
         Button loginBtn = findViewById(R.id.login_btn_login);
         loginBtn.setOnClickListener(v -> {

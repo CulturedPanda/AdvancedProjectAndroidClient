@@ -25,4 +25,20 @@ public class AccessToken {
 
     private String accessToken;
     private String refreshToken;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String username;
+
+    public AccessToken(String accessToken, String refreshToken, String username) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        this.username = username;
+    }
 }
