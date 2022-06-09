@@ -13,8 +13,8 @@ public interface MessageDao {
 
 
     @Query("SELECT * FROM message WHERE message.`with` = :with order by created asc")
-    public List<Message> getAllMessages(String with);
+    List<Message> getAllMessages(String with);
 
     @Insert
-    public void insert(Message message);
+    void insert(Message message);
 }

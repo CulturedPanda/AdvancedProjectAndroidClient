@@ -10,8 +10,8 @@ import java.util.List;
 
 public class ContactsViewModel extends ViewModel {
 
-    private LiveData<List<Contact>> contacts;
-    private ContactsRepository contactsRepository;
+    private final LiveData<List<Contact>> contacts;
+    private final ContactsRepository contactsRepository;
 
     public ContactsViewModel() {
         this.contactsRepository = new ContactsRepository();

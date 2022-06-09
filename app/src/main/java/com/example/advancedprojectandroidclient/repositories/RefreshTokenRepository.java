@@ -9,7 +9,7 @@ import com.example.advancedprojectandroidclient.entities.RefreshToken;
 
 public class RefreshTokenRepository {
 
-    private RefreshTokenDao refreshTokenDao;
+    private final RefreshTokenDao refreshTokenDao;
     // private ContactApi contactApi;
     private RefreshToken refreshToken;
     boolean updated;

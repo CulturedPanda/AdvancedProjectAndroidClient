@@ -76,7 +76,7 @@
             android:inputType="textPersonName"
             android:hint="@string/chat_input_bar"
             android:textColorHint="@color/hintColor"
-            android:background="@drawable/shape"
+            android:background="@drawable/white_oval"
             android:textColor="@color/black"/>
 
         <Button

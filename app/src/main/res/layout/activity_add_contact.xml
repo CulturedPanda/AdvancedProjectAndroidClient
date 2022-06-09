@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="372dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape"
+        android:background="@drawable/white_oval"
         android:padding="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

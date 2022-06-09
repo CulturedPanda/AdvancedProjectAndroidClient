@@ -15,9 +15,9 @@ import java.util.Objects;
 
 public class MessagesRepository {
 
-    private MessageDao messageDao;
+    private final MessageDao messageDao;
     // private ContactApi contactApi;
-    private MessageData messages;
+    private final MessageData messages;
 
     public void setWith(String with) {
         this.with = with;

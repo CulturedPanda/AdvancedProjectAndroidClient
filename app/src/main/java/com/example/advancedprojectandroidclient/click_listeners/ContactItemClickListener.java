@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ContactItemClickListener implements RecyclerView.OnItemTouchListener {
 
-    private OnItemClickListener mListener;
-    private GestureDetector mGestureDetector;
+    private final OnItemClickListener mListener;
+    private final GestureDetector mGestureDetector;
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
 
-        public void onLongItemClick(View view, int position);
+        void onLongItemClick(View view, int position);
     }
 
     public ContactItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {

@@ -14,17 +14,17 @@ import java.util.List;
 public interface ContactDao {
 
     @Query("SELECT * FROM contact")
-    public List<Contact> getAll();
+    List<Contact> getAll();
 
     @Query("SELECT * FROM contact WHERE id = :id")
-    public Contact getById(String id);
+    Contact getById(String id);
 
     @Insert
-    public void insert(Contact contact);
+    void insert(Contact contact);
 
     @Delete
-    public void delete(Contact contact);
+    void delete(Contact contact);
 
     @Update
-    public void update(Contact contact);
+    void update(Contact contact);
 }

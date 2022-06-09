@@ -15,9 +15,9 @@ import java.util.List;
 
 public class ContactsRepository {
 
-    private ContactDao contactDao;
-    private ContactApi contactApi;
-    private ContactsData contacts;
+    private final ContactDao contactDao;
+    private final ContactApi contactApi;
+    private final ContactsData contacts;
 
     public ContactsRepository() {
         AppDB db = Room.databaseBuilder(

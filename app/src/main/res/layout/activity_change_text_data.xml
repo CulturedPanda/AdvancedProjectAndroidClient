@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        android:background="@drawable/shape"
+        android:background="@drawable/white_oval"
         android:layout_margin="15dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat

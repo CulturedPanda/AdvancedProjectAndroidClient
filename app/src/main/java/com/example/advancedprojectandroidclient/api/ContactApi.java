@@ -14,10 +14,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactApi {
 
-    private Retrofit retrofit;
-    private IContactsApi IContactsApi;
-    private MutableLiveData<List<Contact>> contacts;
-    private ContactDao contactDao;
+    private final Retrofit retrofit;
+    private final IContactsApi IContactsApi;
+    private final MutableLiveData<List<Contact>> contacts;
+    private final ContactDao contactDao;
 
     public ContactApi(MutableLiveData<List<Contact>> contacts, ContactDao contactDao) {
         this.retrofit = new Retrofit.Builder()

@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisteredUserApi {
 
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
     private final IRegisteredUserApi IRegisteredUserApi;
 
     public RegisteredUserApi() {

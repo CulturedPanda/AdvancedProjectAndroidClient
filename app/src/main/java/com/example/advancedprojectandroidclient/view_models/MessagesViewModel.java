@@ -12,7 +12,7 @@ import java.util.Objects;
 public class MessagesViewModel extends ViewModel {
 
     private LiveData<List<Message>> messages;
-    private MessagesRepository messagesRepository;
+    private final MessagesRepository messagesRepository;
 
     public void setWith(String with) {
         this.with = with;

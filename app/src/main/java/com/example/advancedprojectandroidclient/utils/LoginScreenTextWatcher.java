@@ -8,7 +8,7 @@ import com.example.advancedprojectandroidclient.R;
 
 public class LoginScreenTextWatcher implements TextWatcher {
 
-    private TextView errorTv;
+    private final TextView errorTv;
 
     public LoginScreenTextWatcher(TextView errorTv) {
         this.errorTv = errorTv;
