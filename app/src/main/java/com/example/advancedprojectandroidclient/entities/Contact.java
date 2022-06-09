@@ -25,11 +25,11 @@ public class Contact {
         this.last = last;
         this.server = server;
         this.name = name;
-        this.lastdate = this.parseDate(lastdate);
+        this.lastdate = Contact.parseDate(lastdate);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private String parseDate(String date){
+    public static String parseDate(String date){
         try {
             LocalDateTime localDateTime = LocalDateTime.parse(date);
             long timeDelta = new Date().getTime() - localDateTime.toInstant(java.time.ZoneOffset.UTC).toEpochMilli();

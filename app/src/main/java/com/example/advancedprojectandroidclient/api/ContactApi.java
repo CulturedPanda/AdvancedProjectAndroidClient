@@ -1,5 +1,8 @@
 package com.example.advancedprojectandroidclient.api;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.advancedprojectandroidclient.MyApplication;
@@ -34,9 +37,14 @@ public class ContactApi {
     public void getAll(){
         Call<List<Contact>> call = IContactsApi.getContacts("Bearer " + RefreshTokenRepository.accessToken);
         call.enqueue(new retrofit2.Callback<List<Contact>>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<List<Contact>> call, retrofit2.Response<List<Contact>> response) {
-                if (response.isSuccessful() && response.body() != null && contacts.getValue() != null) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Making sure the date is parsed correctly before displaying to the user.
+                    for (Contact contact : response.body()) {
+                        contact.setLastdate(Contact.parseDate(contact.getLastdate()));
+                    }
                     new Thread(() -> {
                         contactDao.deleteAll();
                         for (Contact contact : response.body()) {
