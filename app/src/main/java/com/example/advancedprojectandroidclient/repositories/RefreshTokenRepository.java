@@ -12,6 +12,7 @@ public class RefreshTokenRepository {
     private final RefreshTokenDao refreshTokenDao;
     // private ContactApi contactApi;
     private RefreshToken refreshToken;
+    public static String accessToken;
     boolean updated;
 
     public RefreshTokenRepository() {
@@ -19,33 +20,31 @@ public class RefreshTokenRepository {
                 MyApplication.context,
                 AppDB.class,
                 "app.db"
-        ).fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        ).fallbackToDestructiveMigration().build();
         refreshTokenDao = db.refreshTokenDao();
-        refreshToken = refreshTokenDao.get();
+        new Thread(() -> refreshToken = refreshTokenDao.get()).start();
     }
 
-    public RefreshToken getRefreshToken() {
-        if (!updated) {
-            return refreshToken;
-        } else {
+    public synchronized RefreshToken getRefreshToken() {
+        if (updated) {
             refreshToken = refreshTokenDao.get();
             updated = false;
-            return refreshToken;
         }
+        return refreshToken;
     }
 
-    public void setRefreshToken(RefreshToken refreshToken) {
+    public synchronized void setRefreshToken(RefreshToken refreshToken) {
         refreshTokenDao.insert(refreshToken);
         updated = true;
     }
 
-    public void deleteRefreshToken() {
+    public synchronized void deleteRefreshToken() {
         if (refreshToken != null) {
             refreshTokenDao.delete(refreshToken);
         }
     }
 
-    public void updateRefreshToken(RefreshToken refreshToken) {
+    public synchronized void updateRefreshToken(RefreshToken refreshToken) {
         if (refreshToken != null) {
             refreshTokenDao.update(refreshToken);
         }

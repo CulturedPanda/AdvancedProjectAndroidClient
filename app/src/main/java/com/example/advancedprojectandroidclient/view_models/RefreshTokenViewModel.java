@@ -18,14 +18,14 @@ public class RefreshTokenViewModel extends ViewModel {
     }
 
     public void setRefreshToken(RefreshToken refreshToken) {
-        refreshTokenRepository.setRefreshToken(refreshToken);
+        new Thread(() -> refreshTokenRepository.setRefreshToken(refreshToken)).start();
     }
 
     public void deleteRefreshToken() {
-        refreshTokenRepository.deleteRefreshToken();
+        new Thread(refreshTokenRepository::deleteRefreshToken).start();
     }
 
     public void updateRefreshToken(RefreshToken refreshToken) {
-        refreshTokenRepository.updateRefreshToken(refreshToken);
+        new Thread(() -> refreshTokenRepository.updateRefreshToken(refreshToken)).start();
     }
 }

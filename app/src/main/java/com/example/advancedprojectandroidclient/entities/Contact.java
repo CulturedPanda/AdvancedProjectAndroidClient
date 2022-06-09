@@ -1,21 +1,25 @@
 package com.example.advancedprojectandroidclient.entities;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
+@Entity(primaryKeys = {"id", "contactOf"})
 public class Contact {
 
-    @PrimaryKey
     @NonNull
     private String id;
+    @NonNull
     private String contactOf;
 
-    public Contact(@NonNull String id, String contactOf, String last, String server, String name, String lastdate) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Contact(@NonNull String id, @NonNull String contactOf, String last, String server, String name, String lastdate) {
         this.id = id;
         this.contactOf = contactOf;
         this.last = last;
@@ -24,10 +28,11 @@ public class Contact {
         this.lastdate = this.parseDate(lastdate);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private String parseDate(String date){
         try {
-            Date lastDate = new Date(date);
-            long timeDelta = System.currentTimeMillis() - lastDate.getTime();
+            LocalDateTime localDateTime = LocalDateTime.parse(date);
+            long timeDelta = new Date().getTime() - localDateTime.toInstant(java.time.ZoneOffset.UTC).toEpochMilli();
             if (timeDelta < 1000 * 60){
                 return "Just now";
             }

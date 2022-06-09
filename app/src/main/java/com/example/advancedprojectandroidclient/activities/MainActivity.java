@@ -9,11 +9,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
-import com.example.advancedprojectandroidclient.entities.RefreshToken;
+import com.example.advancedprojectandroidclient.entities.User;
 import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
 import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
 
@@ -48,19 +49,24 @@ public class MainActivity extends AppCompatActivity {
             usernameErrorTv.setText(errText);
         });
 
+        MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
+        loggedIn.observe(this, aBoolean -> {
+            if (aBoolean) {
+                Intent intent = new Intent(this, ContactsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                TextView errorTv = findViewById(R.id.login_tv_error);
+                errorTv.setVisibility(TextView.VISIBLE);
+            }
+        });
+
         Button loginBtn = findViewById(R.id.login_btn_login);
         loginBtn.setOnClickListener(v -> {
 
             String username = usernameEt.getText().toString();
             String password = passwordEt.getText().toString();
-
-            refreshTokenViewModel.deleteRefreshToken();
-            refreshTokenViewModel.setRefreshToken(new RefreshToken("abcde"));
-
-            Intent intent = new Intent(this, ContactsActivity.class);
-            intent.putExtra("nickname", username);
-            startActivity(intent);
-            finish();
 
             boolean error = false;
             if (username.isEmpty()) {
@@ -76,14 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-//            User user = new User(username, password);
-//            registeredUserApi.loginUser(user);
-//            if (user.isLoggedIn()){
-//                usernameEt.setText("WOOOOOOO");
-//            }
-//            else{
-//                TextView errorTv = findViewById(R.id.login_tv_error);
-//            }
+            User user = new User(username, password);
+            registeredUserApi.loginUser(user, loggedIn);
         });
 
         TextView signupTv = findViewById(R.id.login_tv_sign_up_link);

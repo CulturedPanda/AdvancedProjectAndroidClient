@@ -10,15 +10,21 @@ import java.util.List;
 
 public class ContactsViewModel extends ViewModel {
 
-    private final LiveData<List<Contact>> contacts;
+    private LiveData<List<Contact>> contacts;
     private final ContactsRepository contactsRepository;
 
     public ContactsViewModel() {
         this.contactsRepository = new ContactsRepository();
-        contacts = contactsRepository.getAll();
     }
 
-    public LiveData<List<Contact>> getContacts() {
+    public synchronized LiveData<List<Contact>> getContacts(boolean shouldUpdate) {
+        if (shouldUpdate || contacts == null) {
+            contacts = contactsRepository.getAll();
+        }
         return contacts;
+    }
+
+    public void update() {
+        contactsRepository.update();
     }
 }

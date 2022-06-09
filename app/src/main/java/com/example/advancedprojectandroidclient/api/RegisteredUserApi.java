@@ -1,8 +1,13 @@
 package com.example.advancedprojectandroidclient.api;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.entities.AccessToken;
+import com.example.advancedprojectandroidclient.entities.RefreshToken;
 import com.example.advancedprojectandroidclient.entities.User;
+import com.example.advancedprojectandroidclient.repositories.RefreshTokenRepository;
 
 import java.util.concurrent.Executors;
 
@@ -14,6 +19,7 @@ public class RegisteredUserApi {
 
     private final Retrofit retrofit;
     private final IRegisteredUserApi IRegisteredUserApi;
+    RefreshTokenRepository refreshTokenRepository;
 
     public RegisteredUserApi() {
         this.retrofit = new Retrofit.Builder()
@@ -22,22 +28,31 @@ public class RegisteredUserApi {
                 .callbackExecutor(Executors.newSingleThreadExecutor())
                 .build();
         this.IRegisteredUserApi = retrofit.create(IRegisteredUserApi.class);
+        refreshTokenRepository = new RefreshTokenRepository();
     }
 
-    public void loginUser(User user) {
-        Call<Boolean> call =  IRegisteredUserApi.logIn(user);
-        call.enqueue(new retrofit2.Callback<Boolean>() {
+    public void loginUser(User user, MutableLiveData<Boolean> loggedIn) {
+
+        Call<AccessToken> call = IRegisteredUserApi.logIn(user);
+        call.enqueue(new retrofit2.Callback<AccessToken>() {
             @Override
-            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
-                user.setLoggedIn(Boolean.TRUE.equals(response.body()));
-                if (user.isLoggedIn()){
-                    MyApplication.username = user.getUsername();
+            public void onResponse(Call<AccessToken> call, retrofit2.Response<AccessToken> response) {
+                if (response.isSuccessful()) {
+                    RefreshTokenRepository.accessToken = response.body().getAccessToken();
+                    RefreshToken refreshToken = new RefreshToken(response.body().getRefreshToken());
+                    new Thread(() -> {
+                        refreshTokenRepository.deleteRefreshToken();
+                        refreshTokenRepository.setRefreshToken(refreshToken);
+                    }).start();
+                    loggedIn.postValue(true);
+                } else {
+                    loggedIn.postValue(false);
                 }
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                user.setLoggedIn(Boolean.FALSE);
+            public void onFailure(Call<AccessToken> call, Throwable t) {
+                loggedIn.postValue(false);
             }
         });
     }

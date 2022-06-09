@@ -23,6 +23,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     private ContactsViewModel contactsViewModel;
     private RefreshTokenViewModel refreshTokenViewModel;
+    private ContactListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +51,11 @@ public class ContactsActivity extends AppCompatActivity {
         });
 
         RecyclerView lstContacts = findViewById(R.id.contacts_list_rv);
-        final ContactListAdapter adapter = new ContactListAdapter(this);
+        adapter = new ContactListAdapter(this);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
         lstContacts.setAdapter(adapter);
 
-        contactsViewModel.getContacts().observe(this, adapter::setContacts);
-
-        lstContacts.addOnItemTouchListener(new ContactItemClickListener(MyApplication.context, lstContacts ,new ContactItemClickListener.OnItemClickListener() {
+        lstContacts.addOnItemTouchListener(new ContactItemClickListener(MyApplication.context, lstContacts, new ContactItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Contact contact = adapter.getContact(position);
@@ -71,5 +70,11 @@ public class ContactsActivity extends AppCompatActivity {
                 // do whatever
             }
         }));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        contactsViewModel.getContacts(true).observe(this, adapter::setContacts);
     }
 }

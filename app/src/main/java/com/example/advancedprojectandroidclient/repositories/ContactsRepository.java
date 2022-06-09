@@ -24,10 +24,11 @@ public class ContactsRepository {
                 MyApplication.context,
                 AppDB.class,
                 "app.db"
-        ).fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        ).fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
         contacts = new ContactsData();
         contactApi = new ContactApi(contacts, contactDao);
+        contactApi.getAll();
     }
 
     class ContactsData extends MutableLiveData<List<Contact>> {
@@ -51,6 +52,10 @@ public class ContactsRepository {
 
     public LiveData<List<Contact>> getAll(){
         return contacts;
+    }
+
+    public void update(){
+        contactApi.getAll();
     }
 
 }

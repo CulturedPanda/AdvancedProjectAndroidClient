@@ -19,7 +19,7 @@
     <string name="signup_important">*</string>
     <string name="login_pwd_empty">Password must not be empty</string>
     <string name="empty">must not be empty</string>
-    <string name="base_url">https://192.168.1.163:7031/api/</string>
+    <string name="base_url">http://192.168.1.163:80/api/</string>
     <string name="signup_phone">Phone number:</string>
     <string name="signup_security_question">Security question:</string>
     <string name="signup_phone_example">Example: 05–1234–5678</string>
