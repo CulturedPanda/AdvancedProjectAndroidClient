@@ -11,7 +11,6 @@ import com.example.advancedprojectandroidclient.entities.Message;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 public class MessagesRepository {
 
@@ -61,7 +60,7 @@ public class MessagesRepository {
     }
 
     public LiveData<List<Message>> getAllMessages(String with){
-        if (!Objects.equals(with, this.with)) {
+        if (!this.with.equals(with)) {
             this.with = with;
             messages.setValue(messageDao.getAllMessages(with));
         }

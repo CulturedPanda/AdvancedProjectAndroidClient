@@ -64,6 +64,7 @@
     <string name="add_contact_phone">Phone number</string>
     <string name="add_contact_btn">Add contact</string>
     <string name="add_contact_close">Close</string>
+    <string name="add_contact">Add contact</string>
 
 
 </resources>

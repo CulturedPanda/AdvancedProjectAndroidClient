@@ -1,11 +1,9 @@
 package com.example.advancedprojectandroidclient.repositories;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 
 import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.api.RefreshTokenApi;
-import com.example.advancedprojectandroidclient.daos.AppDB;
 import com.example.advancedprojectandroidclient.daos.RefreshTokenDao;
 import com.example.advancedprojectandroidclient.entities.RefreshToken;
 
@@ -18,12 +16,12 @@ public class RefreshTokenRepository {
     boolean updated;
 
     public RefreshTokenRepository() {
-        AppDB db = Room.databaseBuilder(
-                MyApplication.context,
-                AppDB.class,
-                "app.db"
-        ).fallbackToDestructiveMigration().build();
-        refreshTokenDao = db.refreshTokenDao();
+//        AppDB db = Room.databaseBuilder(
+//                MyApplication.context,
+//                AppDB.class,
+//                "app.db"
+//        ).fallbackToDestructiveMigration().build();
+        refreshTokenDao = MyApplication.appDB.refreshTokenDao();
         new Thread(() -> refreshToken = refreshTokenDao.get()).start();
         refreshTokenApi = new RefreshTokenApi(this);
     }

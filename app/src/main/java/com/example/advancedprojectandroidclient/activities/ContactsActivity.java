@@ -51,6 +51,13 @@ public class ContactsActivity extends AppCompatActivity {
             finish();
         });
 
+        ImageView addContactIv = findViewById(R.id.contacts_add_contact_iv);
+        addContactIv.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddContactActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
+
         RecyclerView lstContacts = findViewById(R.id.contacts_list_rv);
         adapter = new ContactListAdapter(this);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
