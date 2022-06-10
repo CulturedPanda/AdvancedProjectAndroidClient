@@ -199,4 +199,21 @@ public class RegisteredUserApi {
             }
         });
     }
+
+    public void setPhoneToken(String phoneToken){
+        Call<Void> call = IRegisteredUserApi.setPhoneToken("Bearer " + RefreshTokenRepository.accessToken, phoneToken);
+        call.enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("Phone token set");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("Phone token not set");
+            }
+        });
+    }
 }

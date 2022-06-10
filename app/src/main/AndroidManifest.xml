@@ -17,6 +17,15 @@
         android:theme="@style/Theme.AdvancedProjectAndroidClient"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <service
+            android:name=".services.FirebaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="false" />
@@ -38,11 +47,6 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:exported="false" /> <!-- <service -->
-        <!-- android:name=".MyFirebaseInstanceIDService"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/> -->
-        <!-- </intent-filter> -->
-        <!-- </service> -->
         <activity
             android:name=".activities.ChatActivity"
             android:exported="false"

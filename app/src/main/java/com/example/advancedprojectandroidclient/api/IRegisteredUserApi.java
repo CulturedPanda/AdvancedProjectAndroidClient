@@ -9,6 +9,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IRegisteredUserApi {
 
@@ -23,4 +24,7 @@ public interface IRegisteredUserApi {
 
     @PUT("RegisteredUsers/editNickName/{newNickName}")
     Call<Void> editNickName(@Path("newNickName") String newNickName, @Header("Authorization") String token);
+
+    @PUT("RegisteredUsers/setPhoneToken")
+    Call<Void> setPhoneToken(@Header("Authorization") String token, @Query("phoneToken") String phoneToken);
 }

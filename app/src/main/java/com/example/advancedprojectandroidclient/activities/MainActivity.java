@@ -16,8 +16,10 @@ import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 import com.example.advancedprojectandroidclient.entities.User;
+import com.example.advancedprojectandroidclient.services.FirebaseService;
 import com.example.advancedprojectandroidclient.utils.LoginScreenTextWatcher;
 import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Date;
 
@@ -52,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
                     cleaningFinished.postValue(true);
                 }).start();
                 cleaningFinished.observe(this, aBoolean1 -> {
+                    FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+                        String token = instanceIdResult.getToken();
+                        FirebaseService.sendRegistrationToServer(token);
+                    });
                     Intent intent = new Intent(this, ContactsActivity.class);
                     intent.putExtra("username", MyApplication.username);
                     startActivity(intent);
