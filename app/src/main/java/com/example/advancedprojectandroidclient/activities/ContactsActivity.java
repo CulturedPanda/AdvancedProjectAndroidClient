@@ -63,6 +63,8 @@ public class ContactsActivity extends AppCompatActivity {
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
         lstContacts.setAdapter(adapter);
 
+        contactsViewModel.getContacts(false).observe(this, adapter::setContacts);
+
         lstContacts.addOnItemTouchListener(new ContactItemClickListener(MyApplication.context, lstContacts, new ContactItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -75,7 +77,6 @@ public class ContactsActivity extends AppCompatActivity {
 
             @Override
             public void onLongItemClick(View view, int position) {
-                // do whatever
             }
         }));
     }
@@ -83,7 +84,7 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        contactsViewModel.getContacts(true).observe(this, adapter::setContacts);
+        contactsViewModel.update();
         refreshTokenViewModel.refreshTokens();
     }
 }

@@ -12,9 +12,12 @@ import java.util.List;
 public interface MessageDao {
 
 
-    @Query("SELECT * FROM message WHERE message.`with` = :with order by created asc")
+    @Query("SELECT * FROM message WHERE message.`with` = :with order by actualTime desc")
     List<Message> getAllMessages(String with);
 
     @Insert
     void insert(Message message);
+
+    @Query("DELETE FROM message WHERE message.`with` = :with")
+    void deleteAll(String with);
 }

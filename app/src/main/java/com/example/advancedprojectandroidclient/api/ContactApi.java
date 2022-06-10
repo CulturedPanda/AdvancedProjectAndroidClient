@@ -61,4 +61,55 @@ public class ContactApi {
             }
         });
     }
+
+    public void addContactByUsername(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                     MutableLiveData<Boolean> doesContactExist, MutableLiveData<Boolean> callSuccess){
+        Call<Boolean> call = IContactsApi.doesUserExistByUsername(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
+        call.enqueue(new retrofit2.Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    doesContactExist.postValue(response.body());
+                    if (response.body()) {
+                        Call<Boolean> call2 = IContactsApi.isAlreadyContact(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
+                        call2.enqueue(new retrofit2.Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    isAlreadyContact.postValue(response.body());
+                                    if (!response.body()){
+                                        Call<Contact> call3 = IContactsApi.createContactByUsername(contact,
+                                                "Bearer " + RefreshTokenRepository.accessToken, true);
+                                        call3.enqueue(new retrofit2.Callback<Contact>() {
+                                            @Override
+                                            public void onResponse(Call<Contact> call, retrofit2.Response<Contact> response) {
+                                                if (response.isSuccessful()) {
+                                                    callSuccess.postValue(true);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Contact> call, Throwable t) {
+                                                callSuccess.postValue(false);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                callSuccess.postValue(true);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                callSuccess.postValue(false);
+            }
+        });
+    }
 }

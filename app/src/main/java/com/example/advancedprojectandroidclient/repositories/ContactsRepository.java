@@ -2,11 +2,9 @@ package com.example.advancedprojectandroidclient.repositories;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 
 import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.api.ContactApi;
-import com.example.advancedprojectandroidclient.daos.AppDB;
 import com.example.advancedprojectandroidclient.daos.ContactDao;
 import com.example.advancedprojectandroidclient.entities.Contact;
 
@@ -20,15 +18,14 @@ public class ContactsRepository {
     private final ContactsData contacts;
 
     public ContactsRepository() {
-        AppDB db = Room.databaseBuilder(
-                MyApplication.context,
-                AppDB.class,
-                "app.db"
-        ).fallbackToDestructiveMigration().build();
-        contactDao = db.contactDao();
+        contactDao = MyApplication.appDB.contactDao();
         contacts = new ContactsData();
         contactApi = new ContactApi(contacts, contactDao);
-        contactApi.getAll();
+    }
+
+    public void addContactByUsername(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                           MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
+        contactApi.addContactByUsername(contact, isAlreadyContact, doesUserExist, callSuccess);
     }
 
     class ContactsData extends MutableLiveData<List<Contact>> {

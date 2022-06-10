@@ -77,6 +77,10 @@
     <string name="reset_password_guide_two">After submitting, you will be re-directed to the
         login screen.</string>
 
-
+    <string name="addcontactimg">AddContactImg</string>
+    <string name="enter_information_here">enter information here</string>
+    <string name="add_contact_user_does_not_exist">User does not exist</string>
+    <string name="add_contact_contact_already_exists">User is already your contact</string>
+    <string name="add_contact_something_went_wrong">Oops! Something went wrong. Please try again later</string>
 
 </resources>

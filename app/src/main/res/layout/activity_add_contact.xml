@@ -89,21 +89,37 @@
                     android:id="@+id/imageView2"
                     android:layout_width="43dp"
                     android:layout_height="match_parent"
-                    android:contentDescription="AddContactImg"
+                    android:contentDescription="@string/addcontactimg"
                     app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
                 <EditText
-                    android:layout_width="305dp"
+                    android:id="@+id/add_contact_et_user_identification"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:backgroundTintMode="src_over"
                     android:ems="10"
-                    android:hint="enter information here"
-                    android:minHeight="48dp" />
+                    android:hint="@string/enter_information_here"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"/>
+
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/add_contact_tv_user_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:layout_gravity="center"
+                tools:text="Error"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                />
+
             <Button
-                android:id="@+id/add_contact_btn"
+                android:id="@+id/add_contact_btn_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

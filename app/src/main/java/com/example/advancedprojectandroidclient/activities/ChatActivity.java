@@ -1,10 +1,12 @@
 package com.example.advancedprojectandroidclient.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -23,6 +25,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private MessagesViewModel messageViewModel;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
 
         messageViewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
         messageViewModel.setWith(contactId);
+        messageViewModel.getLiveAll();
         RecyclerView lstMessages = findViewById(R.id.chat_recycle_view);
         final MessageListAdapter adapter = new MessageListAdapter(this);
         lstMessages.setLayoutManager(new LinearLayoutManager(this));

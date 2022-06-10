@@ -1,8 +1,14 @@
 package com.example.advancedprojectandroidclient.entities;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Entity
 public class Message {
@@ -29,13 +35,44 @@ public class Message {
     @ColumnInfo(name = "with")
     private String with;
 
+    public long getActualTime() {
+        return actualTime;
+    }
+
+    public void setActualTime(long actualTime) {
+        this.actualTime = actualTime;
+    }
+
+    long actualTime;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Message(String with, int conversationId, String created, String content, boolean sent, String type) {
         this.with = with;
         this.conversationId = conversationId;
-        this.created = created;
+        this.created = Message.parseDate(created);
         this.content = content;
         this.sent = sent;
         this.type = type;
+        try {
+            actualTime = LocalDateTime.parse(created).toEpochSecond(ZoneOffset.UTC);
+        } catch (Exception ignored) {
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static long parseActualTime(String created) {
+        LocalDateTime date = LocalDateTime.parse(created);
+        return date.toEpochSecond(ZoneOffset.UTC);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String parseDate(String date) {
+        try {
+            LocalDateTime localDateTime = LocalDateTime.parse(date);
+            return localDateTime.getHour() + ":" + localDateTime.getMinute();
+        } catch (Exception e) {
+            return date;
+        }
     }
 
     public int getConversationId() {

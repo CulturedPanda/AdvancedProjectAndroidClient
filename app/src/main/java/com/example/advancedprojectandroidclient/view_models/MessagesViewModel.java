@@ -16,6 +16,7 @@ public class MessagesViewModel extends ViewModel {
 
     public void setWith(String with) {
         this.with = with;
+        messagesRepository.setWith(with);
     }
 
     private String with;
@@ -33,7 +34,11 @@ public class MessagesViewModel extends ViewModel {
         return messages;
     }
 
+    public void getLiveAll(){
+        messagesRepository.getAll();
+    }
+
     public void insert(Message message) {
-        messagesRepository.insert(message);
+        new Thread(()->{messagesRepository.insert(message);}).start();
     }
 }
