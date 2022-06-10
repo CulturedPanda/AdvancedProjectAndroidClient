@@ -30,7 +30,7 @@
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.333">
+            app:layout_constraintVertical_bias="0.541">
 
 
             <EditText
@@ -113,6 +113,15 @@
                 android:text="@string/login_btn_text" />
 
             <TextView
+                android:id="@+id/login_forgot_pass_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_forgot_pass"
+                android:textColor="@color/blue"
+                android:layout_gravity="center"
+                />
+
+            <TextView
                 android:id="@+id/login_tv_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_click_here_to_sign_up"
                 android:textColor="@color/blue" />
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

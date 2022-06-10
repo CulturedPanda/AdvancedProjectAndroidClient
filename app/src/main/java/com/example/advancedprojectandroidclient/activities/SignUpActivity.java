@@ -1,9 +1,15 @@
 package com.example.advancedprojectandroidclient.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.advancedprojectandroidclient.R;
@@ -28,5 +34,13 @@ public class SignUpActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //set the spinners adapter to the previously created one.
         questionsList.setAdapter(adapter);
+
+        Button btnSignUp = findViewById(R.id.sign_up_btn);
+        btnSignUp.setOnClickListener(v -> {
+            Intent i = new Intent(this, EmailVerificationActivity.class);
+            startActivity(i);
+        });
+
+
     }
 }

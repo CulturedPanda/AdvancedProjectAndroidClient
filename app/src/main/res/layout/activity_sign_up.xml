@@ -25,6 +25,30 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="24dp">
 
+        <LinearLayout
+            android:id="@+id/sign_up_pic_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/sign_up_profile_pic_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="120dp"
+                android:background="@drawable/profile_pic_border"
+                app:srcCompat="@drawable/ic_person_circle" />
+
+            <Button
+                android:id="@+id/sign_up_choose_img_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/sign_up_select_pic"
+                />
+        </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/Email"
                 android:layout_width="match_parent"
@@ -344,6 +368,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/sign_up_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

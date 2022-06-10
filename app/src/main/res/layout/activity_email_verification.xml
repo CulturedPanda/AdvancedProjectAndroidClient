@@ -78,7 +78,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/verify_email_btn_submit"
+                android:id="@+id/email_verification_submit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
