@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.adapters.ContactListAdapter;
+import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 import com.example.advancedprojectandroidclient.click_listeners.ContactItemClickListener;
 import com.example.advancedprojectandroidclient.entities.Contact;
 import com.example.advancedprojectandroidclient.view_models.ContactsViewModel;
@@ -24,17 +26,19 @@ public class ContactsActivity extends AppCompatActivity {
     private ContactsViewModel contactsViewModel;
     private RefreshTokenViewModel refreshTokenViewModel;
     private ContactListAdapter adapter;
+    private String username;
+    private RegisteredUserApi registeredUserApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        getSupportActionBar().hide();
         contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
         refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
         refreshTokenViewModel.beginAutoRefresh();
-        String username = getIntent().getStringExtra("username");
-        TextView usernameTv = findViewById(R.id.contacts_username_tv);
-        usernameTv.setText(username);
+        registeredUserApi = new RegisteredUserApi();
+        username = getIntent().getStringExtra("username");
 
         ImageView settingsIv = findViewById(R.id.contacts_settings_iv);
         settingsIv.setOnClickListener(v -> {
@@ -86,5 +90,9 @@ public class ContactsActivity extends AppCompatActivity {
         super.onResume();
         contactsViewModel.update();
         refreshTokenViewModel.refreshTokens();
+        TextView usernameTv = findViewById(R.id.contacts_username_tv);
+        MutableLiveData<String> userNickname = new MutableLiveData<>();
+        userNickname.observe(this, s -> usernameTv.setText(s));
+        new Thread(() -> {registeredUserApi.getNickname(userNickname, username);}).start();
     }
 }

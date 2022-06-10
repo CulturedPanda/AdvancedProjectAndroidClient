@@ -45,7 +45,8 @@
         <!-- </service> -->
         <activity
             android:name=".activities.ChatActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.ContactsActivity"
             android:exported="false" />

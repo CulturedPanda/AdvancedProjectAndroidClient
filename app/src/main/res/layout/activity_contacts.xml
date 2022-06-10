@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.ContactsActivity"
     android:orientation="vertical"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,7 +35,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/contacts_user_img_tv"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/login_username">
+            tools:text="@string/login_username"
+            android:textColor="@color/black">
 
         </TextView>
 

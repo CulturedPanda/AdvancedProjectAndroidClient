@@ -30,6 +30,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        getSupportActionBar().hide();
         String contactName = getIntent().getStringExtra("contactName");
         TextView headerUsernameTv = findViewById(R.id.chat_header_username_tv);
         headerUsernameTv.setText(contactName);
