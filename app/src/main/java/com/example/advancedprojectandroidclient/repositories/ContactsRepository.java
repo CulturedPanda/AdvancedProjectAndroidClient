@@ -38,6 +38,10 @@ public class ContactsRepository {
         contactApi.addContactByPhone(contact, isAlreadyContact, doesUserExist, callSuccess);
     }
 
+    public void deleteAll() {
+        contactDao.deleteAll();
+    }
+
     class ContactsData extends MutableLiveData<List<Contact>> {
 
         public ContactsData() {

@@ -3,6 +3,7 @@ package com.example.advancedprojectandroidclient.view_models;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.entities.RefreshToken;
 import com.example.advancedprojectandroidclient.repositories.RefreshTokenRepository;
 
@@ -16,7 +17,7 @@ public class RefreshTokenViewModel extends ViewModel {
     ScheduledExecutorService execService;
 
     public RefreshTokenViewModel() {
-        refreshTokenRepository = new RefreshTokenRepository();
+        refreshTokenRepository = MyApplication.refreshTokenRepository;
         execService = Executors.newSingleThreadScheduledExecutor();
     }
 

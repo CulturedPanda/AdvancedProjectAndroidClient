@@ -3,6 +3,7 @@ package com.example.advancedprojectandroidclient.view_models;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.entities.Message;
 import com.example.advancedprojectandroidclient.repositories.MessagesRepository;
 
@@ -22,7 +23,7 @@ public class MessagesViewModel extends ViewModel {
     private String with;
 
     public MessagesViewModel() {
-        this.messagesRepository = new MessagesRepository();
+        this.messagesRepository = MyApplication.messagesRepository;
     }
 
     public LiveData<List<Message>> getMessages(String with) {
@@ -40,5 +41,9 @@ public class MessagesViewModel extends ViewModel {
 
     public void insert(Message message) {
         new Thread(()->{messagesRepository.insert(message);}).start();
+    }
+
+    public void deleteAll(){
+        new Thread(messagesRepository::deleteAll).start();
     }
 }

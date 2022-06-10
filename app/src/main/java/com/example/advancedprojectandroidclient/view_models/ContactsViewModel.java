@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.entities.Contact;
 import com.example.advancedprojectandroidclient.repositories.ContactsRepository;
 
@@ -15,7 +16,7 @@ public class ContactsViewModel extends ViewModel {
     private final ContactsRepository contactsRepository;
 
     public ContactsViewModel() {
-        this.contactsRepository = new ContactsRepository();
+        this.contactsRepository = MyApplication.contactsRepository;
     }
 
     public synchronized LiveData<List<Contact>> getContacts(boolean shouldUpdate) {
@@ -42,5 +43,9 @@ public class ContactsViewModel extends ViewModel {
     public void addContactByPhone(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
                                   MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
         contactsRepository.addContactByPhone(contact, isAlreadyContact, doesUserExist, callSuccess);
+    }
+
+    public void deleteAll(){
+        new Thread(contactsRepository::deleteAll).start();
     }
 }

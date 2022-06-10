@@ -19,6 +19,7 @@ import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 import com.example.advancedprojectandroidclient.click_listeners.ContactItemClickListener;
 import com.example.advancedprojectandroidclient.entities.Contact;
 import com.example.advancedprojectandroidclient.view_models.ContactsViewModel;
+import com.example.advancedprojectandroidclient.view_models.MessagesViewModel;
 import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
 
 public class ContactsActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class ContactsActivity extends AppCompatActivity {
     private ContactListAdapter adapter;
     private String username;
     private RegisteredUserApi registeredUserApi;
+    private MessagesViewModel messagesViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class ContactsActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
         refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
+        messagesViewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
         refreshTokenViewModel.beginAutoRefresh();
         registeredUserApi = new RegisteredUserApi();
         username = getIntent().getStringExtra("username");
@@ -50,6 +53,9 @@ public class ContactsActivity extends AppCompatActivity {
         ImageView logoutIv = findViewById(R.id.contacts_logout_iv);
         logoutIv.setOnClickListener(v -> {
             refreshTokenViewModel.deleteRefreshToken();
+            contactsViewModel.deleteAll();
+            messagesViewModel.deleteAll();
+            registeredUserApi.logOut();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

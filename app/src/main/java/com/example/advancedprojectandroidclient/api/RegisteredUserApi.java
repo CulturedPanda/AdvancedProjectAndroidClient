@@ -71,7 +71,7 @@ public class RegisteredUserApi {
         });
     }
 
-    public void changeDescription(String newDescription){
+    public void changeDescription(String newDescription) {
         Call<Void> call = IRegisteredUserApi.editDescription(newDescription, "Bearer " + RefreshTokenRepository.accessToken);
         call.enqueue(new retrofit2.Callback<Void>() {
             @Override
@@ -88,7 +88,7 @@ public class RegisteredUserApi {
         });
     }
 
-    public void changeNickname(String newNickname){
+    public void changeNickname(String newNickname) {
         Call<Void> call = IRegisteredUserApi.editNickName(newNickname, "Bearer " + RefreshTokenRepository.accessToken);
         call.enqueue(new retrofit2.Callback<Void>() {
             @Override
@@ -105,7 +105,7 @@ public class RegisteredUserApi {
         });
     }
 
-    public void changeServer(String newServer){
+    public void changeServer(String newServer) {
         Call<Void> call = IRegisteredUserApi.changeServer(newServer, "Bearer " + RefreshTokenRepository.accessToken);
         call.enqueue(new retrofit2.Callback<Void>() {
             @Override
@@ -122,7 +122,7 @@ public class RegisteredUserApi {
         });
     }
 
-    public void getDescription(MutableLiveData<String> description, String username){
+    public void getDescription(MutableLiveData<String> description, String username) {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
@@ -145,10 +145,10 @@ public class RegisteredUserApi {
                     description.postValue("");
                 }
             }
-            });
+        });
     }
 
-    public void getNickname(MutableLiveData<String> nickname, String username){
+    public void getNickname(MutableLiveData<String> nickname, String username) {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
@@ -174,7 +174,7 @@ public class RegisteredUserApi {
         });
     }
 
-    public void getServer(MutableLiveData<String> server, String username){
+    public void getServer(MutableLiveData<String> server, String username) {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
@@ -200,7 +200,7 @@ public class RegisteredUserApi {
         });
     }
 
-    public void setPhoneToken(String phoneToken){
+    public void setPhoneToken(String phoneToken) {
         Call<Void> call = IRegisteredUserApi.setPhoneToken("Bearer " + RefreshTokenRepository.accessToken, phoneToken);
         call.enqueue(new retrofit2.Callback<Void>() {
             @Override
@@ -213,6 +213,23 @@ public class RegisteredUserApi {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 System.out.println("Phone token not set");
+            }
+        });
+    }
+
+    public void logOut() {
+        Call<Void> call = IRegisteredUserApi.logOut("Bearer " + RefreshTokenRepository.accessToken);
+        call.enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("Logged out");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("Logout failed");
             }
         });
     }

@@ -39,6 +39,10 @@ public class MessagesRepository {
         messageApi.getAll(with);
     }
 
+    public void deleteAll() {
+        messageDao.deleteTable();
+    }
+
     class MessageData extends MutableLiveData<List<Message>>{
 
         public MessageData() {
