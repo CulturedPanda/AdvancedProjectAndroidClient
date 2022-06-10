@@ -16,6 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        String username = getIntent().getStringExtra("username");
 
         ListView lstSettings = findViewById(R.id.settings_list_view);
         lstSettings.setAdapter(new SettingsListAdapter(MyApplication.context,
@@ -24,13 +25,19 @@ public class SettingsActivity extends AppCompatActivity {
         lstSettings.setOnItemClickListener((parent, view, position, id) -> {
             switch (position) {
                 case 0:
-                    startActivity(new Intent(this, ChangeServerActivity.class));
+                    Intent iServ = new Intent(SettingsActivity.this, ChangeServerActivity.class);
+                    iServ.putExtra("username", username);
+                    startActivity(iServ);
                     break;
                 case 1:
-                    startActivity(new Intent(this, ChangeDescriptionActivity.class));
+                    Intent iDesc = new Intent(SettingsActivity.this, ChangeDescriptionActivity.class);
+                    iDesc.putExtra("username", username);
+                    startActivity(iDesc);
                     break;
                 case 2:
-                    startActivity(new Intent(this, ChangeNicknameActivity.class));
+                    Intent iNick = new Intent(SettingsActivity.this, ChangeNicknameActivity.class);
+                    iNick.putExtra("username", username);
+                    startActivity(iNick);
                     break;
             }
         });

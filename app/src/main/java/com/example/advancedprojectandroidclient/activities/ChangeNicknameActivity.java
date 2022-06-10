@@ -6,8 +6,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 
 public class ChangeNicknameActivity extends AppCompatActivity {
 
@@ -15,22 +17,35 @@ public class ChangeNicknameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_text_data);
+        RegisteredUserApi registeredUserApi = new RegisteredUserApi(null);
+        String username = getIntent().getStringExtra("username");
 
         TextView currentTypeTv = findViewById(R.id.change_text_data_current_info_type_tv);
         currentTypeTv.setText(R.string.current_nickname);
 
-        TextView currentDescriptionTv = findViewById(R.id.change_text_data_current_tv);
-        currentDescriptionTv.setText("abvdehhagagahsdjf");
+        TextView currentNicknameTv = findViewById(R.id.change_text_data_current_tv);
+
+        MutableLiveData<String> currentNickname = new MutableLiveData<>();
+        currentNickname.observe(this, s -> currentNicknameTv.setText(s));
+        new Thread(()->{registeredUserApi.getNickname(currentNickname, username);}).start();
 
         TextView newTypeTv = findViewById(R.id.change_text_data_new_info_type_tv);
         newTypeTv.setText(R.string.new_nickname);
 
-        EditText newDescriptionEt = findViewById(R.id.change_text_data_new_et);
-        newDescriptionEt.setHint(R.string.new_nickname_hint);
+        EditText newNicknameEt = findViewById(R.id.change_text_data_new_et);
+        newNicknameEt.setHint(R.string.new_nickname_hint);
 
         Button changeBtn = findViewById(R.id.change_text_data_btn_save);
         changeBtn.setOnClickListener(v -> {
-            finish();
+            String newNickname = newNicknameEt.getText().toString();
+            if (newNickname.isEmpty()) {
+                TextView newDescriptionErrorTv = findViewById(R.id.change_text_data_error_tv);
+                String errorText = "nickname " + getResources().getString(R.string.empty);
+                newDescriptionErrorTv.setText(errorText);
+            } else {
+                registeredUserApi.changeNickname(newNickname);
+                finish();
+            }
         });
 
         Button discardBtn = findViewById(R.id.change_text_data_btn_discard);

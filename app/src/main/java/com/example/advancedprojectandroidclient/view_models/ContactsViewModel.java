@@ -29,8 +29,18 @@ public class ContactsViewModel extends ViewModel {
         contactsRepository.update();
     }
 
-    public void addContact(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
-                           MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
+    public void addContactByUsername(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                     MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
         contactsRepository.addContactByUsername(contact, isAlreadyContact, doesUserExist, callSuccess);
+    }
+
+    public void addContactByEmail(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                     MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
+        contactsRepository.addContactByEmail(contact, isAlreadyContact, doesUserExist, callSuccess);
+    }
+
+    public void addContactByPhone(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                  MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
+        contactsRepository.addContactByPhone(contact, isAlreadyContact, doesUserExist, callSuccess);
     }
 }

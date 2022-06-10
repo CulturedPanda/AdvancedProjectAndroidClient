@@ -46,7 +46,7 @@
                 >
 
                 <RadioGroup
-                    android:id="@+id/add_contact_username_email_phone"
+                    android:id="@+id/add_contact_rg_username_email_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">

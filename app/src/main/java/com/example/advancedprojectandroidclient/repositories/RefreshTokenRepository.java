@@ -10,7 +10,7 @@ import com.example.advancedprojectandroidclient.entities.RefreshToken;
 public class RefreshTokenRepository {
 
     private final RefreshTokenDao refreshTokenDao;
-    private RefreshTokenApi refreshTokenApi;
+    private final RefreshTokenApi refreshTokenApi;
     private RefreshToken refreshToken;
     public static String accessToken;
     boolean updated;

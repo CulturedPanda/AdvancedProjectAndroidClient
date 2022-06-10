@@ -20,4 +20,7 @@ public interface MessageDao {
 
     @Query("DELETE FROM message WHERE message.`with` = :with")
     void deleteAll(String with);
+
+    @Query("DELETE FROM message")
+    void deleteTable();
 }

@@ -68,7 +68,7 @@
     <string name="forgot_password_heading">Some verifications...</string>
     <string name="forgot_password_writings">Before we reset your password, we would like to confirm
         your identity. Please enter your username / email, and then choose your security question
-    and it's answer.</string>
+    and it\'s answer.</string>
     <string name="forgot_password_username">Username:</string>
     <string name="forgot_password_submit">Submit</string>
     <string name="forgot_password_remember">I remember my password</string>

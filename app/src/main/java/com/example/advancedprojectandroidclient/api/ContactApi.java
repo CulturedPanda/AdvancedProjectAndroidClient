@@ -71,7 +71,7 @@ public class ContactApi {
                 if (response.isSuccessful() && response.body() != null) {
                     doesContactExist.postValue(response.body());
                     if (response.body()) {
-                        Call<Boolean> call2 = IContactsApi.isAlreadyContact(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
+                        Call<Boolean> call2 = IContactsApi.isAlreadyContactByUsername(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
                         call2.enqueue(new retrofit2.Callback<Boolean>() {
                             @Override
                             public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
@@ -112,4 +112,121 @@ public class ContactApi {
             }
         });
     }
+
+    /***
+     * Copy pasted code because passing functions as argument is a pain in Java.
+     * @param contact
+     * @param isAlreadyContact
+     * @param doesContactExist
+     * @param callSuccess
+     */
+    public void addContactByEmail(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                  MutableLiveData<Boolean> doesContactExist, MutableLiveData<Boolean> callSuccess) {
+        Call<Boolean> call = IContactsApi.doesUserExistByEmail(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
+        call.enqueue(new retrofit2.Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    doesContactExist.postValue(response.body());
+                    if (response.body()) {
+                        Call<Boolean> call2 = IContactsApi.isAlreadyContactByEmail(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
+                        call2.enqueue(new retrofit2.Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    isAlreadyContact.postValue(response.body());
+                                    if (!response.body()){
+                                        Call<Contact> call3 = IContactsApi.createContactByEmail(contact,
+                                                "Bearer " + RefreshTokenRepository.accessToken, true);
+                                        call3.enqueue(new retrofit2.Callback<Contact>() {
+                                            @Override
+                                            public void onResponse(Call<Contact> call, retrofit2.Response<Contact> response) {
+                                                if (response.isSuccessful()) {
+                                                    callSuccess.postValue(true);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Contact> call, Throwable t) {
+                                                callSuccess.postValue(false);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                callSuccess.postValue(true);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                callSuccess.postValue(false);
+            }
+        });
+    }
+
+    /***
+     * COPY PASTE AWAY
+     * @param contact
+     * @param isAlreadyContact
+     * @param doesContactExist
+     * @param callSuccess
+     */
+    public void addContactByPhone(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                  MutableLiveData<Boolean> doesContactExist, MutableLiveData<Boolean> callSuccess) {
+        Call<Boolean> call = IContactsApi.doesUserExistByPhone(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
+        call.enqueue(new retrofit2.Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    doesContactExist.postValue(response.body());
+                    if (response.body()) {
+                        Call<Boolean> call2 = IContactsApi.isAlreadyContactByPhone(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
+                        call2.enqueue(new retrofit2.Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    isAlreadyContact.postValue(response.body());
+                                    if (!response.body()){
+                                        Call<Contact> call3 = IContactsApi.createContactByPhone(contact,
+                                                "Bearer " + RefreshTokenRepository.accessToken, true);
+                                        call3.enqueue(new retrofit2.Callback<Contact>() {
+                                            @Override
+                                            public void onResponse(Call<Contact> call, retrofit2.Response<Contact> response) {
+                                                if (response.isSuccessful()) {
+                                                    callSuccess.postValue(true);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Contact> call, Throwable t) {
+                                                callSuccess.postValue(false);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                callSuccess.postValue(true);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                callSuccess.postValue(false);
+            }
+        });
+    }
+
 }

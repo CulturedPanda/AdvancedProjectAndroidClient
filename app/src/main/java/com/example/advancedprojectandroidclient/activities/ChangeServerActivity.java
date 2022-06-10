@@ -6,8 +6,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 
 public class ChangeServerActivity extends AppCompatActivity {
 
@@ -15,22 +17,35 @@ public class ChangeServerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_text_data);
+        RegisteredUserApi registeredUserApi = new RegisteredUserApi(null);
+        String username = getIntent().getStringExtra("username");
 
         TextView currentTypeTv = findViewById(R.id.change_text_data_current_info_type_tv);
         currentTypeTv.setText(R.string.current_server);
 
-        TextView currentDescriptionTv = findViewById(R.id.change_text_data_current_tv);
-        currentDescriptionTv.setText("abvdehhagagahsdjf");
+        TextView currentServerTv = findViewById(R.id.change_text_data_current_tv);
+
+        MutableLiveData<String> currentNickname = new MutableLiveData<>();
+        currentNickname.observe(this, s -> currentServerTv.setText(s));
+        new Thread(()->{registeredUserApi.getServer(currentNickname, username);}).start();
 
         TextView newTypeTv = findViewById(R.id.change_text_data_new_info_type_tv);
         newTypeTv.setText(R.string.new_server);
 
-        EditText newDescriptionEt = findViewById(R.id.change_text_data_new_et);
-        newDescriptionEt.setHint(R.string.new_server_hint);
+        EditText newServerEt = findViewById(R.id.change_text_data_new_et);
+        newServerEt.setHint(R.string.new_server_hint);
 
         Button changeBtn = findViewById(R.id.change_text_data_btn_save);
         changeBtn.setOnClickListener(v -> {
-            finish();
+            String newNickname = newServerEt.getText().toString();
+            if (newNickname.isEmpty()) {
+                TextView newDescriptionErrorTv = findViewById(R.id.change_text_data_error_tv);
+                String errorText = "server " + getResources().getString(R.string.empty);
+                newDescriptionErrorTv.setText(errorText);
+            } else {
+                registeredUserApi.changeServer(newNickname);
+                finish();
+            }
         });
 
         Button discardBtn = findViewById(R.id.change_text_data_btn_discard);

@@ -32,7 +32,7 @@ public class ContactsActivity extends AppCompatActivity {
         contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
         refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
         refreshTokenViewModel.beginAutoRefresh();
-        String username = getIntent().getStringExtra("nickname");
+        String username = getIntent().getStringExtra("username");
         TextView usernameTv = findViewById(R.id.contacts_username_tv);
         usernameTv.setText(username);
 

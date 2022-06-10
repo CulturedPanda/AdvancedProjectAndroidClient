@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 import com.example.advancedprojectandroidclient.entities.User;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.registeredUserApi = new RegisteredUserApi();
+        refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
+
 
         EditText usernameEt = findViewById(R.id.login_et_username);
         EditText passwordEt = findViewById(R.id.login_et_pwd);
@@ -40,9 +43,20 @@ public class MainActivity extends AppCompatActivity {
         MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
         loggedIn.observe(this, aBoolean -> {
             if (aBoolean) {
-                Intent intent = new Intent(this, ContactsActivity.class);
-                startActivity(intent);
-                finish();
+                MutableLiveData<Boolean> cleaningFinished = new MutableLiveData<>();
+                new Thread(() -> {
+                    // Cleans up the database when a new user logs in, so as not to expose the
+                    // previous user's data.
+                    MyApplication.appDB.contactDao().deleteAll();
+                    MyApplication.appDB.messageDao().deleteTable();
+                    cleaningFinished.postValue(true);
+                }).start();
+                cleaningFinished.observe(this, aBoolean1 -> {
+                    Intent intent = new Intent(this, ContactsActivity.class);
+                    intent.putExtra("username", MyApplication.username);
+                    startActivity(intent);
+                    finish();
+                });
             }
             else{
                 TextView errorTv = findViewById(R.id.login_tv_error);
@@ -54,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
         loggedInRefreshToken.observe(this, aBoolean -> {
             if (aBoolean) {
                 Intent intent = new Intent(this, ContactsActivity.class);
+                intent.putExtra("username", MyApplication.username);
                 startActivity(intent);
                 finish();
             }
         });
 
-        refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
         Date now = new Date();
 
         MutableLiveData<Boolean> canProceed = new MutableLiveData<>();

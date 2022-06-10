@@ -6,8 +6,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 
 public class ChangeDescriptionActivity extends AppCompatActivity {
 
@@ -15,12 +17,17 @@ public class ChangeDescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_text_data);
+        RegisteredUserApi registeredUserApi = new RegisteredUserApi(null);
+        String username = getIntent().getStringExtra("username");
 
         TextView currentTypeTv = findViewById(R.id.change_text_data_current_info_type_tv);
         currentTypeTv.setText(R.string.current_description);
 
         TextView currentDescriptionTv = findViewById(R.id.change_text_data_current_tv);
-        currentDescriptionTv.setText("abvdehhagagahsdjf");
+
+        MutableLiveData<String> currentDescription = new MutableLiveData<>();
+        currentDescription.observe(this, s -> currentDescriptionTv.setText(s));
+        new Thread(()->{registeredUserApi.getDescription(currentDescription, username);}).start();
 
         TextView newTypeTv = findViewById(R.id.change_text_data_new_info_type_tv);
         newTypeTv.setText(R.string.new_description);
@@ -30,7 +37,15 @@ public class ChangeDescriptionActivity extends AppCompatActivity {
 
         Button changeBtn = findViewById(R.id.change_text_data_btn_save);
         changeBtn.setOnClickListener(v -> {
-            finish();
+            String newDescription = newDescriptionEt.getText().toString();
+            if (newDescription.isEmpty()) {
+                TextView newDescriptionErrorTv = findViewById(R.id.change_text_data_error_tv);
+                String errorText = "description " + getResources().getString(R.string.empty);
+                newDescriptionErrorTv.setText(errorText);
+            } else {
+                registeredUserApi.changeDescription(newDescription);
+                finish();
+            }
         });
 
         Button discardBtn = findViewById(R.id.change_text_data_btn_discard);

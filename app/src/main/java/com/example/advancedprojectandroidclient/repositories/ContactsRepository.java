@@ -28,6 +28,16 @@ public class ContactsRepository {
         contactApi.addContactByUsername(contact, isAlreadyContact, doesUserExist, callSuccess);
     }
 
+    public void addContactByEmail(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                  MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
+        contactApi.addContactByEmail(contact, isAlreadyContact, doesUserExist, callSuccess);
+    }
+
+    public void addContactByPhone(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
+                                  MutableLiveData<Boolean> doesUserExist, MutableLiveData<Boolean> callSuccess) {
+        contactApi.addContactByPhone(contact, isAlreadyContact, doesUserExist, callSuccess);
+    }
+
     class ContactsData extends MutableLiveData<List<Contact>> {
 
         public ContactsData() {

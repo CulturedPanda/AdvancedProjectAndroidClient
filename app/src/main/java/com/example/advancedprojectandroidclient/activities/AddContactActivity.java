@@ -4,6 +4,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -51,7 +53,6 @@ public class AddContactActivity extends AppCompatActivity {
                 errorAddingUserTv.setVisibility(TextView.VISIBLE);
             }
             else{
-                contactsViewModel.update();
                 finish();
             }
         });
@@ -60,7 +61,15 @@ public class AddContactActivity extends AppCompatActivity {
         addContactBtn.setOnClickListener(v -> {
             EditText usernameEt = findViewById(R.id.add_contact_et_user_identification);
             Contact contact = new Contact(usernameEt.getText().toString(), currentUser, null, "abcde", null, null);
-            contactsViewModel.addContact(contact, isAlreadyContact, doesContactExist, callSuccess);
+            RadioGroup addContactIdentificationChoice = findViewById(R.id.add_contact_rg_username_email_phone);
+            RadioButton selected = findViewById(addContactIdentificationChoice.getCheckedRadioButtonId());
+            if (selected.getText().equals("Username")) {
+                contactsViewModel.addContactByUsername(contact, isAlreadyContact, doesContactExist, callSuccess);
+            } else if (selected.getText().equals("Email")) {
+                contactsViewModel.addContactByEmail(contact, isAlreadyContact, doesContactExist, callSuccess);
+            } else if (selected.getText().equals("Phone number")) {
+                contactsViewModel.addContactByPhone(contact, isAlreadyContact, doesContactExist, callSuccess);
+            }
         });
 
         Button cancelBtn = findViewById(R.id.add_contact_btn_close);

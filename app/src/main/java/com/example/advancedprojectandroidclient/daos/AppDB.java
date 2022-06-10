@@ -7,7 +7,7 @@ import com.example.advancedprojectandroidclient.entities.Contact;
 import com.example.advancedprojectandroidclient.entities.Message;
 import com.example.advancedprojectandroidclient.entities.RefreshToken;
 
-@Database(entities = {Contact.class, Message.class, RefreshToken.class}, version = 11)
+@Database(entities = {Contact.class, Message.class, RefreshToken.class}, version = 12)
 public abstract class AppDB extends RoomDatabase {
     public abstract ContactDao contactDao();
     public abstract MessageDao messageDao();
