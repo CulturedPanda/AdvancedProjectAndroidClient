@@ -8,7 +8,7 @@
     <string name="login_email">email</string>
     <string name="login_error">Error: Incorrect username or password</string>
     <string name="signup_email">Email:</string>
-    <string name="signup_email_example">name@example.come</string>
+    <string name="signup_email_example">name@example.com</string>
     <string name="signup_username">Username:</string>
     <string name="signup_username_example">Example: JohnSmith</string>
     <string name="signup_password">Password:</string>
@@ -65,6 +65,18 @@
     <string name="add_contact_btn">Add contact</string>
     <string name="add_contact_close">Close</string>
     <string name="add_contact">Add contact</string>
+    <string name="forgot_password_heading">Some verifications...</string>
+    <string name="forgot_password_writings">Before we reset your password, we would like to confirm
+        your identity. Please enter your username / email, and then choose your security question
+    and it's answer.</string>
+    <string name="forgot_password_username">Username:</string>
+    <string name="forgot_password_submit">Submit</string>
+    <string name="forgot_password_remember">I remember my password</string>
+    <string name="reset_password_guide">To finish reseting your password, please inout your new
+        password and then click submit</string>
+    <string name="reset_password_guide_two">After submitting, you will be re-directed to the
+        login screen.</string>
+
 
 
 </resources>
