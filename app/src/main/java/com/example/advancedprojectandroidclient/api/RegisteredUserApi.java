@@ -126,7 +126,7 @@ public class RegisteredUserApi {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
-                .url(MyApplication.context.getString(R.string.base_url) + "/RegisteredUsers/getDescription/" + username)
+                .url(MyApplication.context.getString(R.string.base_url) + "RegisteredUsers/getDescription/" + username)
                 .get()
                 .addHeader("Authorization", "Bearer " + RefreshTokenRepository.accessToken)
                 .build();
@@ -152,7 +152,7 @@ public class RegisteredUserApi {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
-                .url(MyApplication.context.getString(R.string.base_url) + "/RegisteredUsers/getNickName/" + username)
+                .url(MyApplication.context.getString(R.string.base_url) + "RegisteredUsers/getNickName/" + username)
                 .get()
                 .addHeader("Authorization", "Bearer " + RefreshTokenRepository.accessToken)
                 .build();
@@ -178,7 +178,7 @@ public class RegisteredUserApi {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
-                .url(MyApplication.context.getString(R.string.base_url) + "/RegisteredUsers/getServer/" + username)
+                .url(MyApplication.context.getString(R.string.base_url) + "RegisteredUsers/getServer/" + username)
                 .get()
                 .addHeader("Authorization", "Bearer " + RefreshTokenRepository.accessToken)
                 .build();
@@ -272,7 +272,7 @@ public class RegisteredUserApi {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
-                .url(MyApplication.context.getString(R.string.base_url) + "/RegisteredUsers/verifyCode/" + username
+                .url(MyApplication.context.getString(R.string.base_url) + "RegisteredUsers/verifyCode/" + username
                         + "?verificationCode=" + code)
                 .get()
                 .build();

@@ -1,10 +1,7 @@
 package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,12 +19,9 @@ import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 import com.example.advancedprojectandroidclient.click_listeners.ContactItemClickListener;
 import com.example.advancedprojectandroidclient.daos.ImageDao;
 import com.example.advancedprojectandroidclient.entities.Contact;
-import com.example.advancedprojectandroidclient.entities.Image;
 import com.example.advancedprojectandroidclient.view_models.ContactsViewModel;
 import com.example.advancedprojectandroidclient.view_models.MessagesViewModel;
 import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
-
-import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
 
@@ -51,14 +45,13 @@ public class ContactsActivity extends AppCompatActivity {
         ImageDao imageDao = MyApplication.appDB.imageDao();
         username = getIntent().getStringExtra("username");
         ImageView userProfileImage = findViewById(R.id.contacts_user_img_tv);
-        List<Image> image = imageDao.getAllImages();
-        if (image != null){
-            Image profileImg = image.get(0);
-
-            //decode string to image
-            byte[] decodedString = Base64.decode(String.valueOf(profileImg), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        }
+//        List<Image> image = imageDao.getAllImages();
+//        if (image.size() > 0) {
+//            Image profileImg = image.get(0);
+//            //decode string to image
+//            byte[] decodedString = Base64.decode(String.valueOf(profileImg), Base64.DEFAULT);
+//            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        }
 
 
 

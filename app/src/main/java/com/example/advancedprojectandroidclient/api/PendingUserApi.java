@@ -34,7 +34,7 @@ public class PendingUserApi {
         this.IPendingUserApi = retrofit.create(IPendingUserApi.class);
         refreshTokenRepository = MyApplication.refreshTokenRepository;
     }
-    
+
     public void doesPendingUserExistByX(String X, String username, MutableLiveData<Boolean> result) {
         Call<Boolean> call = IPendingUserApi.doesPendingUserExistByX(X, username);
         call.enqueue(new retrofit2.Callback<Boolean>() {
@@ -90,7 +90,7 @@ public class PendingUserApi {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         Request request = new Request.Builder()
-                .url(MyApplication.context.getString(R.string.base_url) + "/PendingUsers/" + username + "?verificationCode=" + code)
+                .url(MyApplication.context.getString(R.string.base_url) + "PendingUsers/" + username + "?verificationCode=" + code)
                 .get()
                 .build();
         okhttp3.Call call = client.newCall(request);
@@ -118,7 +118,7 @@ public class PendingUserApi {
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), "{}");
 
         Request request = new Request.Builder()
-                .url(MyApplication.context.getString(R.string.base_url) + "/RegisteredUsers/signUp")
+                .url(MyApplication.context.getString(R.string.base_url) + "RegisteredUsers/signUp")
                 .post(body)
                 .addHeader("Authorization", "Bearer " + RefreshTokenRepository.accessToken)
                 .build();

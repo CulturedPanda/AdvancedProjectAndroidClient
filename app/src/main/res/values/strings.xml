@@ -20,7 +20,7 @@
     <string name="signup_important">*</string>
     <string name="login_pwd_empty">Password must not be empty</string>
     <string name="empty">must not be empty</string>
-    <string name="base_url">https://a92b-132-70-1-38.eu.ngrok.io/api/</string>
+    <string name="base_url">https://8735-132-70-1-38.eu.ngrok.io/api/</string>
     <string name="signup_phone">Phone number:</string>
     <string name="signup_security_question">Security question:</string>
     <string name="signup_phone_example">Example: 05–1234–5678</string>
