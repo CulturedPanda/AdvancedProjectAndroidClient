@@ -1,34 +1,35 @@
 package com.example.advancedprojectandroidclient.entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(primaryKeys = {"id", "image"})
 public class Image {
+    @NonNull
+    String id;
+    @NonNull
+    String image;
 
-    @PrimaryKey(autoGenerate = true)
-    int id;
-    // @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    // Byte[] image;
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-//    public Byte[] getImage() {
-//        return image;
-//    }
+    public String getImage() {
+        return image;
+    }
 
-//    public void setImage(Byte[] image) {
-//        this.image = image;
-//    }
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-    public Image(int id) {
+    public Image(String id, String image) {
         this.id = id;
-//        this.image = image;
+        this.image = image;
     }
 }

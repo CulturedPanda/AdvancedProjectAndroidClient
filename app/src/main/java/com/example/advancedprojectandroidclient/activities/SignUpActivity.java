@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,6 +29,9 @@ import com.example.advancedprojectandroidclient.entities.SecretQuestion;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.example.advancedprojectandroidclient.entities.Image;
+
+import java.io.ByteArrayOutputStream;
 
 public class SignUpActivity extends AppCompatActivity {
     private AppDB db;
@@ -159,8 +165,6 @@ public class SignUpActivity extends AppCompatActivity {
                 allowMainThreadQueries().build();
         imageDao= db.imageDao();
 
-
-
         //Choose profile img button and display in box
         Button btnImage = findViewById(R.id.sign_up_choose_img_btn);
         btnImage.setOnClickListener(v -> {
@@ -169,8 +173,16 @@ public class SignUpActivity extends AppCompatActivity {
             i.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(i, "Title"),SELECT_IMAGE_CODE);
 
-            //
+            //save image in DB as string
             userImgIv = findViewById(R.id.sign_up_profile_pic_iv);
+            userImgIv.buildDrawingCache();
+            Bitmap bitmap = userImgIv.getDrawingCache();
+            ByteArrayOutputStream stream=new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+            byte[] image=stream.toByteArray();
+            String img_str = Base64.encodeToString(image, 0);
+            Image imageFinal = new Image(usernameEt.getText().toString(), img_str);
+            imageDao.insert(imageFinal);
         });
 
         //sign up button
@@ -260,6 +272,7 @@ public class SignUpActivity extends AppCompatActivity {
             Uri uri = data.getData();
             ImageView profileImg = findViewById(R.id.sign_up_profile_pic_iv);
             profileImg.setImageURI(uri);
+
             bmpImage = (Bitmap) data.getExtras().get("data");
             if (bmpImage != null){
                 userImgIv.setImageBitmap(bmpImage);
