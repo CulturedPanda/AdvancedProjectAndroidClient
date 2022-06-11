@@ -50,29 +50,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email_verification_input"
-                    android:textColor="@color/black" />
-
                 <EditText
+                    android:id="@+id/verify_code_input_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:backgroundTint="@color/black"
                     android:backgroundTintMode="src_over"
                     android:ems="10"
                     android:hint="@string/email_verification_code"
-                    android:inputType="number"
-                    android:minHeight="48dp" />
+                    android:textColorHint="@color/hintColor"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"/>
 
                 <Button
                     android:id="@+id/verify_email_btn_resend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="48dp"
-                    android:text="@string/email_verification_resend" />
+                    android:text="@string/email_verification_resend"
+                    android:backgroundTint="@color/grey"/>
 
 
             </LinearLayout>
@@ -82,9 +78,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="@string/email_verification_submit" />
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:minHeight="48dp"
+                android:text="@string/email_verification_submit"
+                android:backgroundTint="@color/blue"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

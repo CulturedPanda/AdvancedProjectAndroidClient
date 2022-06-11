@@ -5,6 +5,7 @@ import com.example.advancedprojectandroidclient.entities.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -30,4 +31,14 @@ public interface IRegisteredUserApi {
 
     @PUT("RegisteredUsers/logOutAndroid")
     Call<Void> logOut(@Header("Authorization") String token);
+
+    @GET("RegisteredUsers/secretQuestion/{username}")
+    Call<Boolean> verifySecretQuestion(@Path("username") String username,
+                                       @Query("question") String question, @Query("answer") String answer);
+
+    @PUT("RegisteredUsers/renewVerificationCode/{username}")
+    Call<Void> renewVerificationCode(@Path("username") String username);
+
+    @PUT("RegisteredUsers/editPassword")
+    Call<Void> resetPassword(@Header("Authorization") String token, @Body User user);
 }

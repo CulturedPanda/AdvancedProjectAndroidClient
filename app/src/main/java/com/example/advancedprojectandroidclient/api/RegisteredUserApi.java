@@ -233,4 +233,85 @@ public class RegisteredUserApi {
             }
         });
     }
+
+    public void verifySecretQuestion(String username, String question, String answer, MutableLiveData<Boolean> success) {
+        Call<Boolean> call = IRegisteredUserApi.verifySecretQuestion(username, question, answer);
+        call.enqueue(new retrofit2.Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    success.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                success.postValue(false);
+            }
+        });
+    }
+
+    public void renewCode(String username) {
+        Call<Void> call = IRegisteredUserApi.renewVerificationCode(username);
+        call.enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("Code renewed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("Code not renewed");
+            }
+        });
+    }
+
+    public void verifyCode(String username, String code, MutableLiveData<Boolean> success) {
+        OkHttpClient client = new OkHttpClient.Builder().build();
+
+        Request request = new Request.Builder()
+                .url(MyApplication.context.getString(R.string.base_url) + "/RegisteredUsers/verifyCode/" + username
+                        + "?verificationCode=" + code)
+                .get()
+                .build();
+        okhttp3.Call call = client.newCall(request);
+        call.enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                success.postValue(false);
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    RefreshTokenRepository.accessToken = response.body().string();
+                    success.postValue(true);
+                } else {
+                    success.postValue(false);
+                }
+            }
+        });
+    }
+
+    public void resetPassword(String password, MutableLiveData<Boolean> success) {
+        User user = new User("abcde", password);
+        Call<Void> call = IRegisteredUserApi.resetPassword("Bearer " + RefreshTokenRepository.accessToken, user);
+        call.enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
+                if (response.isSuccessful()) {
+                    success.postValue(true);
+                } else {
+                    success.postValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                success.postValue(false);
+            }
+        });
+    }
 }

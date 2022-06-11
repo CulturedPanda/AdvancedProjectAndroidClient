@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        boolean passwordReset = getIntent().getBooleanExtra("resetPassword", false);
+        if (passwordReset) {
+            TextView textView = findViewById(R.id.password_reset_success_tv);
+            textView.setVisibility(TextView.VISIBLE);
+        }
         this.registeredUserApi = new RegisteredUserApi();
         refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
 

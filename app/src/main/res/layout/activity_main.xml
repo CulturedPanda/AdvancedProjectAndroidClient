@@ -32,6 +32,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.541">
 
+            <TextView
+                android:id="@+id/password_reset_success_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/light_green"
+                android:text="@string/password_reset_successfully"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:paddingBottom="10dp"/>
+
 
             <EditText
                 android:id="@+id/login_et_username"
