@@ -15,6 +15,7 @@
     <string name="signup_password_confirm">Confirm Password:</string>
     <string name="signup_password_hint">password</string>
     <string name="signup_nickname">Nickname:</string>
+    <string name="signup_profile_img">profileImg</string>
     <string name="signup_nickname_example">Example: Bond007</string>
     <string name="signup_important">*</string>
     <string name="login_pwd_empty">Password must not be empty</string>
@@ -32,7 +33,7 @@
     <string name="signup_privacy_policy_accept">I have read and accepted the\t</string>
     <string name="signup_privacy_policy"> privacy policy </string>
     <string name="signup_button"> SIGN UP </string>
-    <string name="signup_already_have_Acc"> I already have an account </string>
+    <string name="signup_already_have_Acc"><u>I already have an account </u> </string>
     <string name="signup_choose_security_question">Choose security question</string>
     <string name="email_verification_title">Please verify your email to complete your registration</string>
     <string name="chat_input_bar"> New message here… </string>
@@ -65,18 +66,21 @@
     <string name="add_contact_btn">Add contact</string>
     <string name="add_contact_close">Close</string>
     <string name="add_contact">Add contact</string>
+    <string name="forgot_password_username_hint">username</string>
     <string name="forgot_password_heading">Some verifications</string>
     <string name="forgot_password_writings">Before we reset your password, we would like to confirm
         your identity. Please enter your username / email, and then choose your security question
     and it\'s answer.</string>
+    <string name="forgot_password_empty_answer">answer must not be empty</string>
     <string name="forgot_password_username">Username:</string>
     <string name="forgot_password_submit">Submit</string>
-    <string name="forgot_password_remember">I remember my password</string>
+    <string name="forgot_password_error">Error: incorrect secret question or answer</string>
+    <string name="forgot_password_remember"><u>I remember my password</u></string>
     <string name="reset_password_guide">To finish resetting your password, please input your new
         password and then click submit</string>
     <string name="reset_password_guide_two">After submitting, you will be re-directed to the
         login screen.</string>
-    <string name="login_forgot_pass">Forgot my password</string>
+    <string name="login_forgot_pass"><u>Forgot my password</u></string>
     <string name="sign_up_select_pic">Select Picture</string>
 
 

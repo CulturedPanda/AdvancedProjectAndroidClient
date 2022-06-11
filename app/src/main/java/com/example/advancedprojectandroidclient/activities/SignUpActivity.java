@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        //Choose profile img button
         Button btn = findViewById(R.id.sign_up_choose_img_btn);
         btn.setOnClickListener(v -> {
             Intent i = new Intent();
@@ -46,10 +48,18 @@ public class SignUpActivity extends AppCompatActivity {
         //set the spinners adapter to the previously created one.
         questionsList.setAdapter(adapter);
 
+        //sign up button
         Button btnSignUp = findViewById(R.id.sign_up_btn);
         btnSignUp.setOnClickListener(v -> {
             Intent i = new Intent(this, EmailVerificationActivity.class);
             startActivity(i);
+        });
+
+        //already have account button
+        TextView alreadySignUp = findViewById(R.id.sign_up_already_tv);
+        alreadySignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         });
     }
 
