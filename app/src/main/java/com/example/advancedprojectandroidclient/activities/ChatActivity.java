@@ -18,18 +18,26 @@ import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.adapters.MessageListAdapter;
 import com.example.advancedprojectandroidclient.entities.Message;
 import com.example.advancedprojectandroidclient.view_models.MessagesViewModel;
+import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
 
 import java.util.Date;
 
 public class ChatActivity extends AppCompatActivity {
 
     private MessagesViewModel messageViewModel;
+    private RefreshTokenViewModel refreshTokenViewModel;
+    public static boolean running;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
+        refreshTokenViewModel.refreshTokens();
+        refreshTokenViewModel.beginAutoRefresh();
+
         getSupportActionBar().hide();
         String contactName = getIntent().getStringExtra("contactName");
         TextView headerUsernameTv = findViewById(R.id.chat_header_username_tv);
@@ -66,5 +74,17 @@ public class ChatActivity extends AppCompatActivity {
             messageViewModel.insert(msg);
             ((TextView) findViewById(R.id.chat_et_message)).setText("");
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        running = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        running = false;
     }
 }

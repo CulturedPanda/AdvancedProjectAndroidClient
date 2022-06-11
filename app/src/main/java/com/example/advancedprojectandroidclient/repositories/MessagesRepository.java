@@ -21,6 +21,10 @@ public class MessagesRepository {
         this.with = with;
     }
 
+    public String getWith() {
+        return with;
+    }
+
     private String with;
 
     public MessagesRepository() {

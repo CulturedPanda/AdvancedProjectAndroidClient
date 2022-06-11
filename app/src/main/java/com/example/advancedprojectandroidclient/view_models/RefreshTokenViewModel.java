@@ -7,18 +7,12 @@ import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.entities.RefreshToken;
 import com.example.advancedprojectandroidclient.repositories.RefreshTokenRepository;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 public class RefreshTokenViewModel extends ViewModel {
 
     private final RefreshTokenRepository refreshTokenRepository;
-    ScheduledExecutorService execService;
 
     public RefreshTokenViewModel() {
         refreshTokenRepository = MyApplication.refreshTokenRepository;
-        execService = Executors.newSingleThreadScheduledExecutor();
     }
 
     public RefreshToken getRefreshToken() {
@@ -46,7 +40,6 @@ public class RefreshTokenViewModel extends ViewModel {
     }
 
     public void beginAutoRefresh() {
-        execService.scheduleAtFixedRate(() -> refreshTokenRepository.renewTokens(1, 13),
-                3, 4, TimeUnit.MINUTES);
+        refreshTokenRepository.autoRenewTokens(1, 13);
     }
 }
