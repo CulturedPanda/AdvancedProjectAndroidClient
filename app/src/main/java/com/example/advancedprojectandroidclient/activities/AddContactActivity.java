@@ -17,6 +17,7 @@ import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.entities.Contact;
 import com.example.advancedprojectandroidclient.view_models.ContactsViewModel;
 
+
 public class AddContactActivity extends AppCompatActivity {
 
     private ContactsViewModel contactsViewModel;

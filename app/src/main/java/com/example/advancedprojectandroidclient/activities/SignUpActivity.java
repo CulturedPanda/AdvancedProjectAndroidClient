@@ -2,6 +2,7 @@ package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -158,8 +159,8 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-        bmpImage = null;
-        userImgIv = findViewById(R.id.sign_up_profile_pic_iv);
+        //bmpImage = null;
+
         //Create db for profile image
         db = Room.databaseBuilder(getApplicationContext(),AppDB.class, "ImageDB").
                 allowMainThreadQueries().build();
@@ -173,7 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
             i.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(i, "Title"),SELECT_IMAGE_CODE);
 
-            //save image in DB as string
+            //convert image to string
             userImgIv = findViewById(R.id.sign_up_profile_pic_iv);
             userImgIv.buildDrawingCache();
             Bitmap bitmap = userImgIv.getDrawingCache();
@@ -181,6 +182,18 @@ public class SignUpActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
             byte[] image=stream.toByteArray();
             String img_str = Base64.encodeToString(image, 0);
+
+
+            //convert image to string (attempt 2)
+/*            userImgIv = (ImageView)findViewById(R.id.sign_up_profile_pic_iv);
+            BitmapDrawable drawable = (BitmapDrawable) userImgIv.getDrawable();
+            Bitmap bitmap = drawable.getBitmap();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+            byte[] bb = bos.toByteArray();
+            String img_str = Base64.encodeBytes(bb);*/
+
+            //save image in DB as string
             Image imageFinal = new Image(usernameEt.getText().toString(), img_str);
             imageDao.insert(imageFinal);
         });
@@ -273,10 +286,10 @@ public class SignUpActivity extends AppCompatActivity {
             ImageView profileImg = findViewById(R.id.sign_up_profile_pic_iv);
             profileImg.setImageURI(uri);
 
-            bmpImage = (Bitmap) data.getExtras().get("data");
+/*            bmpImage = (Bitmap) data.getExtras().get("data");
             if (bmpImage != null){
                 userImgIv.setImageBitmap(bmpImage);
-            }
+            }*/
 
         }
     }
