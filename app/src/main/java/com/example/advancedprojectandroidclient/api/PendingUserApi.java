@@ -34,7 +34,7 @@ public class PendingUserApi {
         this.IPendingUserApi = retrofit.create(IPendingUserApi.class);
         refreshTokenRepository = MyApplication.refreshTokenRepository;
     }
-
+    
     public void doesPendingUserExistByX(String X, String username, MutableLiveData<Boolean> result) {
         Call<Boolean> call = IPendingUserApi.doesPendingUserExistByX(X, username);
         call.enqueue(new retrofit2.Callback<Boolean>() {
