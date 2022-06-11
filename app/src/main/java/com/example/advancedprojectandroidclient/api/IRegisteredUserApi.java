@@ -28,6 +28,6 @@ public interface IRegisteredUserApi {
     @PUT("RegisteredUsers/setPhoneToken")
     Call<Void> setPhoneToken(@Header("Authorization") String token, @Query("phoneToken") String phoneToken);
 
-    @PUT("RegisteredUsers/logOut")
+    @PUT("RegisteredUsers/logOutAndroid")
     Call<Void> logOut(@Header("Authorization") String token);
 }

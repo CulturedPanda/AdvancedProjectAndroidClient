@@ -14,7 +14,6 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 public class FirebaseService extends FirebaseMessagingService {
 
     public static String token;
-    private static int notificationId = 0;
 
     public FirebaseService() {
     }
@@ -44,8 +43,7 @@ public class FirebaseService extends FirebaseMessagingService {
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            notificationManager.notify(notificationId, builder.build());
-            notificationId++;
+            notificationManager.notify(String.valueOf(remoteMessage.getNotification().getTitle()).hashCode(), builder.build());
         }
     }
 
