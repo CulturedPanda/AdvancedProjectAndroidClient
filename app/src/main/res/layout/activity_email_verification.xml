@@ -81,8 +81,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:minHeight="48dp"
-                android:text="@string/email_verification_submit"
-                android:backgroundTint="@color/blue"/>
+                android:text="@string/email_verification_submit" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

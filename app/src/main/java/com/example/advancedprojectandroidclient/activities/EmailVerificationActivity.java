@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.api.PendingUserApi;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 
 import java.util.concurrent.Executors;
@@ -19,6 +20,7 @@ import java.util.regex.Pattern;
 public class EmailVerificationActivity extends AppCompatActivity {
 
     private RegisteredUserApi registeredUserApi;
+    private PendingUserApi pendingUserApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
         String username = getIntent().getStringExtra("username");
         String from = getIntent().getStringExtra("from");
         registeredUserApi = new RegisteredUserApi();
+        pendingUserApi = new PendingUserApi();
         Button btnResend = findViewById(R.id.verify_email_btn_resend);
         EditText codeEt = findViewById(R.id.verify_code_input_et);
 
@@ -42,17 +45,29 @@ public class EmailVerificationActivity extends AppCompatActivity {
         });
 
         MutableLiveData<Boolean> isSuccessful = new MutableLiveData<>();
+        MutableLiveData<Boolean> signUpFinishedSuccessfully = new MutableLiveData<>();
         isSuccessful.observe(this, aBoolean -> {
             if (aBoolean) {
-                Intent i;
                 if (from.equals("forgotPassword")) {
-                    i = new Intent(this, ResetPasswordActivity.class);
+                    Intent i = new Intent(this, ResetPasswordActivity.class);
                     i.putExtra("username", username);
+                    startActivity(i);
+                    finish();
                 } else {
-                    i = new Intent(this, MainActivity.class);
+                    pendingUserApi.finishSignUp(signUpFinishedSuccessfully);
+                    signUpFinishedSuccessfully.observe(this, aBoolean1 -> {
+                        if (aBoolean1) {
+                            MainActivity.fa.finish();
+                            Intent i = new Intent(this, ContactsActivity.class);
+                            i.putExtra("username", username);
+                            startActivity(i);
+                            finish();
+                        }
+                        else{
+                            btnResend.setError(getString(R.string.add_contact_something_went_wrong));
+                        }
+                    });
                 }
-                startActivity(i);
-                finish();
             }
             else{
                 codeEt.setError(getString(R.string.invalid_code));
@@ -79,12 +94,20 @@ public class EmailVerificationActivity extends AppCompatActivity {
                     if (from.equals("forgotPassword")) {
                         registeredUserApi.verifyCode(username, code, isSuccessful);
                     }
+                    else{
+                        pendingUserApi.verifyCode(username, code, isSuccessful);
+                    }
                 }
             }
         });
 
         btnResend.setOnClickListener(v -> {
-            registeredUserApi.renewCode(username);
+            if (from.equals("forgotPassword")) {
+                registeredUserApi.renewCode(username);
+            }
+            else {
+                pendingUserApi.renewCode(username);
+            }
             btnResend.setEnabled(false);
             this.timer(countdownText, countdown);
         });

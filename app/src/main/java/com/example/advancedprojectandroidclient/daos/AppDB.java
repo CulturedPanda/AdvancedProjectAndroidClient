@@ -9,7 +9,7 @@ import com.example.advancedprojectandroidclient.entities.RefreshToken;
 import com.example.advancedprojectandroidclient.entities.Image;
 
 
-@Database(entities = {Contact.class, Message.class, RefreshToken.class, Image.class}, version = 13)
+@Database(entities = {Contact.class, Message.class, RefreshToken.class, Image.class}, version = 14)
 public abstract class AppDB extends RoomDatabase {
     public abstract ContactDao contactDao();
     public abstract MessageDao messageDao();

@@ -17,6 +17,9 @@ public interface IRegisteredUserApi {
     @POST("RegisteredUsers")
     Call<AccessToken> logIn(@Body User user);
 
+    @POST("RegisteredUsers/emailLogIn")
+    Call<AccessToken> logInByEmail(@Body User user);
+
     @PUT("RegisteredUsers/editDescription/{newDescription}")
     Call<Void> editDescription(@Path("newDescription") String newDescription, @Header("Authorization") String token);
 

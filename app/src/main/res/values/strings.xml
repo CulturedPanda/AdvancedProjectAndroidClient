@@ -101,5 +101,10 @@
     <string name="password_match_error">Passwords do not match</string>
     <string name="password_reset_successfully">Password reset succesfully</string>
     <string name="server_error">Oops! Something went wrong, please try again later</string>
+    <string name="unavailable_email_login">Currently unavailable as we did not have the time to implement it. Please log in with a username</string>
+    <string name="amazing_tos">Amazing TOS</string>
+    <string name="amazing_privacy_policy">Amazing privacy policy</string>
+    <string name="must_agreen_tos">You must agree to the terms of service to sign up</string>
+    <string name="must_agreen_privacy_policy">You must agree to the privacy policy to sign up</string>
 
 </resources>

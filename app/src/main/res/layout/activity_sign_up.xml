@@ -57,7 +57,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/Email"
+                    android:id="@+id/signup_email_field_ll"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -78,7 +78,7 @@
                         android:textColor="@color/red" />
 
                     <EditText
-                        android:id="@+id/editTextEmailAddress"
+                        android:id="@+id/signup_email_field_et"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
@@ -89,7 +89,8 @@
                         android:hint="@string/signup_email_example"
                         android:inputType="textEmailAddress"
                         android:minHeight="48dp"
-                        android:textColorHint="@color/hintColor" />
+                        android:textColorHint="@color/hintColor"
+                        android:textColor="@color/black"/>
 
                 </LinearLayout>
 
@@ -115,7 +116,7 @@
                         android:textColor="@color/red" />
 
                     <EditText
-                        android:id="@+id/editTextUsername"
+                        android:id="@+id/signup_username_field_et"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
@@ -126,7 +127,8 @@
                         android:hint="@string/signup_username_example"
                         android:inputType="textPersonName"
                         android:minHeight="48dp"
-                        android:textColorHint="@color/hintColor" />
+                        android:textColorHint="@color/hintColor"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -160,7 +162,8 @@
                         android:ems="10"
                         android:hint="@string/signup_password_hint"
                         android:inputType="textPassword"
-                        android:minHeight="48dp" />
+                        android:minHeight="48dp"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -185,7 +188,7 @@
                         android:textColor="@color/red" />
 
                     <EditText
-                        android:id="@+id/editTextConfirmPassword"
+                        android:id="@+id/signup_confirm_pass_field_et"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -195,7 +198,8 @@
                         android:ems="10"
                         android:hint="@string/signup_password_hint"
                         android:inputType="textPassword"
-                        android:minHeight="48dp" />
+                        android:minHeight="48dp"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -219,7 +223,7 @@
                         android:textColor="@color/red" />
 
                     <EditText
-                        android:id="@+id/editTextNickName"
+                        android:id="@+id/signup_nickname_field_et"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -229,7 +233,8 @@
                         android:ems="10"
                         android:hint="@string/signup_nickname_example"
                         android:inputType="textPersonName"
-                        android:minHeight="48dp" />
+                        android:minHeight="48dp"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -246,7 +251,7 @@
                         android:textColor="@color/black" />
 
                     <EditText
-                        android:id="@+id/editTextPhoneNum"
+                        android:id="@+id/signup_phone_field_et"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -256,7 +261,8 @@
                         android:ems="10"
                         android:hint="@string/signup_phone_example"
                         android:inputType="phone"
-                        android:minHeight="48dp" />
+                        android:minHeight="48dp"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -280,7 +286,7 @@
                         android:textColor="@color/red" />
 
                     <Spinner
-                        android:id="@+id/securitySpinner"
+                        android:id="@+id/signup_security_question_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:drawable/btn_dropdown"
@@ -309,7 +315,7 @@
                         android:textColor="@color/red" />
 
                     <EditText
-                        android:id="@+id/editTextSecurityAnswer"
+                        android:id="@+id/signup_answer_field_et"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -319,7 +325,8 @@
                         android:ems="10"
                         android:hint="@string/signup_security_answer"
                         android:inputType="textPersonName"
-                        android:minHeight="48dp" />
+                        android:minHeight="48dp"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -328,8 +335,8 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/signup_tos"
+                    <CheckBox
+                        android:id="@+id/signup_tos_cb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
@@ -337,7 +344,7 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/tos_text"
+                        android:id="@+id/signup_tos_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/signup_terms_of_service"
@@ -350,8 +357,8 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/signup_pp"
+                    <CheckBox
+                        android:id="@+id/signup_privacy_policy_cb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
@@ -359,7 +366,7 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/pp_text"
+                        android:id="@+id/signup_privacy_policy_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/signup_privacy_policy"

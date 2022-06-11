@@ -1,5 +1,6 @@
 package com.example.advancedprojectandroidclient.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -27,11 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     private RegisteredUserApi registeredUserApi;
     private RefreshTokenViewModel refreshTokenViewModel;
+    public static Activity fa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fa = this;
         boolean passwordReset = getIntent().getBooleanExtra("resetPassword", false);
         if (passwordReset) {
             TextView textView = findViewById(R.id.password_reset_success_tv);
@@ -47,33 +50,6 @@ public class MainActivity extends AppCompatActivity {
         String errorText = "username " + getResources().getString(R.string.empty);
         usernameErrorTv.setText(errorText);
 
-        MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
-        loggedIn.observe(this, aBoolean -> {
-            if (aBoolean) {
-                MutableLiveData<Boolean> cleaningFinished = new MutableLiveData<>();
-                new Thread(() -> {
-                    // Cleans up the database when a new user logs in, so as not to expose the
-                    // previous user's data.
-                    MyApplication.appDB.contactDao().deleteAll();
-                    MyApplication.appDB.messageDao().deleteTable();
-                    cleaningFinished.postValue(true);
-                }).start();
-                cleaningFinished.observe(this, aBoolean1 -> {
-                    FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
-                        String token = instanceIdResult.getToken();
-                        FirebaseService.sendRegistrationToServer(token);
-                    });
-                    Intent intent = new Intent(this, ContactsActivity.class);
-                    intent.putExtra("username", usernameEt.getText().toString());
-                    startActivity(intent);
-                    finish();
-                });
-            }
-            else{
-                TextView errorTv = findViewById(R.id.login_tv_error);
-                errorTv.setVisibility(TextView.VISIBLE);
-            }
-        });
 
         MutableLiveData<Boolean> loggedInRefreshToken = new MutableLiveData<>();
         loggedInRefreshToken.observe(this, aBoolean -> {
@@ -106,6 +82,42 @@ public class MainActivity extends AppCompatActivity {
             usernameErrorTv.setText(errText);
         });
 
+        MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
+        loggedIn.observe(this, aBoolean -> {
+            if (aBoolean) {
+                MutableLiveData<Boolean> cleaningFinished = new MutableLiveData<>();
+                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+                    String token = instanceIdResult.getToken();
+                    FirebaseService.sendRegistrationToServer(token);
+                });
+                new Thread(() -> {
+                    // Cleans up the database when a new user logs in, so as not to expose the
+                    // previous user's data.
+                    MyApplication.appDB.contactDao().deleteAll();
+                    MyApplication.appDB.messageDao().deleteTable();
+                    cleaningFinished.postValue(true);
+                }).start();
+                cleaningFinished.observe(this, aBoolean1 -> {
+                    RadioButton checked = findViewById(radioGroup.getCheckedRadioButtonId());
+                    if (checked.getText().toString().equals("username")) {
+                        Intent intent = new Intent(this, ContactsActivity.class);
+                        intent.putExtra("username", usernameEt.getText().toString());
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(this, ContactsActivity.class);
+                        intent.putExtra("username", MyApplication.username);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+            else{
+                TextView errorTv = findViewById(R.id.login_tv_error);
+                errorTv.setVisibility(TextView.VISIBLE);
+            }
+        });
+
 
 
         Button loginBtn = findViewById(R.id.login_btn_login);
@@ -128,8 +140,15 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            User user = new User(username, password);
-            registeredUserApi.loginUser(user, loggedIn);
+            RadioButton checked = findViewById(radioGroup.getCheckedRadioButtonId());
+            if (checked.getText().toString().equals("username")) {
+                User user = new User(username, password);
+                registeredUserApi.loginUser(user, loggedIn);
+            } else {
+                User user = new User(username, password);
+                user.setEmail(username);
+                registeredUserApi.logInEmail(user, loggedIn);
+            }
         });
 
         TextView signupTv = findViewById(R.id.login_tv_sign_up_link);

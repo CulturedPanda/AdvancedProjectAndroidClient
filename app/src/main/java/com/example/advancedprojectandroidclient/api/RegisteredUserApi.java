@@ -32,7 +32,7 @@ public class RegisteredUserApi {
                 .callbackExecutor(Executors.newSingleThreadExecutor())
                 .build();
         this.IRegisteredUserApi = retrofit.create(IRegisteredUserApi.class);
-        refreshTokenRepository = new RefreshTokenRepository();
+        refreshTokenRepository = MyApplication.refreshTokenRepository;
     }
 
     public RegisteredUserApi(RefreshTokenRepository refreshTokenRepository) {
@@ -311,6 +311,32 @@ public class RegisteredUserApi {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 success.postValue(false);
+            }
+        });
+    }
+
+    public void logInEmail(User user, MutableLiveData<Boolean> loggedIn) {
+        Call<AccessToken> call = IRegisteredUserApi.logInByEmail(user);
+        call.enqueue(new retrofit2.Callback<AccessToken>() {
+            @Override
+            public void onResponse(Call<AccessToken> call, retrofit2.Response<AccessToken> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    RefreshTokenRepository.accessToken = response.body().getAccessToken();
+                    RefreshToken refreshToken = new RefreshToken(response.body().getRefreshToken());
+                    new Thread(() -> {
+                        refreshTokenRepository.deleteRefreshToken();
+                        refreshTokenRepository.setRefreshToken(refreshToken);
+                    }).start();
+                    MyApplication.username = response.body().getUsername();
+                    loggedIn.postValue(true);
+                } else {
+                    loggedIn.postValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccessToken> call, Throwable t) {
+                loggedIn.postValue(false);
             }
         });
     }
