@@ -1,6 +1,7 @@
 package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -10,16 +11,26 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.advancedprojectandroidclient.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    int SELECT_IMAGE_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Button btn = findViewById(R.id.sign_up_choose_img_btn);
+        btn.setOnClickListener(v -> {
+            Intent i = new Intent();
+            i.setType("image/*");
+            i.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(i, "Title"),SELECT_IMAGE_CODE);
+        });
 
         //get the spinner of security questions from the xml.
         Spinner questionsList = findViewById(R.id.securitySpinner);
@@ -40,7 +51,17 @@ public class SignUpActivity extends AppCompatActivity {
             Intent i = new Intent(this, EmailVerificationActivity.class);
             startActivity(i);
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 1){
+            Uri uri = data.getData();
+            ImageView profileImg = findViewById(R.id.sign_up_profile_pic_iv);
+            profileImg.setImageURI(uri);
+
+        }
     }
 }
