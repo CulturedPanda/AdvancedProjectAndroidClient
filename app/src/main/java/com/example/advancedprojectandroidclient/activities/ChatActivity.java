@@ -27,6 +27,7 @@ public class ChatActivity extends AppCompatActivity {
     private MessagesViewModel messageViewModel;
     private RefreshTokenViewModel refreshTokenViewModel;
     public static boolean running;
+    private String contactId;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,11 +43,9 @@ public class ChatActivity extends AppCompatActivity {
         String contactName = getIntent().getStringExtra("contactName");
         TextView headerUsernameTv = findViewById(R.id.chat_header_username_tv);
         headerUsernameTv.setText(contactName);
-        String contactId = getIntent().getStringExtra("contactId");
+        contactId = getIntent().getStringExtra("contactId");
 
         messageViewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
-        messageViewModel.setWith(contactId);
-        messageViewModel.getLiveAll();
         RecyclerView lstMessages = findViewById(R.id.chat_recycle_view);
         final MessageListAdapter adapter = new MessageListAdapter(this);
         lstMessages.setLayoutManager(new LinearLayoutManager(this));
@@ -74,6 +73,13 @@ public class ChatActivity extends AppCompatActivity {
             messageViewModel.insert(msg);
             ((TextView) findViewById(R.id.chat_et_message)).setText("");
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        messageViewModel.setWith(contactId);
+        messageViewModel.getLiveAll();
     }
 
     @Override

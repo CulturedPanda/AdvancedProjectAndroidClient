@@ -41,32 +41,32 @@ public class FirebaseService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull com.google.firebase.messaging.RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         String username = remoteMessage.getData().get("username");
+        String nickname = remoteMessage.getData().get("nickname");
+        String content = remoteMessage.getData().get("content");
         String current = MyApplication.messagesRepository.getWith();
-        MyApplication.messagesRepository.setWith(remoteMessage.getData().get("username"));
-        MyApplication.messagesRepository.getAll();
         // Second condition is to prevent the notification from being sent when the user is in the chat activity
         // With the user who sent the message
-        if (remoteMessage.getNotification() != null &&
+        if (/*remoteMessage.getNotification() != null &&*/
                 (!ChatActivity.running || !current.equals(username) )){
             createNotificationChannel();
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
             Intent i = new Intent(this, ChatActivity.class);
-            i.putExtra("contactName", remoteMessage.getData().get("nickname"));
-            i.putExtra("contactId", remoteMessage.getData().get("username"));
+            i.putExtra("contactName", nickname);
+            i.putExtra("contactId", username);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.channel_id))
                     .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentTitle(remoteMessage.getNotification().getTitle())
-                    .setContentText(remoteMessage.getNotification().getBody())
+                    .setContentTitle(nickname)
+                    .setContentText(content)
                     .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(remoteMessage.getNotification().getBody()))
+                            .bigText(content))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true)
                     .setContentIntent(pendingIntent);
 
-            notificationManager.notify(String.valueOf(remoteMessage.getNotification().getTitle()).hashCode(), builder.build());
+            notificationManager.notify(String.valueOf(current).hashCode(), builder.build());
         }
     }
 
