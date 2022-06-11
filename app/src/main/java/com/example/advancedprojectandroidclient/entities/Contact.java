@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * Contant class
+ * Contact class
  */
 @Entity(primaryKeys = {"id", "contactOf"})
 public class Contact {
