@@ -1,6 +1,7 @@
 package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,10 +15,17 @@ import android.widget.TextView;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.advancedprojectandroidclient.R;
+import com.example.advancedprojectandroidclient.daos.AppDB;
+import com.example.advancedprojectandroidclient.daos.ImageDao;
 
 public class SignUpActivity extends AppCompatActivity {
+    private AppDB db;
+    private ImageDao imageDao;
+    Bitmap bmpImage;
+    ImageView imageView;
 
     int SELECT_IMAGE_CODE = 1;
     @Override
@@ -25,13 +33,25 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        //Choose profile img button
-        Button btn = findViewById(R.id.sign_up_choose_img_btn);
-        btn.setOnClickListener(v -> {
+        bmpImage = null;
+        imageView = findViewById(R.id.sign_up_profile_pic_iv);
+        //Create db for profile image
+        db = Room.databaseBuilder(getApplicationContext(),AppDB.class, "ImageDB").
+                allowMainThreadQueries().build();
+        imageDao= db.imageDao();
+
+
+
+        //Choose profile img button and display in box
+        Button btnImage = findViewById(R.id.sign_up_choose_img_btn);
+        btnImage.setOnClickListener(v -> {
             Intent i = new Intent();
             i.setType("image/*");
             i.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(i, "Title"),SELECT_IMAGE_CODE);
+
+            //
+            imageView = findViewById(R.id.sign_up_profile_pic_iv);
         });
 
         //get the spinner of security questions from the xml.
@@ -61,6 +81,8 @@ public class SignUpActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
+
+
     }
 
     @Override
@@ -71,6 +93,10 @@ public class SignUpActivity extends AppCompatActivity {
             Uri uri = data.getData();
             ImageView profileImg = findViewById(R.id.sign_up_profile_pic_iv);
             profileImg.setImageURI(uri);
+            bmpImage = (Bitmap) data.getExtras().get("data");
+            if (bmpImage != null){
+                imageView.setImageBitmap(bmpImage);
+            }
 
         }
     }
