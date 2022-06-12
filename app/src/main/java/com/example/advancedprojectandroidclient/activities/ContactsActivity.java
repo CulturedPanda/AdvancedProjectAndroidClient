@@ -1,6 +1,7 @@
 package com.example.advancedprojectandroidclient.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,7 +48,10 @@ public class ContactsActivity extends AppCompatActivity {
         userImage.observe(this, image -> {
             if (image != null) {
                 ImageView userProfileImage = findViewById(R.id.contacts_user_img_tv);
-                userProfileImage.setImageBitmap(userImage.getValue().decode());
+                Bitmap bitmap = image.decode();
+                if (bitmap != null){
+                    userProfileImage.setImageBitmap(bitmap);
+                }
             }
         });
 

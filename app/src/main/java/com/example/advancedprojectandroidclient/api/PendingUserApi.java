@@ -142,4 +142,21 @@ public class PendingUserApi {
             }
         });
     }
+
+    public void setPhoneToken(String username, String token) {
+        Call<Void> call = IPendingUserApi.setPhoneToken(username, token);
+        call.enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("setPhoneToken success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("setPhoneToken failure");
+            }
+        });
+    }
 }

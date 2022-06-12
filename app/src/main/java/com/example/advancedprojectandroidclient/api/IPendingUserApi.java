@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IPendingUserApi  {
 
@@ -18,4 +19,7 @@ public interface IPendingUserApi  {
 
     @PUT("PendingUsers/{username}")
     retrofit2.Call<Void> renewCode(@Path("username") String username);
+
+    @PUT("PendingUsers/setToken/{user}")
+    retrofit2.Call<Void> setPhoneToken(@Path("user") String username, @Query("token") String token);
 }

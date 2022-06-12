@@ -56,7 +56,10 @@ public class Image {
     }
 
     public Bitmap decode() {
-        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (this.image != null) {
+            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        }
+        return null;
     }
 }

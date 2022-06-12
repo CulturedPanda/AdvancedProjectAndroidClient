@@ -44,10 +44,11 @@ public class MessageApi {
             @Override
             public void onResponse(Call<List<Message>> call, retrofit2.Response<List<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Making sure the date is parsed correctly before displaying to the user.
+                    // Making sure the date is parsed correctly
                     for (Message message : response.body()) {
                         message.setActualTime(Message.parseActualTime(message.getCreated()));
                         message.setCreated(Message.parseDate(message.getCreated()));
+                        message.setWith(id);
                     }
                     new Thread(() -> {
                         messageDao.deleteAll(id);

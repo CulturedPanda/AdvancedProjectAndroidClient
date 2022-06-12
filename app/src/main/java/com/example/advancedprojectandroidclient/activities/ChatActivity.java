@@ -1,5 +1,6 @@
 package com.example.advancedprojectandroidclient.activities;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -28,13 +29,18 @@ public class ChatActivity extends AppCompatActivity {
     private RefreshTokenViewModel refreshTokenViewModel;
     public static boolean running;
     private String contactId;
+    public static Activity fa;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
+        if (fa != null){
+            fa.finish();
+        }
+        fa = this;
+        running = true;
         refreshTokenViewModel = new ViewModelProvider(this).get(RefreshTokenViewModel.class);
         refreshTokenViewModel.refreshTokens();
         refreshTokenViewModel.beginAutoRefresh();
@@ -46,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
         contactId = getIntent().getStringExtra("contactId");
 
         messageViewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
+        messageViewModel.setWith(contactId);
         RecyclerView lstMessages = findViewById(R.id.chat_recycle_view);
         final MessageListAdapter adapter = new MessageListAdapter(this);
         lstMessages.setLayoutManager(new LinearLayoutManager(this));
@@ -80,6 +87,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onResume();
         messageViewModel.setWith(contactId);
         messageViewModel.getLiveAll();
+        running = true;
     }
 
     @Override

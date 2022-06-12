@@ -1,5 +1,6 @@
 package com.example.advancedprojectandroidclient.services;
 
+import android.app.ActivityManager;
 import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -13,8 +14,11 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.activities.ChatActivity;
+import com.example.advancedprojectandroidclient.api.PendingUserApi;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 import com.google.firebase.messaging.FirebaseMessagingService;
+
+import java.util.List;
 
 public class FirebaseService extends FirebaseMessagingService {
 
@@ -27,6 +31,11 @@ public class FirebaseService extends FirebaseMessagingService {
     public static void sendRegistrationToServer(String token) {
         RegisteredUserApi api = new RegisteredUserApi();
         api.setPhoneToken(token);
+    }
+
+    public static void sendRegistrationToServerOnSignup(String username, String token){
+        PendingUserApi api = new PendingUserApi();
+        api.setPhoneToken(username, token);
     }
 
     @Override
@@ -44,10 +53,11 @@ public class FirebaseService extends FirebaseMessagingService {
         String nickname = remoteMessage.getData().get("nickname");
         String content = remoteMessage.getData().get("content");
         String current = MyApplication.messagesRepository.getWith();
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(Integer.MAX_VALUE);
         // Second condition is to prevent the notification from being sent when the user is in the chat activity
         // With the user who sent the message
-        if (/*remoteMessage.getNotification() != null &&*/
-                (!ChatActivity.running || !current.equals(username) )){
+        if (!current.equals(username) || !tasks.get(0).topActivity.getClassName().equals(ChatActivity.class.getName())) {
             createNotificationChannel();
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
@@ -67,6 +77,9 @@ public class FirebaseService extends FirebaseMessagingService {
                     .setContentIntent(pendingIntent);
 
             notificationManager.notify(String.valueOf(current).hashCode(), builder.build());
+        }
+        else if (tasks.get(0).topActivity.getClassName().equals(ChatActivity.class.getName())){
+            MyApplication.messagesRepository.getAll();
         }
     }
 

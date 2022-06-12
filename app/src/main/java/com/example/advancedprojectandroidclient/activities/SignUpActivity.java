@@ -26,6 +26,8 @@ import com.example.advancedprojectandroidclient.daos.ImageDao;
 import com.example.advancedprojectandroidclient.entities.Image;
 import com.example.advancedprojectandroidclient.entities.PendingUser;
 import com.example.advancedprojectandroidclient.entities.SecretQuestion;
+import com.example.advancedprojectandroidclient.services.FirebaseService;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
@@ -163,6 +165,10 @@ public class SignUpActivity extends AppCompatActivity {
                         MyApplication.appDB.imageDao().insert(imageFinal);
                     }).start();
                 }
+                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+                    String token = instanceIdResult.getToken();
+                    FirebaseService.sendRegistrationToServerOnSignup(usernameEt.getText().toString(),token);
+                });
                 Intent intent = new Intent(this, EmailVerificationActivity.class);
                 intent.putExtra("username", usernameEt.getText().toString());
                 intent.putExtra("from", "signup");
