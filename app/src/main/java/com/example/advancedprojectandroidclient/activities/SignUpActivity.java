@@ -152,7 +152,6 @@ public class SignUpActivity extends AppCompatActivity {
                     userImgIv.buildDrawingCache();
                     BitmapDrawable drawable = (BitmapDrawable) userImgIv.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
-                    // Bitmap bitmap = userImgIv.getDrawingCache();
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byte[] image = stream.toByteArray();
