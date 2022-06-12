@@ -73,6 +73,6 @@ used, leading to some code that may be hard to figure out, and fairly full of ba
 
 ### `Log in activity`
 The log in activity is the first activity that is shown to the user.
-[!alt text="Log in activity"](https://imgur.com/a/CRGwYWO)
+<img src="https://imgur.com/a/CRGwYWO">
 
 
