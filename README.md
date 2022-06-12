@@ -73,7 +73,7 @@ used, leading to some code that may be hard to figure out, and fairly full of ba
 
 ### `Log in activity`
 The log in activity is the first activity that is shown to the user.
-![](README.md resources/login_screen.jpg)
+![img.jpg](README_resources/login_screen.jpg)
 It is a simple activity, allowing for logging in with a username and password, or with the email instead
 of the username.\
 In addition, it contains links to the registration activity and the forgot password activity.\
@@ -81,7 +81,7 @@ The user will be automatically logged in if they have a valid refresh token.
 
 ### `Registration activity`
 Just as its name states, this activity is for registering a new user.
-![](README.md resources/signup.jpg)
+![img.jpg](README_resources/signup.jpg)
 The user can choose their profile picture (stored locally only), their email, username, etc.\
 After registering, the user is moved to the verify email activity.\
 You can input "111111" as the verification code to bypass that mechanic.
@@ -90,26 +90,26 @@ You can input "111111" as the verification code to bypass that mechanic.
 This activity is the main activity of the app.\
 It displays all the user's contacts, and allows for opening the chat with them.\
 It also contains links to the options and add contact activities, as well as a log-out button.
-![](README.md resources/contacts.jpg)
+![img.jpg](README_resources/contacts.jpg)
 
 ### `Options activity`
 This activity is for changing the user's settings.\
 It allow for changing the user's nickname, server and description.\
 Screenshots of the individual options were not shown.
-![](README.md resources/options.jpg)
+![img.jpg](README_resources/options.jpg)
 
 ### `Add contact activity`
 This activity is for adding a new contact.\
 It allows the user to add a contact via either their username, their email or their phone number.\
 After succesfully adding a contact, they will be shown in the user's contact list.
-![](README.md resources/add_contact.jpg)
+![img.jpg](README_resources/add_contact.jpg)
 
 ### `Forgot password activity`
 This activity is for resetting the user's password.\
 It is a 3-step process (only 1st step's image is shown here).\
 The user is first asked to verify their username + security question, followed by verifying their email
 via a code sent to it, and then finally choosing their new password.
-![](README.md resources/forgot_password.jpg)
+![img.jpg](README_resources/forgot_password.jpg)
 
 ## `Proof of working notifications and live messaging`
 The following is a video proof of the notifications and live messaging functionality.\
@@ -123,11 +123,9 @@ tested by running the server on a local environment and not the one on the unive
 
 Also note that this is a gif, so it loops in the end - the messages are not deleted, it simply loops back to the beginning,
 where there were still no messages.
-![](README.md resources/notification_recording.gif)
+![img.gif](README_resources/notification_recording.gif)
 
 ## `Proof of working email sending`
 While this was not mandatory, this also works on our local environment, as can be seen by the many
 emails I got while testing.
-![](README.md resources/email_sending.png)
-
-a
+![img.png](README_resources/email_sending.png)
