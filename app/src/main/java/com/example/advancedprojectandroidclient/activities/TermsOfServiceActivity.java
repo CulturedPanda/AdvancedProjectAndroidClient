@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.advancedprojectandroidclient.R;
 
+/**
+ * Joke activity.
+ */
 public class TermsOfServiceActivity extends AppCompatActivity {
 
     @Override

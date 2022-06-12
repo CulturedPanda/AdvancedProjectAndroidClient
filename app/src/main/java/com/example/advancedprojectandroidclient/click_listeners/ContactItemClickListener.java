@@ -8,6 +8,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * A click listener for the contacts recycler view.
+ * Mostly boilerplate code.
+ */
 public class ContactItemClickListener implements RecyclerView.OnItemTouchListener {
 
     private final OnItemClickListener mListener;

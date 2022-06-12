@@ -4,8 +4,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.TextView;
 
-import com.example.advancedprojectandroidclient.R;
-
+/**
+ * A TextWatcher that will show the error message if the text is empty.
+ */
 public class LoginScreenTextWatcher implements TextWatcher {
 
     private final TextView errorTv;
@@ -20,10 +21,9 @@ public class LoginScreenTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!s.toString().isEmpty()){
+        if (!s.toString().isEmpty()) {
             errorTv.setVisibility(TextView.GONE);
-        }
-        else{
+        } else {
             errorTv.setVisibility(TextView.VISIBLE);
         }
     }

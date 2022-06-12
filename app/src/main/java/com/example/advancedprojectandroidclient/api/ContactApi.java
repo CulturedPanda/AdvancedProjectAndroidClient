@@ -17,6 +17,9 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The API implementation for handling contacts.
+ */
 public class ContactApi {
 
     private final Retrofit retrofit;
@@ -24,6 +27,12 @@ public class ContactApi {
     private final MutableLiveData<List<Contact>> contacts;
     private final ContactDao contactDao;
 
+    /**
+     * Constructor
+     *
+     * @param contactDao The contact DAO to use.
+     * @param contacts   The mutable live data list of contacts to use.
+     */
     public ContactApi(MutableLiveData<List<Contact>> contacts, ContactDao contactDao) {
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.base_url))
@@ -34,7 +43,10 @@ public class ContactApi {
         this.contactDao = contactDao;
     }
 
-    public void getAll(){
+    /**
+     * Gets the list of contacts
+     */
+    public void getAll() {
         Call<List<Contact>> call = IContactsApi.getContacts("Bearer " + RefreshTokenRepository.accessToken);
         call.enqueue(new retrofit2.Callback<List<Contact>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -45,6 +57,7 @@ public class ContactApi {
                     for (Contact contact : response.body()) {
                         contact.setLastdate(Contact.parseDate(contact.getLastdate()));
                     }
+                    // Deletes all previous entries in the database.
                     new Thread(() -> {
                         contactDao.deleteAll();
                         for (Contact contact : response.body()) {
@@ -57,19 +70,29 @@ public class ContactApi {
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
+                // Keep on using the current list on failure
                 contacts.postValue(contactDao.getAll());
             }
         });
     }
 
+    /**
+     * Adds a new contact by their username
+     *
+     * @param contact          The contact to add.
+     * @param isAlreadyContact A mutable live data to determine whether the contact is already the user's contact.
+     * @param doesContactExist A mutable live data to determine whether the contact exists.
+     * @param callSuccess      A mutable live data to determine whether the call was successful.
+     */
     public void addContactByUsername(Contact contact, MutableLiveData<Boolean> isAlreadyContact,
-                                     MutableLiveData<Boolean> doesContactExist, MutableLiveData<Boolean> callSuccess){
+                                     MutableLiveData<Boolean> doesContactExist, MutableLiveData<Boolean> callSuccess) {
         Call<Boolean> call = IContactsApi.doesUserExistByUsername(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
         call.enqueue(new retrofit2.Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     doesContactExist.postValue(response.body());
+                    // If the contacts exists, then next check whether the user is already a contact.
                     if (response.body()) {
                         Call<Boolean> call2 = IContactsApi.isAlreadyContactByUsername(contact.getId(), "Bearer " + RefreshTokenRepository.accessToken);
                         call2.enqueue(new retrofit2.Callback<Boolean>() {
@@ -77,19 +100,22 @@ public class ContactApi {
                             public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
                                 if (response.isSuccessful() && response.body() != null) {
                                     isAlreadyContact.postValue(response.body());
-                                    if (!response.body()){
+                                    // If the contact is not already the user's contact, add the contact.
+                                    if (!response.body()) {
                                         Call<Contact> call3 = IContactsApi.createContactByUsername(contact,
                                                 "Bearer " + RefreshTokenRepository.accessToken, true);
                                         call3.enqueue(new retrofit2.Callback<Contact>() {
                                             @Override
                                             public void onResponse(Call<Contact> call, retrofit2.Response<Contact> response) {
                                                 if (response.isSuccessful()) {
+                                                    // Indicate the adding was successful.
                                                     callSuccess.postValue(true);
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<Contact> call, Throwable t) {
+                                                // Failure should not happen unless the server is down.
                                                 callSuccess.postValue(false);
                                             }
                                         });
@@ -114,7 +140,8 @@ public class ContactApi {
     }
 
     /***
-     * Copy pasted code because passing functions as argument is a pain in Java.
+     * Copy pasted code because I did not work particularly smart at this point (this code was written at 2am).
+     * See addContactByUsername for comments.
      * @param contact
      * @param isAlreadyContact
      * @param doesContactExist
@@ -135,7 +162,7 @@ public class ContactApi {
                             public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
                                 if (response.isSuccessful() && response.body() != null) {
                                     isAlreadyContact.postValue(response.body());
-                                    if (!response.body()){
+                                    if (!response.body()) {
                                         Call<Contact> call3 = IContactsApi.createContactByEmail(contact,
                                                 "Bearer " + RefreshTokenRepository.accessToken, true);
                                         call3.enqueue(new retrofit2.Callback<Contact>() {
@@ -172,7 +199,8 @@ public class ContactApi {
     }
 
     /***
-     * COPY PASTE AWAY
+     * Copy pasted code because I did not work particularly smart at this point (this code was written at 2am).
+     * See addContactByUsername for comments.
      * @param contact
      * @param isAlreadyContact
      * @param doesContactExist
@@ -193,7 +221,7 @@ public class ContactApi {
                             public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
                                 if (response.isSuccessful() && response.body() != null) {
                                     isAlreadyContact.postValue(response.body());
-                                    if (!response.body()){
+                                    if (!response.body()) {
                                         Call<Contact> call3 = IContactsApi.createContactByPhone(contact,
                                                 "Bearer " + RefreshTokenRepository.accessToken, true);
                                         call3.enqueue(new retrofit2.Callback<Contact>() {

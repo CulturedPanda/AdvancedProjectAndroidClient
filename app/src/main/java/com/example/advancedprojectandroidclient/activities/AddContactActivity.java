@@ -18,6 +18,9 @@ import com.example.advancedprojectandroidclient.entities.Contact;
 import com.example.advancedprojectandroidclient.view_models.ContactsViewModel;
 
 
+/**
+ * The activity for adding contacts
+ */
 public class AddContactActivity extends AppCompatActivity {
 
     private ContactsViewModel contactsViewModel;
@@ -28,7 +31,9 @@ public class AddContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+
         String currentUser = getIntent().getStringExtra("username");
+        // The hacky way to get whether or not the contact adding worked
         MutableLiveData<Boolean> doesContactExist = new MutableLiveData<>();
         MutableLiveData<Boolean> isAlreadyContact = new MutableLiveData<>();
         MutableLiveData<Boolean> callSuccess = new MutableLiveData<>();
@@ -48,22 +53,24 @@ public class AddContactActivity extends AppCompatActivity {
             }
         });
 
+        // The add contact method updates this last, so if this passes, the contact was added
         callSuccess.observe(this, aBoolean -> {
             if (!aBoolean) {
                 errorAddingUserTv.setText(R.string.add_contact_something_went_wrong);
                 errorAddingUserTv.setVisibility(TextView.VISIBLE);
-            }
-            else{
+            } else {
                 finish();
             }
         });
 
         Button addContactBtn = findViewById(R.id.add_contact_btn_confirm);
+        // Submit to the server on click
         addContactBtn.setOnClickListener(v -> {
             EditText usernameEt = findViewById(R.id.add_contact_et_user_identification);
             Contact contact = new Contact(usernameEt.getText().toString(), currentUser, null, "abcde", null, null);
             RadioGroup addContactIdentificationChoice = findViewById(R.id.add_contact_rg_username_email_phone);
             RadioButton selected = findViewById(addContactIdentificationChoice.getCheckedRadioButtonId());
+            // Add contact via the user's selected method
             if (selected.getText().equals("Username")) {
                 contactsViewModel.addContactByUsername(contact, isAlreadyContact, doesContactExist, callSuccess);
             } else if (selected.getText().equals("Email")) {

@@ -8,6 +8,9 @@ import com.example.advancedprojectandroidclient.entities.Message;
 
 import java.util.List;
 
+/**
+ * Data Access Object for the Message table.
+ */
 @Dao
 public interface MessageDao {
 

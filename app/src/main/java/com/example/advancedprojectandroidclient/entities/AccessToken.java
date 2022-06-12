@@ -1,12 +1,14 @@
 package com.example.advancedprojectandroidclient.entities;
 
 /**
- * Access token to user
+ * Access token for the user
+ * Used solely as a data class when getting responses via retrofit.
  */
 public class AccessToken {
 
     /**
      * Constructor
+     *
      * @param accessToken  access token
      * @param refreshToken refresh token
      */
@@ -17,7 +19,8 @@ public class AccessToken {
 
     /**
      * getter
-     * @return string
+     *
+     * @return the access token's value.
      */
     public String getAccessToken() {
         return accessToken;
@@ -25,6 +28,7 @@ public class AccessToken {
 
     /**
      * setter
+     *
      * @param accessToken sets new access token
      */
     public void setAccessToken(String accessToken) {
@@ -33,7 +37,8 @@ public class AccessToken {
 
     /**
      * getter for refresh token
-     * @return refresh token
+     *
+     * @return the refresh token's value.
      */
     public String getRefreshToken() {
         return refreshToken;
@@ -41,7 +46,8 @@ public class AccessToken {
 
     /**
      * setter refresh token
-     * @param refreshToken
+     *
+     * @param refreshToken the new refresh token
      */
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
@@ -52,7 +58,8 @@ public class AccessToken {
 
     /**
      * get username
-     * @return string username
+     *
+     * @return string the username of the user
      */
     public String getUsername() {
         return username;
@@ -60,7 +67,8 @@ public class AccessToken {
 
     /**
      * set username
-     * @param username sets username
+     *
+     * @param username the new username
      */
     public void setUsername(String username) {
         this.username = username;
@@ -70,9 +78,10 @@ public class AccessToken {
 
     /**
      * Cosntructor of access token
-     * @param accessToken
-     * @param refreshToken
-     * @param username
+     *
+     * @param accessToken  the access token value.
+     * @param refreshToken the refresh token value.
+     * @param username     the username of the user.
      */
     public AccessToken(String accessToken, String refreshToken, String username) {
         this.accessToken = accessToken;

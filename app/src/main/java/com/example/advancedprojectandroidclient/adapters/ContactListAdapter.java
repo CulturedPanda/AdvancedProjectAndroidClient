@@ -15,12 +15,19 @@ import com.example.advancedprojectandroidclient.entities.Contact;
 
 import java.util.List;
 
+/**
+ * This adapter is used to display the list of contacts.
+ * Basically a boilerplate class, hence low on documentation.
+ */
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
 
     public Contact getContact(int position) {
         return contacts.get(position);
     }
 
+    /**
+     * The view holder for each contact
+     */
     class ContactViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView nicknameTv;
@@ -53,7 +60,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ContactListAdapter.ContactViewHolder holder, int position) {
-        if (contacts != null){
+        if (contacts != null) {
             final Contact current = contacts.get(position);
             holder.lastDateTv.setText(current.getLastdate());
             holder.nicknameTv.setText(current.getName());
@@ -64,13 +71,18 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public int getItemCount() {
-        if (contacts != null){
+        if (contacts != null) {
             return contacts.size();
         }
         return 0;
     }
 
-    public void setContacts(List<Contact> contacts){
+    /**
+     * Sets the cotnacts list to be displayed.
+     *
+     * @param contacts the list of contacts to be displayed.
+     */
+    public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
         notifyDataSetChanged();
     }

@@ -11,38 +11,42 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 /**
- * Message class
+ * The database entity for the message table.
  */
 @Entity
 public class Message {
 
     /**
-     * get with user function
-     * @return string of conversation with someone
+     * Getter for who the message is from.
+     *
+     * @return the message's sender.
      */
     public String getWith() {
         return with;
     }
 
     /**
-     * set with user function
-     * @param with string
+     * Setter for who the message is from.
+     *
+     * @param with the message's sender.
      */
     public void setWith(String with) {
         this.with = with;
     }
 
     /**
-     * getter id
-     * @return id
+     * Getter for the message's id.
+     *
+     * @return the message's id.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * setter id
-     * @param id id
+     * Setter for the message's id.
+     *
+     * @param id the message's id.
      */
     public void setId(int id) {
         this.id = id;
@@ -54,17 +58,20 @@ public class Message {
     @ColumnInfo(name = "with")
     private String with;
 
+
     /**
-     * time function
-     * @return time
+     * Getter for the time from epoch of the message.
+     *
+     * @return the message's time from epoch.
      */
     public long getActualTime() {
         return actualTime;
     }
 
     /**
-     * sets time
-     * @param actualTime set the time
+     * Setter for the time from epoch of the message.
+     *
+     * @param actualTime the message's time from epoch.
      */
     public void setActualTime(long actualTime) {
         this.actualTime = actualTime;
@@ -72,14 +79,16 @@ public class Message {
 
     long actualTime;
 
+
     /**
-     * Message constructor
-     * @param with with
-     * @param conversationId id convo
-     * @param created string
-     * @param content string
-     * @param sent bool if sent or not
-     * @param type type of message
+     * Constructor.
+     *
+     * @param with           the id of the user the message is with.
+     * @param conversationId the id of the conversation the message is in.
+     * @param created        the time the message was created.
+     * @param content        the content of the message.
+     * @param sent           whether the message was sent or received by the user.
+     * @param type           the type of the message.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Message(String with, int conversationId, String created, String content, boolean sent, String type) {
@@ -95,10 +104,12 @@ public class Message {
         }
     }
 
+
     /**
-     * parse time
-     * @param created string
-     * @return long
+     * Parses the actual time as seconds from epoch. Used for sorting messages when retrieving them.
+     *
+     * @param created the time the message was created.
+     * @return the time the message was created in seconds from epoch.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static long parseActualTime(String created) {
@@ -106,10 +117,12 @@ public class Message {
         return date.toEpochSecond(ZoneOffset.UTC);
     }
 
+
     /**
-     * parse date
-     * @param date string
-     * @return string
+     * Parses the time the message was created.
+     *
+     * @param date the time the message was created.
+     * @return the time the message was created in a human readable format, as "hh:mm".
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String parseDate(String date) {
@@ -122,80 +135,96 @@ public class Message {
     }
 
     /**
-     * conversation id getter
-     * @return int conversation id
+     * Getter for the message's conversation id.
+     *
+     * @return the message's conversation id.
      */
     public int getConversationId() {
         return conversationId;
     }
 
+
     /**
-     * conversation id setter
-     * @param conversationId conversation id
+     * Setter for the message's conversation id.
+     *
+     * @param conversationId the message's conversation id.
      */
     public void setConversationId(int conversationId) {
         this.conversationId = conversationId;
     }
 
     /**
-     * created getter
-     * @return string
+     * Getter for when the message was created.
+     *
+     * @return the time the message was created.
      */
     public String getCreated() {
         return created;
     }
 
+
     /**
-     * setter created
-     * @param created created
+     * Setter for when the message was created.
+     *
+     * @param created the time the message was created.
      */
     public void setCreated(String created) {
         this.created = created;
     }
 
     /**
-     * content getter
-     * @return content
+     * Getter for the message's content.
+     *
+     * @return the message's content.
      */
     public String getContent() {
         return content;
     }
 
+
     /**
-     * content setter
-     * @param content content
+     * Setter for the message's content.
+     *
+     * @param content the message's content.
      */
     public void setContent(String content) {
         this.content = content;
     }
 
+
     /**
-     * function checks if message sent
-     * @return bool
+     * Getter for whether the message was sent or received by the user.
+     *
+     * @return whether the message was sent or received by the user.
      */
     public boolean isSent() {
         return sent;
     }
 
     /**
-     * message sent setter
-     * @param sent sent
+     * Setter for whether the message was sent or received by the user.
+     *
+     * @param sent whether the message was sent or received by the user.
      */
     public void setSent(boolean sent) {
         this.sent = sent;
     }
 
+
     /**
-     * function gets type of message
-     * @return type
+     * Getter for the message's type.
+     *
+     * @return the message's type.
      */
     public String getType() {
         return type;
     }
 
+
     /**
-     * set type
-     * @param type type
+     * Setter for the message's type.
+     *
+     * @param type the message's type.
      */
     public void setType(String type) {
         this.type = type;

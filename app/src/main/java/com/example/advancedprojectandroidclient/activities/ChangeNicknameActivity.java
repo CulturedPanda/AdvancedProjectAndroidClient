@@ -11,6 +11,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 
+/**
+ * The activity for changing your own nickname.
+ * Identical to ChangeDescriptionActivity, short of names, hence short on documentation.
+ */
 public class ChangeNicknameActivity extends AppCompatActivity {
 
     @Override
@@ -27,7 +31,9 @@ public class ChangeNicknameActivity extends AppCompatActivity {
 
         MutableLiveData<String> currentNickname = new MutableLiveData<>();
         currentNickname.observe(this, s -> currentNicknameTv.setText(s));
-        new Thread(()->{registeredUserApi.getNickname(currentNickname, username);}).start();
+        new Thread(() -> {
+            registeredUserApi.getNickname(currentNickname, username);
+        }).start();
 
         TextView newTypeTv = findViewById(R.id.change_text_data_new_info_type_tv);
         newTypeTv.setText(R.string.new_nickname);

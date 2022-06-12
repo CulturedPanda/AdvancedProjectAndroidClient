@@ -19,6 +19,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The implementation of the API for handling messages.
+ */
 public class MessageApi {
 
     private final Retrofit retrofit;
@@ -26,6 +29,9 @@ public class MessageApi {
     private final MutableLiveData<List<Message>> messages;
     private final MessageDao messageDao;
 
+    /**
+     * Constructor for the MessageApi.
+     */
     public MessageApi(MutableLiveData<List<Message>> messages, MessageDao messageDao) {
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.base_url))
@@ -37,7 +43,12 @@ public class MessageApi {
         this.messageDao = messageDao;
     }
 
-    public void getAll(String id){
+    /**
+     * Gets all the messages with a particular user
+     *
+     * @param id the id of the user
+     */
+    public void getAll(String id) {
         Call<List<Message>> call = messageApi.getMessages(id, "Bearer " + RefreshTokenRepository.accessToken);
         call.enqueue(new retrofit2.Callback<List<Message>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -48,9 +59,9 @@ public class MessageApi {
                     for (Message message : response.body()) {
                         message.setActualTime(Message.parseActualTime(message.getCreated()));
                         message.setCreated(Message.parseDate(message.getCreated()));
-                        message.setWith(id);
                     }
                     new Thread(() -> {
+                        // Deletes all previous information and sets the new messages
                         messageDao.deleteAll(id);
                         for (Message message : response.body()) {
                             message.setWith(id);
@@ -68,7 +79,14 @@ public class MessageApi {
         });
     }
 
-    public void addMessage(String id,Message message){
+    /**
+     * Sends a message to a user
+     *
+     * @param id      the id of the user
+     * @param message the message to send
+     */
+    public void addMessage(String id, Message message) {
+        // This not being set to null causes errors in date parsing in the server.
         message.setCreated(null);
         Call<Message> call = messageApi.addMessage(id, "Bearer " + RefreshTokenRepository.accessToken,
                 message);

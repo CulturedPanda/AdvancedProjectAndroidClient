@@ -21,8 +21,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.PendingUserApi;
-import com.example.advancedprojectandroidclient.daos.AppDB;
-import com.example.advancedprojectandroidclient.daos.ImageDao;
 import com.example.advancedprojectandroidclient.entities.Image;
 import com.example.advancedprojectandroidclient.entities.PendingUser;
 import com.example.advancedprojectandroidclient.entities.SecretQuestion;
@@ -33,22 +31,25 @@ import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The activity used for signing up.
+ */
 public class SignUpActivity extends AppCompatActivity {
-    private AppDB db;
-    private ImageDao imageDao;
-    Bitmap bmpImage;
     ImageView userImgIv;
     PendingUserApi pendingUserApi;
     boolean imgSet;
 
     int SELECT_IMAGE_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         pendingUserApi = new PendingUserApi();
+        // Used to determine if the user set a profile picture or not.
         imgSet = false;
 
+        // ALLLLLLLLLLLLLLLLLL the fields.
         EditText emailEt = findViewById(R.id.signup_email_field_et);
         EditText usernameEt = findViewById(R.id.signup_username_field_et);
         EditText passwordEt = findViewById(R.id.sign_up_pass_et);
@@ -76,15 +77,18 @@ public class SignUpActivity extends AppCompatActivity {
         questionsList.setAdapter(adapter);
 
         tosTv.setOnClickListener(v -> {
+            // Goes to the wonderful TOS activity
             Intent intent = new Intent(SignUpActivity.this, TermsOfServiceActivity.class);
             startActivity(intent);
         });
 
         privacyPolicyTv.setOnClickListener(v -> {
+            // Goes to the wonderful privacy policy activity.
             Intent intent = new Intent(SignUpActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
         });
 
+        // YET MORE ABUSE OF LIVE DATA
         MutableLiveData<Boolean> doesUserExistByUsername = new MutableLiveData<>();
         MutableLiveData<Boolean> doesUserExistByEmail = new MutableLiveData<>();
         MutableLiveData<Boolean> doesUserExistByPhone = new MutableLiveData<>();
@@ -94,13 +98,16 @@ public class SignUpActivity extends AppCompatActivity {
         boolean[] checks = {false, false, false, false};
 
         doesUserExistByEmail.observe(this, aBoolean -> {
+            // If the user already exists by mail, set the check to false and display an error.
             if (aBoolean) {
                 checks[0] = false;
                 emailEt.setError("Email already exists");
             }
-            else{
+            // Otherwise, set the check to true.
+            else {
                 checks[0] = true;
                 emailEt.setError(null);
+                // If all checks are true and no one set the control to true, send the request.
                 if (checks[1] && checks[2] && !checks[3]) {
                     PendingUser user = new PendingUser(usernameEt.getText().toString(), passwordEt.getText().toString(),
                             phoneEt.getText().toString(), emailEt.getText().toString(), nicknameEt.getText().toString(),
@@ -112,11 +119,11 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         doesUserExistByUsername.observe(this, aBoolean -> {
+            // Same as email, but for username.
             if (aBoolean) {
                 checks[1] = false;
                 usernameEt.setError("Username already exists");
-            }
-            else {
+            } else {
                 checks[1] = true;
                 usernameEt.setError(null);
                 if (checks[0] && checks[2] && !checks[3]) {
@@ -130,6 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         doesUserExistByPhone.observe(this, aBoolean -> {
+            // Same as email, but for phone.
             if (aBoolean) {
                 checks[2] = false;
                 phoneEt.setError("Phone number already exists");
@@ -147,9 +155,11 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         signUpSuccess.observe(this, aBoolean -> {
+            // Checks if adding the pending user was successful. If it was, go to the verify email activity.
             if (aBoolean) {
+                // Checks if the user set a profile picture.
                 if (imgSet) {
-                    //convert image to string
+                    //convert image to base64 string.
                     userImgIv = findViewById(R.id.sign_up_profile_pic_iv);
                     userImgIv.buildDrawingCache();
                     BitmapDrawable drawable = (BitmapDrawable) userImgIv.getDrawable();
@@ -165,9 +175,10 @@ public class SignUpActivity extends AppCompatActivity {
                         MyApplication.appDB.imageDao().insert(imageFinal);
                     }).start();
                 }
+                // Send the firebase token to the server.
                 FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
                     String token = instanceIdResult.getToken();
-                    FirebaseService.sendRegistrationToServerOnSignup(usernameEt.getText().toString(),token);
+                    FirebaseService.sendRegistrationToServerOnSignup(usernameEt.getText().toString(), token);
                 });
                 Intent intent = new Intent(this, EmailVerificationActivity.class);
                 intent.putExtra("username", usernameEt.getText().toString());
@@ -175,7 +186,9 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-            else{
+            // On failure, make sure that trying again is possible.
+            // This should only happeen if the server goes down or the like.
+            else {
                 checks[3] = false;
             }
         });
@@ -186,13 +199,15 @@ public class SignUpActivity extends AppCompatActivity {
             Intent i = new Intent();
             i.setType("image/*");
             i.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(i, "Title"),SELECT_IMAGE_CODE);
+            startActivityForResult(Intent.createChooser(i, "Title"), SELECT_IMAGE_CODE);
         });
 
         //sign up button
         Button btnSignUp = findViewById(R.id.sign_up_btn);
+        // On click, perform checks then sign up the user if they all pass.
         btnSignUp.setOnClickListener(v -> {
             boolean error = false;
+            // Check that all required fields are filled in.
             if (emailEt.getText().toString().isEmpty()) {
                 emailEt.setError("Email is required");
                 error = true;
@@ -219,38 +234,38 @@ public class SignUpActivity extends AppCompatActivity {
                 answerEt.setError("Answer is required");
                 error = true;
             }
-            if (!tosCb.isChecked()){
+            // Check that both checkboxes are checked.
+            if (!tosCb.isChecked()) {
                 tosCb.setError(getString(R.string.must_agreen_tos));
                 error = true;
             }
-            if (!privacyPolicyCb.isChecked()){
+            if (!privacyPolicyCb.isChecked()) {
                 privacyPolicyCb.setError(getString(R.string.must_agreen_privacy_policy));
                 error = true;
             }
-            if (!error){
-                if (password.length() < 8){
+            if (!error) {
+                // Check password rules
+                if (password.length() < 8) {
                     passwordEt.setError(getString(R.string.password_len_error));
-                }
-                else {
+                } else {
                     Pattern p = Pattern.compile("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$");
                     Matcher m = p.matcher(password);
                     boolean b = m.find();
                     if (!b) {
                         passwordEt.setError(getString(R.string.password_format_error));
-                    }
-                    else if (!password.equals(passwordConfirm)) {
+                    } else if (!password.equals(passwordConfirm)) {
                         passwordEt.setError(getString(R.string.password_match_error));
                         passwordConfirmEt.setError(getString(R.string.password_match_error));
                     }
-                    else{
+                    // If all checks passed, ask the server for confirmation about the user's details.
+                    else {
                         //check if user already exists
                         pendingUserApi.doesPendingUserExistByX("Username", usernameEt.getText().toString(), doesUserExistByUsername);
                         pendingUserApi.doesPendingUserExistByX("Email", emailEt.getText().toString(), doesUserExistByEmail);
                         if (!phoneEt.getText().toString().isEmpty()) {
                             pendingUserApi.doesPendingUserExistByX("Phone", phoneEt.getText().toString(), doesUserExistByPhone);
-                        }
-                        else{
-                            // Skip the check for the phone number
+                        } else {
+                            // Skip the check for the phone number if the user did not input any.
                             checks[2] = true;
                         }
                     }
@@ -273,6 +288,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
+            // Sets the image to the image view, and sets imgSet to true to indicate that the image has been set.
             if (data != null) {
                 Uri uri = data.getData();
                 if (uri != null) {

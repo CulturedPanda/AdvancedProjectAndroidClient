@@ -10,6 +10,9 @@ import com.example.advancedprojectandroidclient.entities.Contact;
 
 import java.util.List;
 
+/**
+ * Data Access Object for the Contact table.
+ */
 @Dao
 public interface ContactDao {
 

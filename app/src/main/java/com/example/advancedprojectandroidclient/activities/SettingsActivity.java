@@ -10,6 +10,9 @@ import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.adapters.SettingsListAdapter;
 
+/**
+ * The settings screen.
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -18,11 +21,13 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         String username = getIntent().getStringExtra("username");
 
+        // Displays a simple list of settings.
         ListView lstSettings = findViewById(R.id.settings_list_view);
         lstSettings.setAdapter(new SettingsListAdapter(MyApplication.context,
                 new String[]{"Change server", "Change description", "Change nickname"}));
 
         lstSettings.setOnItemClickListener((parent, view, position, id) -> {
+            // Go to the matching activity for each item on click.
             switch (position) {
                 case 0:
                     Intent iServ = new Intent(SettingsActivity.this, ChangeServerActivity.class);

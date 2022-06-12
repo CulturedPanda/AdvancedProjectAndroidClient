@@ -8,6 +8,9 @@ import androidx.room.Update;
 
 import com.example.advancedprojectandroidclient.entities.RefreshToken;
 
+/**
+ * Data Access Object for the RefreshToken table.
+ */
 @Dao
 public interface RefreshTokenDao {
 

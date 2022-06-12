@@ -16,6 +16,10 @@ import com.example.advancedprojectandroidclient.entities.Message;
 
 import java.util.List;
 
+/**
+ * This adapter is used to display the list of messages.
+ * Basically a boilerplate class, hence low on documentation.
+ */
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MessageViewHolder> {
 
     public Message getMessages(int position) {
@@ -50,17 +54,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        if (messages != null){
+        if (messages != null) {
             final Message current = messages.get(position);
             holder.messageContentTv.setText(current.getContent());
+            // The constarint set the message will have
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(holder.messageLayout);
-            if (current.isSent()){
+            // If the message is from the user, the message will be green and on the right
+            if (current.isSent()) {
                 holder.messageContentTv.setBackgroundResource(R.color.green);
                 constraintSet.connect(R.id.chat_bubble_tv, ConstraintSet.END, R.id.chat_bubble_constraint_layout, ConstraintSet.END);
                 constraintSet.clear(R.id.chat_bubble_tv, ConstraintSet.START);
             }
-            else{
+            // If the message is not from the user, the message will be grey and on the left.
+            else {
                 holder.messageContentTv.setBackgroundResource(R.color.grey);
                 constraintSet.connect(R.id.chat_bubble_tv, ConstraintSet.START, R.id.chat_bubble_constraint_layout, ConstraintSet.START);
                 constraintSet.clear(R.id.chat_bubble_tv, ConstraintSet.END);
@@ -71,13 +78,18 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     @Override
     public int getItemCount() {
-        if (messages != null){
+        if (messages != null) {
             return messages.size();
         }
         return 0;
     }
 
-    public void setMessages(List<Message> messages){
+    /**
+     * This method is used to set the list of messages.
+     *
+     * @param messages the list of messages to be displayed.
+     */
+    public void setMessages(List<Message> messages) {
         this.messages = messages;
         notifyDataSetChanged();
     }

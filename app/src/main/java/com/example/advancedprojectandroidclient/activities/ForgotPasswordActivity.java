@@ -14,7 +14,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 
-
+/**
+ * The first activity for resetting the user's password.
+ * Verifies some information about the user, and then moves on to the verify email activity.
+ */
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private RegisteredUserApi registeredUserApi;
@@ -40,6 +43,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         questionsList.setAdapter(adapter);
 
         TextView rememberPassTv = findViewById(R.id.forgot_pass_remember_tv);
+        // Goes back to the log in screen.
         rememberPassTv.setOnClickListener(v -> {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
@@ -47,8 +51,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         EditText usernameEt = findViewById(R.id.forgot_pass_username_input_et);
 
+        // More abuse of mutable live data
         MutableLiveData<Boolean> isSuccessful = new MutableLiveData<>();
         isSuccessful.observe(this, aBoolean -> {
+            // If verification of all the information was successful, go to the verify email activity
             if (aBoolean) {
                 String username = usernameEt.getText().toString();
                 registeredUserApi.renewCode(username);
@@ -57,14 +63,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 i.putExtra("from", "forgotPassword");
                 startActivity(i);
                 finish();
-            }
-            else{
+            } else {
                 TextView error = findViewById(R.id.forgot_pass_tv_error);
                 error.setVisibility(android.view.View.VISIBLE);
             }
         });
 
         Button forgotPassBtn = findViewById(R.id.forgot_pass_submit_btn);
+        // Send all the information to the server on click, so long as no field is empty.
         forgotPassBtn.setOnClickListener(v -> {
             EditText answerEt = findViewById(R.id.forgot_pass_security_answer_et);
             String username = usernameEt.getText().toString();
@@ -72,14 +78,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             if (username.isEmpty() && answer.isEmpty()) {
                 usernameEt.setError(getString(R.string.username_is_required));
                 answerEt.setError(getString(R.string.answer_is_required));
-            }
-            else if (answer.isEmpty()){
+            } else if (answer.isEmpty()) {
                 answerEt.setError(getString(R.string.answer_is_required));
-            }
-            else if (username.isEmpty()){
+            } else if (username.isEmpty()) {
                 usernameEt.setError(getString(R.string.username_is_required));
-            }
-            else {
+            } else {
                 String question = Integer.toString(questionsList.getSelectedItemPosition() + 1);
                 registeredUserApi.verifySecretQuestion(username, question, answer, isSuccessful);
             }

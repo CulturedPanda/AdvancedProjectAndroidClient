@@ -12,6 +12,10 @@ import androidx.annotation.Nullable;
 
 import com.example.advancedprojectandroidclient.R;
 
+/**
+ * This adapter is used to display the list of options.
+ * A very simple adapter, it was only needed because I wanted to slightly stylize the options.
+ */
 public class SettingsListAdapter extends ArrayAdapter<String> {
 
     LayoutInflater inflater;

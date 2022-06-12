@@ -1,18 +1,19 @@
 package com.example.advancedprojectandroidclient.entities;
 
 /**
- * Pending user class
+ * A pending user entity for sending to the server when signing up.
  */
 public class PendingUser {
 
     /**
-     * Pending user constructor
-     * @param username username
-     * @param password password
-     * @param phone phone num
-     * @param email email
-     * @param nickname nickname
-     * @param secretQuestion secret question
+     * Constructor
+     *
+     * @param username       the user's username
+     * @param password       the user's password
+     * @param phone          the user's phone number
+     * @param email          the user's email
+     * @param nickname       the user's nickname
+     * @param secretQuestion the user's secret question
      */
     public PendingUser(String username, String password, String phone, String email, String nickname, SecretQuestion secretQuestion) {
         this.username = username;
@@ -24,96 +25,118 @@ public class PendingUser {
     }
 
     /**
-     * get username
-     * @return username
+     * Getter for the user's username
+     *
+     * @return the user's username
      */
     public String getUsername() {
         return username;
     }
 
+
     /**
-     * set username
-     * @param username username
+     * Setter for the user's username
+     *
+     * @param username the user's username
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
+
     /**
-     * get password
-     * @return password
+     * Getter for the user's password
+     *
+     * @return the user's password
      */
     public String getPassword() {
         return password;
     }
 
+
     /**
-     * set password
-     * @param password password
+     * Setter for the user's password
+     *
+     * @param password the user's password
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
+
     /**
-     * phone getter
-     * @return phone
+     * Getter for the user's phone number
+     *
+     * @return the user's phone number
      */
     public String getPhone() {
         return phone;
     }
 
+
     /**
-     * phone setter
-     * @param phone phone
+     * Setter for the user's phone number
+     *
+     * @param phone the user's phone number
      */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
     /**
-     * email getter
-     * @return email
+     * Getter for the user's email
+     *
+     * @return the user's email
      */
     public String getEmail() {
         return email;
     }
 
+
     /**
-     * email setter
-     * @param email email
+     * Setter for the user's email
+     *
+     * @param email the user's email
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
+
     /**
-     * nickname getter
-     * @return nickname
+     * Getter for the user's nickname
+     *
+     * @return the user's nickname
      */
     public String getNickname() {
         return nickname;
     }
 
+
     /**
-     * nickname setter
-     * @param nickname nickname
+     * Setter for the user's nickname
+     *
+     * @param nickname the user's nickname
      */
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
+
     /**
-     * secret question getter
-     * @return secret question
+     * Getter for the user's secret question
+     *
+     * @return the user's secret question
      */
     public SecretQuestion getSecretQuestion() {
         return secretQuestion;
     }
 
+
     /**
-     *secret question setter
-     * @param secretQuestion secret question
+     * Setter for the user's secret question
+     *
+     * @param secretQuestion the user's secret question
      */
     public void setSecretQuestion(SecretQuestion secretQuestion) {
         this.secretQuestion = secretQuestion;

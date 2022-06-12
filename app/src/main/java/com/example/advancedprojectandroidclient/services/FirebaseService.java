@@ -20,24 +20,47 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.List;
 
+/**
+ * The service for handling firebase messages.
+ */
 public class FirebaseService extends FirebaseMessagingService {
 
     public static String token;
 
+    /**
+     * Constructor.
+     * Makes the app auto refresh its tokens, so the user can always access the app when getting a notification.
+     */
     public FirebaseService() {
         MyApplication.refreshTokenRepository.autoRenewTokens(1, 100);
     }
 
+    /**
+     * Handles the registration of the device to the server for a registered user.
+     *
+     * @param token the device's token
+     */
     public static void sendRegistrationToServer(String token) {
         RegisteredUserApi api = new RegisteredUserApi();
         api.setPhoneToken(token);
     }
 
-    public static void sendRegistrationToServerOnSignup(String username, String token){
+    /**
+     * Handles the registration of the device to the server for a pending user.
+     *
+     * @param username the username of the pending user
+     * @param token    the device's token
+     */
+    public static void sendRegistrationToServerOnSignup(String username, String token) {
         PendingUserApi api = new PendingUserApi();
         api.setPhoneToken(username, token);
     }
 
+    /**
+     * Sends the token to the server when getting a new token.
+     *
+     * @param token the new token
+     */
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
@@ -45,19 +68,28 @@ public class FirebaseService extends FirebaseMessagingService {
         sendRegistrationToServer(token);
     }
 
+    /**
+     * Handles the notification when a new message is received.
+     *
+     * @param remoteMessage the message
+     */
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onMessageReceived(@NonNull com.google.firebase.messaging.RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        // Gets all data from the new message
         String username = remoteMessage.getData().get("username");
         String nickname = remoteMessage.getData().get("nickname");
         String content = remoteMessage.getData().get("content");
         String current = MyApplication.messagesRepository.getWith();
+
         ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(Integer.MAX_VALUE);
-        // Second condition is to prevent the notification from being sent when the user is in the chat activity
-        // With the user who sent the message
+        // Only sends the notification if the user is not in the chat activity with the currently active user.
         if (!current.equals(username) || !tasks.get(0).topActivity.getClassName().equals(ChatActivity.class.getName())) {
+
+            // Sends a notification to the user with the new message, who sent it, and opens the chat
+            // activity with the user on click.
             createNotificationChannel();
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
@@ -78,13 +110,17 @@ public class FirebaseService extends FirebaseMessagingService {
 
             notificationManager.notify(String.valueOf(current).hashCode(), builder.build());
         }
-        else if (tasks.get(0).topActivity.getClassName().equals(ChatActivity.class.getName())){
+        // If the user is in the chat activity with the currently active user, the message is added to the chat instead.
+        else if (tasks.get(0).topActivity.getClassName().equals(ChatActivity.class.getName())) {
             MyApplication.messagesRepository.getAll();
         }
     }
 
-    private void createNotificationChannel(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+    /**
+     * Creates a notification channel.
+     */
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel, but only on API 26+ because
             // the NotificationChannel class is new and not in the support library
 

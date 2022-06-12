@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.advancedprojectandroidclient.R;
 
+/**
+ * A joke activity
+ */
 public class PrivacyPolicyActivity extends AppCompatActivity {
 
     @Override

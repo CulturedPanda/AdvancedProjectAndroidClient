@@ -10,6 +10,9 @@ import com.example.advancedprojectandroidclient.repositories.ContactsRepository;
 import com.example.advancedprojectandroidclient.repositories.MessagesRepository;
 import com.example.advancedprojectandroidclient.repositories.RefreshTokenRepository;
 
+/**
+ * A class made for convenience, for accessing useful static items.
+ */
 public class MyApplication extends Application {
 
     public static Context context;

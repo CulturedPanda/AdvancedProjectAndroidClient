@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * Contact class
+ * Database entity for the contact table.
  */
 @Entity(primaryKeys = {"id", "contactOf"})
 public class Contact {
@@ -23,12 +23,13 @@ public class Contact {
 
     /**
      * Constructor
-     * @param id id
-     * @param contactOf contactOf
-     * @param last last
-     * @param server server
-     * @param name name
-     * @param lastdate lastdate
+     *
+     * @param id        id the user's id
+     * @param contactOf who the contact is a contact of.
+     * @param last      the last message sent by the contact.
+     * @param server    server the contact's server.
+     * @param name      name the contact's display name.
+     * @param lastdate  the contact's last seen date.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Contact(@NonNull String id, @NonNull String contactOf, String last, String server, String name, String lastdate) {
@@ -41,19 +42,19 @@ public class Contact {
     }
 
     /**
-     * parse date function
-     * @param date date
-     * @return string
+     * Parses a date into a human readable format.
+     *
+     * @param date the date to parse.
+     * @return human readable format as "seen x time ago".
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String parseDate(String date){
+    public static String parseDate(String date) {
         try {
             LocalDateTime localDateTime = LocalDateTime.parse(date);
             long timeDelta = new Date().getTime() - localDateTime.toInstant(java.time.ZoneOffset.UTC).toEpochMilli();
-            if (timeDelta < 1000 * 60){
+            if (timeDelta < 1000 * 60) {
                 return "Just now";
-            }
-            else if (timeDelta < 1000 * 60 * 60) {
+            } else if (timeDelta < 1000 * 60 * 60) {
                 long minutes = timeDelta / (1000 * 60);
                 return minutes + " minutes ago";
             } else if (timeDelta < 1000 * 60 * 60 * 24) {
@@ -76,87 +77,98 @@ public class Contact {
     private String lastdate;
 
     /**
-     * id getter
-     * @return id
+     * Getter for the last message sent by the contact.
+     *
+     * @return the contact's id.
      */
     public String getId() {
         return id;
     }
 
     /**
-     * id setter
-     * @param id id
+     * Setter for the contact's id.
+     *
+     * @param id the contact's new id.
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     * contact of getter
-     * @return string
+     * Getter for the contact's contactOf.
+     *
+     * @return who the contact is a contact of.
      */
     public String getContactOf() {
         return contactOf;
     }
 
     /**
-     *  contactof setter
-     * @param contactOf contactof
+     * Setter for who the contact is a contact of.
+     *
+     * @param contactOf sets who the contact is a contact of.
      */
     public void setContactOf(String contactOf) {
         this.contactOf = contactOf;
     }
 
     /**
-     * last getter
-     * @return string last
+     * Getter for the last message sent by the contact.
+     *
+     * @return returns the user's last message's content.
      */
     public String getLast() {
         return last;
     }
 
     /**
-     * last setter
-     * @param last last
+     * Setter for the contact's last message
+     *
+     * @param last sets the user's last message content.
      */
     public void setLast(String last) {
         this.last = last;
     }
 
     /**
-     * server getter
-     * @return string server
+     * Getter for the contact's server.
+     *
+     * @return the user's server.
      */
     public String getServer() {
         return server;
     }
 
     /**
-     * server setter
-     * @param server server
+     * Setter for the contact's server.
+     *
+     * @param server the server to set to.
      */
     public void setServer(String server) {
         this.server = server;
     }
 
     /**
-     * name getter of contact
-     * @return name
+     * Getter for the contact's display name.
+     *
+     * @return the contact's display name.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * name setter of contact
-     * @param name name
+     * Setter for the contact's display name.
+     *
+     * @param name the contact's display name.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * last date getter of contact
+     * Getter for the contact's last seen date.
+     *
      * @return lastdate
      */
     public String getLastdate() {
@@ -164,8 +176,9 @@ public class Contact {
     }
 
     /**
-     * last date setter of contact
-     * @param lastdate lastdate
+     * Setter for the contact's last seen date.
+     *
+     * @param lastdate the new date the contact was last seen at.
      */
     public void setLastdate(String lastdate) {
         this.lastdate = lastdate;

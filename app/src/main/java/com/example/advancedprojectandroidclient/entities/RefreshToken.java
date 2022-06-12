@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 /**
- * Refresh token class.
+ * The refresh token entity for the refresh token table.
  */
 @Entity(tableName = "refresh_token")
 public class RefreshToken {
@@ -13,19 +13,21 @@ public class RefreshToken {
     @PrimaryKey
     @NonNull
     private String token;
-    public static String accessToken;
 
     /**
      * Constructor
-     * @param token token
+     *
+     * @param token the refresh token's value
      */
     public RefreshToken(@NonNull String token) {
         this.token = token;
     }
 
+
     /**
-     * token getter
-     * @return token
+     * Getter for the refresh token's value.
+     *
+     * @return the refresh token's value.
      */
     @NonNull
     public String getToken() {
@@ -33,8 +35,9 @@ public class RefreshToken {
     }
 
     /**
-     * token setter
-     * @param token token
+     * Setter for the refresh token's value
+     *
+     * @param token the new refresh token's value
      */
     public void setToken(@NonNull String token) {
         this.token = token;

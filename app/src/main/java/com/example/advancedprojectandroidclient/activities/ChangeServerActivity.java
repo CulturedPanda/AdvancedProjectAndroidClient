@@ -11,6 +11,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 
+/**
+ * The activity for changing your server.
+ * Identical to ChangeDescriptionActivity, short of names, hence short on documentation.
+ */
 public class ChangeServerActivity extends AppCompatActivity {
 
     @Override
@@ -27,7 +31,9 @@ public class ChangeServerActivity extends AppCompatActivity {
 
         MutableLiveData<String> currentNickname = new MutableLiveData<>();
         currentNickname.observe(this, s -> currentServerTv.setText(s));
-        new Thread(()->{registeredUserApi.getServer(currentNickname, username);}).start();
+        new Thread(() -> {
+            registeredUserApi.getServer(currentNickname, username);
+        }).start();
 
         TextView newTypeTv = findViewById(R.id.change_text_data_new_info_type_tv);
         newTypeTv.setText(R.string.new_server);

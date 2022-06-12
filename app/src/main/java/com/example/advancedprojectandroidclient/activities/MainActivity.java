@@ -24,6 +24,11 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Date;
 
+/**
+ * The log in activity.
+ * Named MainActivity because that was the default name and I did not care enough to both change it
+ * and figure out how to keep it as the start up activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private RegisteredUserApi registeredUserApi;
@@ -34,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Keeping the instance of this public to allow other activities to finish it.
         fa = this;
+        // If getting here from reset password, display little green text on top (normally hidden).
         boolean passwordReset = getIntent().getBooleanExtra("resetPassword", false);
         if (passwordReset) {
             TextView textView = findViewById(R.id.password_reset_success_tv);
@@ -50,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
         String errorText = "username " + getResources().getString(R.string.empty);
         usernameErrorTv.setText(errorText);
 
-
+        // MutableLiveData abuse
         MutableLiveData<Boolean> loggedInRefreshToken = new MutableLiveData<>();
+        // If successfully logged in with the refresh token, go to contacts activity.
         loggedInRefreshToken.observe(this, aBoolean -> {
             if (aBoolean) {
                 Intent intent = new Intent(this, ContactsActivity.class);
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         passwordEt.addTextChangedListener(new LoginScreenTextWatcher(findViewById(R.id.login_tv_pwd_empty)));
 
         RadioGroup radioGroup = findViewById(R.id.login_rg_email_or_login);
+        // Change the hint of the username field depending on the option chosen by the user.
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton rb = findViewById(checkedId);
             String text = rb.getText().toString();
@@ -82,9 +91,12 @@ public class MainActivity extends AppCompatActivity {
             usernameErrorTv.setText(errText);
         });
 
+        // Abuse of live data to determine log in success.
         MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
         loggedIn.observe(this, aBoolean -> {
+            // If login successful
             if (aBoolean) {
+                // Get the token from Firebase and send it to the server.
                 MutableLiveData<Boolean> cleaningFinished = new MutableLiveData<>();
                 FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
                     String token = instanceIdResult.getToken();
@@ -97,8 +109,10 @@ public class MainActivity extends AppCompatActivity {
                     MyApplication.appDB.messageDao().deleteTable();
                     cleaningFinished.postValue(true);
                 }).start();
+                // Once cleaning is finished, log in the user.
                 cleaningFinished.observe(this, aBoolean1 -> {
                     RadioButton checked = findViewById(radioGroup.getCheckedRadioButtonId());
+                    // Go to contacts activity with the username as an extra.
                     if (checked.getText().toString().equals("username")) {
                         Intent intent = new Intent(this, ContactsActivity.class);
                         intent.putExtra("username", usernameEt.getText().toString());
@@ -111,22 +125,22 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-            }
-            else{
+            } else {
                 TextView errorTv = findViewById(R.id.login_tv_error);
                 errorTv.setVisibility(TextView.VISIBLE);
             }
         });
 
 
-
         Button loginBtn = findViewById(R.id.login_btn_login);
+        // Tries to log the user in on click.
         loginBtn.setOnClickListener(v -> {
 
             String username = usernameEt.getText().toString();
             String password = passwordEt.getText().toString();
 
             boolean error = false;
+            // Checks that the fields are not empty.
             if (username.isEmpty()) {
                 usernameErrorTv.setVisibility(TextView.VISIBLE);
                 error = true;
@@ -136,10 +150,11 @@ public class MainActivity extends AppCompatActivity {
                 errorTv.setVisibility(TextView.VISIBLE);
                 error = true;
             }
-            if (error){
+            if (error) {
                 return;
             }
 
+            // Tries to log in the user via their chosen method.
             RadioButton checked = findViewById(radioGroup.getCheckedRadioButtonId());
             if (checked.getText().toString().equals("username")) {
                 User user = new User(username, password);
@@ -152,12 +167,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         TextView signupTv = findViewById(R.id.login_tv_sign_up_link);
+        // Go to sign up on click.
         signupTv.setOnClickListener(v -> {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
 
         TextView forgotPassTv = findViewById(R.id.login_forgot_pass_tv);
+        // Go to forgot password on click.
         forgotPassTv.setOnClickListener(v -> {
             Intent i = new Intent(this, ForgotPasswordActivity.class);
             startActivity(i);

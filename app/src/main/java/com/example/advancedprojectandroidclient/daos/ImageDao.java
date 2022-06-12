@@ -8,6 +8,9 @@ import androidx.room.Update;
 
 import com.example.advancedprojectandroidclient.entities.Image;
 
+/**
+ * Data Access Object for the Image table.
+ */
 @Dao
 public interface ImageDao {
 
