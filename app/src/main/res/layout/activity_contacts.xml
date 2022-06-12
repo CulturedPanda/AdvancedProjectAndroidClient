@@ -25,7 +25,8 @@
             tools:src="@drawable/ic_person_circle"
             android:src="@drawable/ic_person_circle"
             android:layout_margin="10dp"
-            android:contentDescription="@string/user_s_profile_picture" />
+            android:contentDescription="@string/user_s_profile_picture"
+            android:background="@drawable/round_image_border"/>
 
         <TextView
             android:id="@+id/contacts_username_tv"

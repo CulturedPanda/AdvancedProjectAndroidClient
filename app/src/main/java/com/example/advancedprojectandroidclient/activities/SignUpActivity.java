@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,20 +17,19 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 
+import com.example.advancedprojectandroidclient.MyApplication;
 import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.api.PendingUserApi;
 import com.example.advancedprojectandroidclient.daos.AppDB;
 import com.example.advancedprojectandroidclient.daos.ImageDao;
+import com.example.advancedprojectandroidclient.entities.Image;
 import com.example.advancedprojectandroidclient.entities.PendingUser;
 import com.example.advancedprojectandroidclient.entities.SecretQuestion;
 
+import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.example.advancedprojectandroidclient.entities.Image;
-
-import java.io.ByteArrayOutputStream;
 
 public class SignUpActivity extends AppCompatActivity {
     private AppDB db;
@@ -40,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     Bitmap bmpImage;
     ImageView userImgIv;
     PendingUserApi pendingUserApi;
+    boolean imgSet;
 
     int SELECT_IMAGE_CODE = 1;
     @Override
@@ -47,6 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         pendingUserApi = new PendingUserApi();
+        imgSet = false;
 
         EditText emailEt = findViewById(R.id.signup_email_field_et);
         EditText usernameEt = findViewById(R.id.signup_username_field_et);
@@ -147,6 +146,24 @@ public class SignUpActivity extends AppCompatActivity {
 
         signUpSuccess.observe(this, aBoolean -> {
             if (aBoolean) {
+                if (imgSet) {
+                    //convert image to string
+                    userImgIv = findViewById(R.id.sign_up_profile_pic_iv);
+                    userImgIv.buildDrawingCache();
+                    BitmapDrawable drawable = (BitmapDrawable) userImgIv.getDrawable();
+                    Bitmap bitmap = drawable.getBitmap();
+                    // Bitmap bitmap = userImgIv.getDrawingCache();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] image = stream.toByteArray();
+                    String img_str = Base64.encodeToString(image, Base64.DEFAULT);
+
+                    //save image in DB as string
+                    Image imageFinal = new Image(usernameEt.getText().toString(), img_str);
+                    new Thread(() -> {
+                        MyApplication.appDB.imageDao().insert(imageFinal);
+                    }).start();
+                }
                 Intent intent = new Intent(this, EmailVerificationActivity.class);
                 intent.putExtra("username", usernameEt.getText().toString());
                 intent.putExtra("from", "signup");
@@ -158,14 +175,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
-        //bmpImage = null;
-
-        //Create db for profile image
-        db = Room.databaseBuilder(getApplicationContext(),AppDB.class, "ImageDB").
-                allowMainThreadQueries().build();
-        imageDao= db.imageDao();
-
         //Choose profile img button and display in box
         Button btnImage = findViewById(R.id.sign_up_choose_img_btn);
         btnImage.setOnClickListener(v -> {
@@ -173,29 +182,6 @@ public class SignUpActivity extends AppCompatActivity {
             i.setType("image/*");
             i.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(i, "Title"),SELECT_IMAGE_CODE);
-
-            //convert image to string
-            userImgIv = findViewById(R.id.sign_up_profile_pic_iv);
-            userImgIv.buildDrawingCache();
-            Bitmap bitmap = userImgIv.getDrawingCache();
-            ByteArrayOutputStream stream=new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
-            byte[] image=stream.toByteArray();
-            String img_str = Base64.encodeToString(image, 0);
-
-
-            //convert image to string (attempt 2)
-/*            userImgIv = (ImageView)findViewById(R.id.sign_up_profile_pic_iv);
-            BitmapDrawable drawable = (BitmapDrawable) userImgIv.getDrawable();
-            Bitmap bitmap = drawable.getBitmap();
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
-            byte[] bb = bos.toByteArray();
-            String img_str = Base64.encodeBytes(bb);*/
-
-            //save image in DB as string
-            Image imageFinal = new Image(usernameEt.getText().toString(), img_str);
-            imageDao.insert(imageFinal);
         });
 
         //sign up button
@@ -281,16 +267,15 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1){
-            Uri uri = data.getData();
-            ImageView profileImg = findViewById(R.id.sign_up_profile_pic_iv);
-            profileImg.setImageURI(uri);
-
-/*            bmpImage = (Bitmap) data.getExtras().get("data");
-            if (bmpImage != null){
-                userImgIv.setImageBitmap(bmpImage);
-            }*/
-
+        if (requestCode == 1) {
+            if (data != null) {
+                Uri uri = data.getData();
+                if (uri != null) {
+                    ImageView profileImg = findViewById(R.id.sign_up_profile_pic_iv);
+                    profileImg.setImageURI(uri);
+                    imgSet = true;
+                }
+            }
         }
     }
 }

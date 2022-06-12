@@ -8,17 +8,11 @@ import androidx.room.Update;
 
 import com.example.advancedprojectandroidclient.entities.Image;
 
-import java.util.List;
-
 @Dao
 public interface ImageDao {
 
-    @Query("SELECT * FROM image")
-    List<Image> getAllImages();
-
-
     @Query("SELECT * FROM image WHERE id = :id")
-    Image get(int id);
+    Image get(String id);
 
     @Insert
     void insert(Image image);

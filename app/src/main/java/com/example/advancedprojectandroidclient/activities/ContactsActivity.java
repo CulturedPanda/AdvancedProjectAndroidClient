@@ -17,8 +17,8 @@ import com.example.advancedprojectandroidclient.R;
 import com.example.advancedprojectandroidclient.adapters.ContactListAdapter;
 import com.example.advancedprojectandroidclient.api.RegisteredUserApi;
 import com.example.advancedprojectandroidclient.click_listeners.ContactItemClickListener;
-import com.example.advancedprojectandroidclient.daos.ImageDao;
 import com.example.advancedprojectandroidclient.entities.Contact;
+import com.example.advancedprojectandroidclient.entities.Image;
 import com.example.advancedprojectandroidclient.view_models.ContactsViewModel;
 import com.example.advancedprojectandroidclient.view_models.MessagesViewModel;
 import com.example.advancedprojectandroidclient.view_models.RefreshTokenViewModel;
@@ -42,17 +42,21 @@ public class ContactsActivity extends AppCompatActivity {
         messagesViewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
         refreshTokenViewModel.beginAutoRefresh();
         registeredUserApi = new RegisteredUserApi();
-        ImageDao imageDao = MyApplication.appDB.imageDao();
         username = getIntent().getStringExtra("username");
-        ImageView userProfileImage = findViewById(R.id.contacts_user_img_tv);
-//        List<Image> image = imageDao.getAllImages();
-//        if (image.size() > 0) {
-//            Image profileImg = image.get(0);
-//            //decode string to image
-//            byte[] decodedString = Base64.decode(String.valueOf(profileImg), Base64.DEFAULT);
-//            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//        }
+        MutableLiveData<Image> userImage = new MutableLiveData<>();
+        userImage.observe(this, image -> {
+            if (image != null) {
+                ImageView userProfileImage = findViewById(R.id.contacts_user_img_tv);
+                userProfileImage.setImageBitmap(userImage.getValue().decode());
+            }
+        });
 
+        new Thread(() ->{
+            Image image = MyApplication.appDB.imageDao().get(username);
+            if (image != null) {
+                userImage.postValue(image);
+            }
+        }).start();
 
 
         ImageView settingsIv = findViewById(R.id.contacts_settings_iv);
