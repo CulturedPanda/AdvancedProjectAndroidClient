@@ -28,6 +28,9 @@ So long as the server did not die for unforeseen circumstances (which can happen
 it is well known that all bugs that a developer never saw coming during
 testing and development happen in production), it should work.
 
+Assuming the server did / does crash, and that you have access to to individual user's directories on the university servers,
+the server is under the user "uneryuv" in the AspDotNetServer folder.
+
 Do note however that firebase notifications, email sending and live message updates
 (as that relied on firebase, because it was not stated whether we can use SignalR for android)
 do not work via the remote server.\
