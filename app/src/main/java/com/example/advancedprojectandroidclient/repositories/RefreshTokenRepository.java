@@ -23,6 +23,7 @@ public class RefreshTokenRepository {
     private RefreshToken refreshToken;
     public static String accessToken;
     private final ScheduledExecutorService execService;
+    private boolean autoRefreshing;
     boolean updated;
 
     /**
@@ -33,6 +34,7 @@ public class RefreshTokenRepository {
         new Thread(() -> refreshToken = refreshTokenDao.get()).start();
         refreshTokenApi = new RefreshTokenApi(this);
         execService = Executors.newSingleThreadScheduledExecutor();
+        autoRefreshing = false;
     }
 
     /**
@@ -117,8 +119,11 @@ public class RefreshTokenRepository {
      * @param i  the next attempt time.
      * @param i1 maximum number of attempts.
      */
-    public void autoRenewTokens(int i, int i1) {
-        execService.scheduleAtFixedRate(() -> renewTokens(i, i1),
-                3, 4, TimeUnit.MINUTES);
+    public synchronized void autoRenewTokens(int i, int i1) {
+        if (!autoRefreshing) {
+            execService.scheduleAtFixedRate(() -> renewTokens(i, i1),
+                    10, 4, TimeUnit.MINUTES);
+            autoRefreshing = true;
+        }
     }
 }

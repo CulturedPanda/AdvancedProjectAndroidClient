@@ -41,7 +41,7 @@ public class RefreshTokenApi {
      * @param refreshToken      the refresh token to renew
      * @param nextAttemptParams the parameters to use for the next attempt, in case this method fails.
      */
-    public void renewTokens(RefreshToken refreshToken, int... nextAttemptParams) {
+    public synchronized void renewTokens(RefreshToken refreshToken, int... nextAttemptParams) {
         Call<AccessToken> call = refreshTokenApi.renewRefreshToken(refreshToken, true);
         call.enqueue(new retrofit2.Callback<AccessToken>() {
             @Override
