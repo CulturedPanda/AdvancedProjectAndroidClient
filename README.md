@@ -26,10 +26,12 @@ In the strings.xml file, the url is listed in the string called "base_url".\
 If you wish to test against that, simply keep it as is.\
 So long as the server did not die for unforeseen circumstances (which can happen,
 it is well known that all bugs that a developer never saw coming during
-testing and development happen in production), it should work.
+testing and development happen in production), it should work.\
+If it did crash, it should be fairly obvious as creating users and logging in will not function.
 
 Assuming the server did / does crash, and that you have access to to individual user's directories on the university servers,
-the server is under the user "uneryuv" in the AspDotNetServer folder.
+the server is under the user "uneryuv" in the AspDotNetServer folder.\
+Otherwise, please use the local server configuration as listed below.
 
 Do note however that firebase notifications, email sending and live message updates
 (as that relied on firebase, because it was not stated whether we can use SignalR for android)
