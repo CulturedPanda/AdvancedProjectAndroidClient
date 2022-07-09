@@ -49,7 +49,7 @@ as well as in the Android app in the services package -> FirebaseService.
 Using the server from the 2nd assignment (link to Github repository above) and running it on a local
 environment is also possible.
 To do this, change the base_url in the strings.xml file to the local server's url.\
-If the android device used for testing is an emulator, settings it to http://10.0.2.2:{server port}/api/ should work.
+If the android device used for testing is an emulator, setting it to http://10.0.2.2:{server port}/api/ should work.
 
 In case a proxy is needed to get the messages to the server (as testing environment tends to block requests outside localhost),
 the following is one way to set up such a proxy:
