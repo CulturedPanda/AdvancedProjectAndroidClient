@@ -1,6 +1,7 @@
 # `Submitted by:`
-Yuval Uner, ID: ***REMOVED***, Github: OddPanda.\
-Nadav Elgrabli, ID: ***REMOVED***, Github: ZycleXx.
+Yuval Uner, Github: OddPanda.\
+Nadav Elgrabli, Github: ZycleXx.\
+IDs were removed as the repository is now public and are now only in the file submitted via moodle.
 
 # `Dependencies:`
 All dependencies are included in the gradle build file.
