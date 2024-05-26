@@ -1,7 +1,10 @@
+# `Brief`
+An Android app for our Whatsapp-like messaging application.\
+Developed as part of the Advanced Programming 2 course, Bar-Ilan Universtiy, 2022.
+
 # `Submitted by:`
-Yuval Uner, Github: OddPanda.\
-Nadav Elgrabli, Github: ZycleXx.\
-IDs were removed as the repository is now public and are now only in the file submitted via moodle.
+Yuval Uner, Github: YuvalUner.\
+Nadav Elgrabli, Github: NadavElgrabli.\
 
 # `Dependencies:`
 All dependencies are included in the gradle build file.
