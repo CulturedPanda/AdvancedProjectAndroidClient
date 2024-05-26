@@ -1,6 +1,8 @@
 # `Brief`
 An Android app for our Whatsapp-like messaging application.\
-Developed as part of the Advanced Programming 2 course, Bar-Ilan Universtiy, 2022.
+Developed as part of the Advanced Programming 2 course, Bar-Ilan Universtiy, 2022.\
+The server for this app can be found here: https://github.com/YuvalUner/Whatsapp_like_app_web_server \
+The web client can be found here: https://github.com/YuvalUner/Whatsapp_like_app_web_client
 
 # `Submitted by:`
 Yuval Uner, Github: YuvalUner.\
